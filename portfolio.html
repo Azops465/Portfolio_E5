@@ -1,676 +1,1332 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Expert IT | Architecture Ultime</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-    
-    <style>
-        /* =========================================
-           1. VARIABLES GLOBALES (PALETTE DE COULEURS)
-           Modifie ces codes hexadécimaux pour changer 
-           l'identité visuelle de tout le site.
-           ========================================= */
-        :root {
-            /* Thème Clair Institutionnel (Par défaut) */
-            --blue-france: #000091; /* Couleur d'accentuation principale */
-            --red-marianne: #E1000F; /* Couleur d'alerte / glitch */
-            --grey-975: #F6F6F6;     /* Fond des cartes/encarts */
-            --grey-200: #CECECE;     /* Bordures */
-            --text-title: #161616;   /* Couleur des titres (H1, H2) */
-            --text-default: #3A3A3A; /* Couleur du texte paragraphe */
-            --bg-default: #FFFFFF;   /* Fond de la page */
-            --font-sans: 'Inter', sans-serif;
-            --font-mono: 'Fira Code', monospace;
-            --hud-bg: rgba(0, 0, 0, 0.85);
-            --hud-text: #00ff00;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Ingénieur Réseaux & Infrastructures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.19.0/iconfont/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Thème OVERCLOCK (Activé via le bouton HUD) */
-        body.cyber-mode {
-            --blue-france: #00ff00; /* Vert Néon */
-            --red-marianne: #ff003c; /* Rouge Cyber */
-            --grey-975: #0a0a0a;
-            --grey-200: #333333;
-            --text-title: #ffffff;
-            --text-default: #a0a0a0;
-            --bg-default: #050505;
-            --hud-bg: rgba(0, 255, 0, 0.1);
-            --hud-text: #ffffff;
-        }
+  :root {
+    --navy: #0d1f35;
+    --navy2: #16324f;
+    --accent: #0ea5e9;
+    --accent2: #0284c7;
+    --accent-bg: #e0f2fe;
+    --accent-text: #0c4a6e;
+    --green: #059669;
+    --green-bg: #d1fae5;
+    --green-text: #064e3b;
+    --amber: #d97706;
+    --amber-bg: #fef3c7;
+    --amber-text: #78350f;
+    --red: #dc2626;
+    --red-bg: #fee2e2;
+    --red-text: #7f1d1d;
+    --text: #0f172a;
+    --text2: #475569;
+    --text3: #94a3b8;
+    --border: rgba(15, 27, 45, 0.12);
+    --border2: rgba(15, 27, 45, 0.22);
+    --surface: #f8fafc;
+    --white: #ffffff;
+  }
 
-        /* Reset de base et masquage du curseur natif */
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+  html { scroll-behavior: smooth; }
 
-        body {
-            font-family: var(--font-sans); color: var(--text-default);
-            background-color: var(--bg-default); overflow-x: hidden; /* Empêche le scroll horizontal natif */
-            overscroll-behavior: none; transition: background-color 0.5s, color 0.5s;
-        }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
 
-        /* --- BACKGROUND CANVAS --- */
-        #network-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0; pointer-events: none; opacity: 0.85; 
-        }
+  /* ── NAV ── */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-        /* --- HUD (Panneau en bas à droite) --- */
-        #telemetry-hud {
-            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
-            background: var(--hud-bg); color: var(--hud-text);
-            font-family: var(--font-mono); font-size: 0.75rem;
-            padding: 15px; border-left: 2px solid var(--blue-france);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); backdrop-filter: blur(5px);
-            transition: all 0.3s;
-        }
-        .hud-line { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 5px; }
-        .hud-label { color: #888; }
-        
-        #btn-overclock {
-            margin-top: 10px; width: 100%; background: transparent; border: 1px solid var(--blue-france);
-            color: var(--blue-france); font-family: var(--font-mono); font-size: 0.7rem;
-            padding: 5px; text-transform: uppercase; transition: all 0.2s; pointer-events: auto;
-        }
-        #btn-overclock:hover { background: var(--blue-france); color: var(--bg-default); }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+  }
 
-        /* --- CURSEUR PERSONNALISÉ --- */
-        .custom-cursor {
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference; /* Permet au curseur de contraster avec le fond */
-            transition: transform 0.1s ease-out;
-        }
-        .cursor-cross {
-            position: absolute; top: 50%; left: 50%;
-            width: 20px; height: 20px; transform: translate(-50%, -50%);
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .cursor-cross::before, .cursor-cross::after {
-            content: ''; position: absolute; background-color: #fff;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-        }
-        .cursor-cross::before { width: 100%; height: 2px; }
-        .cursor-cross::after { width: 2px; height: 100%; }
-        .cursor-focus {
-            position: absolute; top: 50%; left: 50%; width: 0px; height: 0px;
-            border: 1px solid transparent; border-radius: 50%;
-            transform: translate(-50%, -50%); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 
-        /* Animation pulsation au repos */
-        @keyframes precision-pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(0.8); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-        .custom-cursor:not(.hover) .cursor-cross { animation: precision-pulse 2s infinite; }
+  .logo-icon i { font-size: 17px; color: #38bdf8; }
 
-        /* État au survol (Scanner) */
-        .custom-cursor.hover .cursor-cross { transform: translate(-50%, -50%) rotate(90deg) scale(0); opacity: 0; }
-        .custom-cursor.hover .cursor-focus {
-            width: 60px; height: 60px; border-color: #fff;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px); 
-        }
+  .logo-text { font-size: 16px; font-weight: 500; }
+  .logo-text span { color: var(--accent2); }
 
-        /* --- HEADER NAVBAR --- */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem; background-color: transparent;
-            border-bottom: 1px solid var(--grey-200); z-index: 100; transition: border-color 0.5s;
-        }
-        .bloc-marque { display: flex; align-items: center; gap: 1.5rem; }
-        .marianne-logo { font-weight: 800; font-size: 0.9rem; line-height: 1.1; display: flex; gap: 10px; align-items: center; color: var(--text-title); transition: color 0.5s;}
-        .marianne-flag { display: flex; width: 45px; height: 30px; border: 1px solid var(--grey-200); transition: border-color 0.5s;}
-        .marianne-flag span { flex: 1; }
-        .marianne-flag .b { background-color: var(--blue-france); transition: background-color 0.5s;}
-        .marianne-flag .w { background-color: var(--bg-default); transition: background-color 0.5s;}
-        .marianne-flag .r { background-color: var(--red-marianne); transition: background-color 0.5s;}
-        .nav-progress { font-family: var(--font-mono); font-weight: 600; font-size: 1rem; color: var(--blue-france); transition: color 0.5s;}
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 
-        /* =========================================
-           2. MOTEUR DE SCROLL HORIZONTAL
-           ========================================= */
-        /* Pour ajouter une page : ajoute 100vh à la height ci-dessous (ex: 4 pages = 400vh, 5 pages = 500vh) */
-        .scroll-container { height: 400vh; } 
-        .sticky-wrapper { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
-        /* Pour ajouter une page : ajoute 100vw à la width ci-dessous (ex: 4 pages = 400vw, 5 pages = 500vw) */
-        .horizontal-track { display: flex; height: 100%; width: 400vw; will-change: transform; align-items: center; }
+  .nav-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: all 0.15s;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+  }
 
-        /* Structure d'une section (un panneau = 1 page écran) */
-        .panel {
-            width: 100vw; height: 100vh; padding: 0 5vw;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            position: relative; z-index: 1; text-align: center;
-        }
-        .content-wrapper { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; }
+  .nav-link:hover, .nav-link.active {
+    background: var(--surface);
+    color: var(--accent2);
+  }
 
-        /* Typographie dynamique */
-        h1, h2 { color: var(--text-title); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; transition: color 0.5s;}
-        h1 { font-size: 4.5vw; text-transform: uppercase; letter-spacing: -1px; position: relative; }
-        h2 { font-size: 3.5vw; text-transform: uppercase; }
-        .accent { color: var(--blue-france); transition: color 0.5s;}
-        
-        /* Effet Glitch lié à la vitesse de scroll */
-        .glitching {
-            animation: glitch-anim 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
-            color: var(--red-marianne); text-shadow: 2px 2px 0px var(--blue-france), -2px -2px 0px #00ff00;
-        }
-        @keyframes glitch-anim {
-            0% { transform: translate(0) skew(0deg) }
-            20% { transform: translate(-4px, 4px) skew(-10deg) }
-            40% { transform: translate(-4px, -4px) skew(10deg) }
-            60% { transform: translate(4px, 4px) skew(-5deg) }
-            80% { transform: translate(4px, -4px) skew(5deg) }
-            100% { transform: translate(0) skew(0deg) }
-        }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text);
+  }
 
-        /* Classe utilitaire pour l'effet de parallaxe sur le texte */
-        .parallax-el { will-change: transform; }
+  /* ── LAYOUT ── */
+  .page { display: none; }
+  .page.active { display: block; }
 
-        /* --- BLOC CODE (Effet Terminal Typewriter) --- */
-        .code-block {
-            font-family: var(--font-mono); background: #1E1E1E; color: #D4D4D4;
-            padding: 2.5rem; border-left: 4px solid var(--blue-france);
-            font-size: 1rem; line-height: 1.6; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            position: relative; overflow: hidden; width: 100%; max-width: 800px; text-align: left; min-height: 250px;
-            transition: border-color 0.5s;
-        }
-        .code-block::before {
-            content: 'sys_profile.json'; position: absolute; top: 0; right: 0;
-            background: var(--blue-france); color: var(--bg-default); padding: 0.2rem 0.5rem;
-            font-size: 0.7rem; font-weight: bold; transition: background-color 0.5s, color 0.5s;
-        }
-        .typing-cursor::after { content: '█'; animation: blink 1s step-end infinite; color: var(--blue-france); }
-        @keyframes blink { 50% { opacity: 0; } }
-        /* Couleurs de coloration syntaxique JSON */
-        .json-key { color: #9CDCFE; } .json-string { color: #CE9178; } .json-punct { color: #ffd700; }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem;
+  }
 
-        /* =========================================
-           3. VITRINE DE PROJETS INTERACTIVE
-           ========================================= */
-        .showcase-container {
-            display: flex; width: 100%; max-width: 1000px; height: 400px;
-            background: var(--grey-975); border: 1px solid var(--grey-200);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: left;
-            transition: background-color 0.5s, border-color 0.5s; overflow: hidden;
-        }
-        /* Colonne de gauche (Menu) */
-        .showcase-list {
-            flex: 1; border-right: 1px solid var(--grey-200); display: flex; flex-direction: column;
-            transition: border-color 0.5s; background: rgba(0,0,0,0.02);
-        }
-        .project-item {
-            padding: 1.5rem; border-bottom: 1px solid var(--grey-200); font-family: var(--font-mono);
-            font-size: 0.9rem; font-weight: 600; color: var(--text-default);
-            transition: all 0.3s; position: relative; overflow: hidden;
-        }
-        .project-item:hover, .project-item.active { background: var(--blue-france); color: var(--bg-default); padding-left: 2rem; }
-        .project-item::before { content: '>'; position: absolute; left: 0.5rem; opacity: 0; transition: opacity 0.3s; }
-        .project-item:hover::before, .project-item.active::before { opacity: 1; }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: var(--navy);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
 
-        /* Colonne de droite (Détails) */
-        .showcase-details { flex: 2; position: relative; padding: 2rem; }
-        .detail-pane {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 2rem;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-            display: flex; flex-direction: column; justify-content: center;
-        }
-        .detail-pane.active { opacity: 1; pointer-events: auto; }
-        .detail-title { font-size: 2rem; font-weight: 800; color: var(--blue-france); margin-bottom: 1rem; transition: color 0.5s; }
-        .detail-desc { font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5; }
-        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .tech-tag {
-            padding: 0.3rem 0.6rem; border: 1px solid var(--blue-france); font-family: var(--font-mono);
-            font-size: 0.75rem; color: var(--blue-france); transition: all 0.5s;
-        }
+  .section-sub {
+    font-size: 14px;
+    color: var(--text3);
+    margin-bottom: 2rem;
+  }
 
-        /* --- CONTACT PROTOCOL --- */
-        .contact-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem; width: 100%; max-width: 800px; margin: 2rem 0;
-        }
-        .contact-node {
-            padding: 1.5rem; border: 1px solid var(--grey-200); text-align: left;
-            text-decoration: none; display: flex; flex-direction: column; gap: 0.5rem;
-            transition: all 0.3s; background: var(--grey-975);
-        }
-        .contact-node:hover {
-            border-color: var(--blue-france); transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-        .node-label { font-family: var(--font-mono); font-size: 0.8rem; color: var(--red-marianne); font-weight: bold; }
-        .node-value { font-size: 1.1rem; font-weight: 600; color: var(--text-title); }
+  /* ── HERO ── */
+  .hero { padding: 3.5rem 2.5rem 3rem; max-width: 960px; margin: 0 auto; }
 
-        /* Bouton Magnétique */
-        .magnetic-btn-wrapper { display: inline-block; padding: 2rem; }
-        .magnetic-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            background: var(--blue-france); color: var(--bg-default); padding: 1.2rem 2.5rem;
-            text-decoration: none; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-            will-change: transform; transition: background-color 0.5s, color 0.5s;
-        }
-    </style>
+  .online-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--green-text);
+    background: var(--green-bg);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 50px;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .hero-role {
+    font-size: 16px;
+    color: var(--text2);
+    font-weight: 400;
+    margin-bottom: 2rem;
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 20px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 20px;
+    background: none;
+    color: var(--text);
+    border: 1px solid var(--border2);
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent2);
+    background: var(--accent-bg);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 520px;
+  }
+
+  .stat-item {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 3px;
+  }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+  }
+
+  .tag.blue { background: var(--accent-bg); color: var(--accent-text); border-color: transparent; }
+  .tag.green { background: var(--green-bg); color: var(--green-text); border-color: transparent; }
+  .tag.amber { background: var(--amber-bg); color: var(--amber-text); border-color: transparent; }
+
+  /* ── PROJECTS ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .project-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--white);
+    transition: all 0.2s;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(14,165,233,0.1);
+  }
+
+  .card-thumb {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+  }
+
+  .card-thumb i { font-size: 42px; color: var(--accent2); }
+
+  .card-body { padding: 1.1rem 1.2rem; }
+
+  .card-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
+
+  .card-name { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
+
+  .card-desc { font-size: 12px; color: var(--text2); line-height: 1.55; margin-bottom: 11px; }
+
+  .card-links { display: flex; gap: 12px; }
+
+  .card-link {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent2);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    padding: 0;
+  }
+
+  .card-link:hover { text-decoration: underline; }
+
+  /* ── TIMELINE ── */
+  .timeline { padding-left: 1.5rem; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 8px; bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-item { position: relative; margin-bottom: 1.75rem; }
+
+  .tl-dot {
+    position: absolute;
+    left: -1.5rem;
+    top: 5px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--accent2);
+  }
+
+  .tl-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+
+  .tl-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+
+  .tl-detail { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 7px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+
+  .badge.ok { background: var(--green-bg); color: var(--green-text); }
+  .badge.warn { background: var(--amber-bg); color: var(--amber-text); }
+
+  /* ── CERTIFICATIONS ── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .cert-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    background: var(--white);
+    text-align: center;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .cert-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(14,165,233,0.08);
+  }
+
+  .cert-logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-size: 22px;
+  }
+
+  .cert-name { font-size: 13px; font-weight: 600; color: var(--navy); line-height: 1.3; margin-bottom: 4px; }
+  .cert-org { font-size: 11px; color: var(--text3); margin-bottom: 5px; }
+  .cert-date { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); margin-bottom: 9px; }
+
+  .cert-status {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 10px;
+  }
+
+  .cert-status.valid { background: var(--green-bg); color: var(--green-text); }
+  .cert-status.inprogress { background: var(--amber-bg); color: var(--amber-text); }
+
+  /* ── CV ── */
+  .cv-wrapper { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+
+  .cv-header { background: var(--navy); padding: 2rem 2rem 1.75rem; color: #fff; }
+
+  .cv-name { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 5px; }
+  .cv-role-line { font-size: 13px; color: #7dd3fc; font-weight: 400; margin-bottom: 1.25rem; }
+
+  .cv-contact { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+
+  .cv-contact-item {
+    font-size: 12px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .cv-body { display: grid; grid-template-columns: 1fr 1fr; }
+
+  .cv-col { padding: 1.5rem 1.75rem; border-right: 1px solid var(--border); }
+  .cv-col:last-child { border-right: none; }
+
+  .cv-section-head {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+  }
+
+  .cv-section-head + .cv-section-head { margin-top: 1.25rem; }
+
+  .cv-entry { margin-bottom: 14px; }
+  .cv-entry-title { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .cv-entry-sub { font-size: 11px; color: var(--text3); margin-bottom: 3px; }
+  .cv-entry-desc { font-size: 12px; color: var(--text2); line-height: 1.55; }
+
+  .cv-skill-list { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .cv-skill-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text2);
+  }
+
+  .cv-footer {
+    padding: 1rem 1.75rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* ── SKILLS ── */
+  .skill-filters {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-filter-btn {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text2);
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .skill-filter-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .skill-filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  .skills-table { width: 100%; border-collapse: collapse; }
+
+  .skills-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text3);
+    padding: 8px 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skills-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .skills-table tbody tr:last-child td { border-bottom: none; }
+
+  .skills-table tbody tr { display: none; }
+  .skills-table tbody tr.visible { display: table-row; }
+
+  .skill-name { font-size: 13px; font-weight: 500; color: var(--navy); }
+  .skill-level { font-size: 12px; color: var(--text3); }
+
+  .bar-wrap {
+    width: 120px;
+    height: 6px;
+    background: var(--surface);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .bar-fill { height: 100%; border-radius: 3px; background: var(--accent2); }
+
+  .skill-exp { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 2rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav { padding: 0.9rem 1.25rem; }
+    .nav-links { display: none; flex-direction: column; width: 100%; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .nav { flex-wrap: wrap; gap: 10px; }
+
+    .hero { padding: 2rem 1.25rem; }
+    .hero-name { font-size: 34px; }
+    .container { padding: 2rem 1.25rem; }
+
+    .grid-2 { grid-template-columns: 1fr; }
+    .certs-grid { grid-template-columns: 1fr 1fr; }
+    .cv-body { grid-template-columns: 1fr; }
+    .cv-col { border-right: none; border-bottom: 1px solid var(--border); }
+    .cv-col:last-child { border-bottom: none; }
+    .hero-stats { max-width: 100%; }
+    .bar-wrap { width: 80px; }
+  }
+
+  @media (max-width: 480px) {
+    .certs-grid { grid-template-columns: 1fr; }
+    .hero-name { font-size: 28px; }
+  }
+</style>
 </head>
 <body>
 
-    <canvas id="network-canvas"></canvas>
+<!-- ── NAVIGATION ── -->
+<nav class="nav">
+  <a class="logo" href="#" onclick="showPage('hero');return false;">
+    <div class="logo-icon"><i class="ti ti-network" aria-hidden="true"></i></div>
+    <span class="logo-text">réseau<span>.</span>folio</span>
+  </a>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <i class="ti ti-menu-2"></i>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-link active" onclick="showPage('hero')">Accueil</button>
+    <button class="nav-link" onclick="showPage('projects')">Réalisations</button>
+    <button class="nav-link" onclick="showPage('proofs')">Expérience</button>
+    <button class="nav-link" onclick="showPage('certs')">Certifications</button>
+    <button class="nav-link" onclick="showPage('cv')">CV</button>
+    <button class="nav-link" onclick="showPage('skills')">Compétences</button>
+  </div>
+</nav>
 
-    <div id="telemetry-hud">
-        <div class="hud-line"><span class="hud-label">FPS:</span> <span id="hud-fps">00</span></div>
-        <div class="hud-line"><span class="hud-label">VELOCITY:</span> <span id="hud-vel">0.00</span></div>
-        <div class="hud-line"><span class="hud-label">DATA_SYNC:</span> <span id="sync-status" style="color:var(--blue-france)">ACTIVE</span></div>
-        <button id="btn-overclock" class="hoverable sound-click">Overclock Mode</button>
+<!-- ══════════════════════════════════════════
+     PAGE — ACCUEIL
+══════════════════════════════════════════ -->
+<div class="page active" id="page-hero">
+  <div class="hero">
+    <div class="online-badge">
+      <span class="pulse"></span>
+      Disponible pour de nouvelles missions
     </div>
 
-    <div class="custom-cursor" id="cursor">
-        <div class="cursor-focus"></div>
-        <div class="cursor-cross"></div>
+    <h1 class="hero-name">
+      Votre Prénom NOM<br>
+      <em>Ingénieur Réseaux &amp; Infrastructures</em>
+    </h1>
+
+    <p class="hero-role">
+      Conception, déploiement et sécurisation d'infrastructures réseau complexes —
+      LAN/WAN, SD-WAN, firewall, VPN et supervision. Expert Cisco, Fortinet &amp; Juniper.
+    </p>
+
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('projects')">
+        <i class="ti ti-topology-star" aria-hidden="true"></i>
+        Mes réalisations
+      </button>
+      <button class="btn-outline" onclick="showPage('certs')">
+        <i class="ti ti-certificate" aria-hidden="true"></i>
+        Certifications
+      </button>
+      <button class="btn-outline" onclick="showPage('cv')">
+        <i class="ti ti-file-cv" aria-hidden="true"></i>
+        Mon CV
+      </button>
     </div>
 
-    <header>
-        <div class="bloc-marque">
-            <div class="marianne-flag hoverable sound-hover"><span class="b"></span><span class="w"></span><span class="r"></span></div>
-            <div class="marianne-logo">EXPERT IT<br>PORTFOLIO</div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">7+</div>
+        <div class="stat-label">Années d'exp.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">15</div>
+        <div class="stat-label">Projets livrés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Équipements gérés</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE — RÉALISATIONS
+══════════════════════════════════════════ -->
+<div class="page" id="page-projects">
+  <div class="container">
+    <h2 class="section-title">Réalisations professionnelles</h2>
+    <p class="section-sub">Projets réseau sélectionnés — infrastructure, sécurité, supervision</p>
+
+    <div class="grid-2">
+
+      <div class="project-card">
+        <div class="card-thumb" style="background:#eff6ff;">
+          <i class="ti ti-building-skyscraper" style="color:#1d4ed8;" aria-hidden="true"></i>
         </div>
-        <div class="nav-progress hoverable sound-hover" id="progress">[SYS_LOAD: 0%]</div>
-    </header>
-
-    <div class="scroll-container">
-        <div class="sticky-wrapper">
-            <div class="horizontal-track" id="track">
-                
-                <section class="panel">
-                    <div class="content-wrapper parallax-el" data-speed="0.05">
-                        <p style="font-family: var(--font-mono); color: var(--red-marianne); margin-bottom: 1rem;">>_ SYS.USER_IDENTIFIED : ARCHITECTE LOGICIEL</p>
-                        <h1 class="scramble hoverable sound-hover" data-value="Développement" id="main-title">Développement</h1>
-                        <h1 style="font-size: 3vw;">& Écosystèmes <span class="accent scramble hoverable sound-hover" data-value="Performants.">Performants.</span></h1>
-                        <p style="font-size: 1.2rem; margin-top: 2rem; max-width: 600px; color: var(--text-default);">
-                            Conception d'architectures robustes, scalables et centrées sur l'utilisateur. Du routage réseau à l'interface client.
-                        </p>
-                    </div>
-                </section>
-
-                <section class="panel">
-                    <div class="content-wrapper parallax-el" data-speed="-0.03">
-                        <h2 class="scramble hoverable sound-hover" data-value="Environnement Technique">Environnement <span class="accent">Technique</span></h2>
-                        <div class="code-block hoverable" id="typewriter-container"></div>
-                    </div>
-                </section>
-
-                <section class="panel">
-                    <div class="content-wrapper parallax-el" data-speed="0.06">
-                        <h2 class="scramble hoverable sound-hover" data-value="Déploiements Majeurs">Déploiements <span class="accent">Majeurs</span></h2>
-                        
-                        <div class="showcase-container">
-                            <div class="showcase-list">
-                                <div class="project-item active hoverable sound-hover" data-target="proj1">PRJ-01 // ARCHITECTURE CLOUD</div>
-                                <div class="project-item hoverable sound-hover" data-target="proj2">PRJ-02 // MOTEUR WEBGL</div>
-                                <div class="project-item hoverable sound-hover" data-target="proj3">PRJ-03 // API GOUVERNEMENTALE</div>
-                            </div>
-                            <div class="showcase-details">
-                                <div id="proj1" class="detail-pane active">
-                                    <h3 class="detail-title">Plateforme SaaS Scalable</h3>
-                                    <p class="detail-desc">Migration complète d'une infrastructure monolithique vers des microservices. Réduction des coûts serveurs de 40% et disponibilité garantie à 99.9%.</p>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">Docker</span><span class="tech-tag">AWS</span>
-                                    </div>
-                                </div>
-                                <div id="proj2" class="detail-pane">
-                                    <h3 class="detail-title">Visualisation de Données 3D</h3>
-                                    <p class="detail-desc">Développement d'un moteur de rendu sur navigateur pour analyser des flux réseau en temps réel. Maintien de 60 FPS constants sur des jeux de données massifs.</p>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Three.js</span><span class="tech-tag">WebGL</span><span class="tech-tag">WebSockets</span><span class="tech-tag">Python</span>
-                                    </div>
-                                </div>
-                                <div id="proj3" class="detail-pane">
-                                    <h3 class="detail-title">Passerelle API Sécurisée</h3>
-                                    <p class="detail-desc">Création d'une API RESTful hautement sécurisée gérant l'authentification et le transit de données sensibles avec chiffrement de bout en bout.</p>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Go</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Redis</span><span class="tech-tag">OAuth 2.0</span>
-                                    </div>
-                                </div>
-                                </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="panel">
-                    <div class="content-wrapper parallax-el" data-speed="-0.05">
-                        <h2 style="color: var(--red-marianne);" class="scramble hoverable sound-hover" data-value="Initier une Connexion">Initier une <span style="color: var(--text-title);">Connexion</span></h2>
-                        <p style="font-family: var(--font-mono); margin: 1rem 0;">> Ping requests accepted. Ready to route your project.</p>
-                        
-                        <div class="contact-grid">
-                            <a href="mailto:ton.email@domaine.com" class="contact-node hoverable sound-hover">
-                                <span class="node-label">[PROTOCOLE_SMTP]</span>
-                                <span class="node-value">ton.email@domaine.com</span>
-                            </a>
-                            <a href="https://linkedin.com/in/tonprofil" target="_blank" class="contact-node hoverable sound-hover">
-                                <span class="node-label">[RÉSEAU_PRO]</span>
-                                <span class="node-value">LinkedIn Profile</span>
-                            </a>
-                            <a href="https://github.com/tonprofil" target="_blank" class="contact-node hoverable sound-hover">
-                                <span class="node-label">[DÉPÔT_CODE]</span>
-                                <span class="node-value">GitHub / Source</span>
-                            </a>
-                        </div>
-
-                        <div class="magnetic-btn-wrapper hoverable sound-click">
-                            <a href="mailto:ton.email@domaine.com" class="magnetic-btn">Transmettre les Datas</a>
-                        </div>
-                    </div>
-                </section>
-                
-                </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag blue">WAN</span>
+            <span class="tag">Cisco</span>
+            <span class="tag">SD-WAN</span>
+            <span class="tag">MPLS</span>
+          </div>
+          <div class="card-name">Refonte WAN multi-sites — Groupe industriel</div>
+          <div class="card-desc">
+            Migration de 32 sites de liaisons MPLS vers architecture SD-WAN Cisco Viptela.
+            Réduction des coûts d'exploitation de 35% et amélioration de la disponibilité à 99,98%.
+          </div>
+          <div class="card-links">
+            <a class="card-link" href="#">
+              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
+            </a>
+            <a class="card-link" href="#">
+              <i class="ti ti-external-link" aria-hidden="true"></i> Démo
+            </a>
+          </div>
         </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb" style="background:#f0fdf4;">
+          <i class="ti ti-shield-lock" style="color:#15803d;" aria-hidden="true"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag green">Sécurité</span>
+            <span class="tag">Fortinet</span>
+            <span class="tag">VPN</span>
+            <span class="tag">Zero Trust</span>
+          </div>
+          <div class="card-name">Infrastructure Zero Trust — Secteur bancaire</div>
+          <div class="card-desc">
+            Déploiement d'une architecture Zero Trust Network Access avec FortiGate 4200F,
+            segmentation micro-périmétrique et authentification MFA pour 2 000 utilisateurs.
+          </div>
+          <div class="card-links">
+            <a class="card-link" href="#">
+              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb" style="background:#faf5ff;">
+          <i class="ti ti-server-2" style="color:#7c3aed;" aria-hidden="true"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag blue">Datacenter</span>
+            <span class="tag">Juniper</span>
+            <span class="tag">BGP</span>
+            <span class="tag">EVPN</span>
+          </div>
+          <div class="card-name">Datacenter Fabric — Hébergeur cloud</div>
+          <div class="card-desc">
+            Conception et déploiement d'une fabric EVPN/VXLAN sur Juniper QFX5200 pour
+            un datacenter de 500 serveurs. Architecture spine-leaf avec redondance totale.
+          </div>
+          <div class="card-links">
+            <a class="card-link" href="#">
+              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb" style="background:#fff7ed;">
+          <i class="ti ti-activity" style="color:#c2410c;" aria-hidden="true"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag amber">NOC</span>
+            <span class="tag">Zabbix</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">SNMP</span>
+          </div>
+          <div class="card-name">Plateforme de supervision réseau — MSP</div>
+          <div class="card-desc">
+            Mise en place d'un NOC centralisé avec Zabbix + Grafana supervisant 800 équipements.
+            Alerting temps réel et dashboards opérationnels pour les équipes support N1/N2.
+          </div>
+          <div class="card-links">
+            <a class="card-link" href="#">
+              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb" style="background:#eff6ff;">
+          <i class="ti ti-wifi" style="color:#1d4ed8;" aria-hidden="true"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag blue">Wi-Fi</span>
+            <span class="tag">Cisco WLC</span>
+            <span class="tag">802.1X</span>
+          </div>
+          <div class="card-name">Déploiement Wi-Fi entreprise — Campus universitaire</div>
+          <div class="card-desc">
+            Refonte complète de l'infrastructure Wi-Fi sur 12 bâtiments (350 AP Cisco Catalyst).
+            Authentification 802.1X via Cisco ISE, ségrégation réseau étudiants/personnel/IoT.
+          </div>
+          <div class="card-links">
+            <a class="card-link" href="#">
+              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-thumb" style="background:#f0fdf4;">
+          <i class="ti ti-cloud-network" style="color:#15803d;" aria-hidden="true"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag green">Hybrid Cloud</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Direct Connect</span>
+          </div>
+          <div class="card-name">Interconnexion Hybrid Cloud — Industrie</div>
+          <div class="card-desc">
+            Mise en place d'un interconnexion privée on-premise / AWS via Direct Connect et
+            Transit Gateway. Routage BGP avec politiques de failover vers VPN IPsec de secours.
+          </div>
+          <div class="card-links">
+            <a class="card-link" href="#">
+              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE — EXPÉRIENCE
+══════════════════════════════════════════ -->
+<div class="page" id="page-proofs">
+  <div class="container">
+    <h2 class="section-title">Expérience professionnelle</h2>
+    <p class="section-sub">Parcours et missions marquantes</p>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2022 — Aujourd'hui</div>
+        <div class="tl-title">Ingénieur Réseaux Senior — ESN Réseau &amp; Cloud</div>
+        <div class="tl-detail">
+          Pilotage de projets d'infrastructure réseau pour des clients grands comptes (CAC 40).
+          Expertise SD-WAN, sécurité périmétrique et datacenter fabric. Référent technique pour
+          une équipe de 8 ingénieurs réseaux. Réalisation d'audits d'architectures et rédaction
+          de dossiers techniques de référence.
+        </div>
+        <span class="badge ok">
+          <i class="ti ti-check" aria-hidden="true"></i> En poste — référence disponible
+        </span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2019 — 2022</div>
+        <div class="tl-title">Administrateur Réseaux &amp; Sécurité — Groupe Hospitalier</div>
+        <div class="tl-detail">
+          Administration de l'infrastructure réseau de 5 sites hospitaliers (4 000 utilisateurs).
+          Gestion des firewalls Palo Alto, segmentation réseau biomed/IT, maintien en condition
+          opérationnelle 24/7. Participation aux astreintes et gestion des incidents P1/P2.
+          Mise en conformité HDS (Hébergeur Données de Santé).
+        </div>
+        <span class="badge ok">
+          <i class="ti ti-check" aria-hidden="true"></i> Référence disponible
+        </span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2017 — 2019</div>
+        <div class="tl-title">Technicien Réseaux N2 — Opérateur Télécom</div>
+        <div class="tl-detail">
+          Support niveau 2 sur infrastructures xDSL/Fibre et réseau cœur. Configuration et
+          dépannage d'équipements Cisco IOS/IOS-XE. Participation aux astreintes et gestion
+          des incidents majeurs. Rédaction de procédures d'exploitation et formations N1.
+        </div>
+        <span class="badge ok">
+          <i class="ti ti-check" aria-hidden="true"></i> Référence disponible
+        </span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2016 — 2017</div>
+        <div class="tl-title">Alternant Technicien Réseaux — PME IT</div>
+        <div class="tl-detail">
+          Première expérience en alternance : déploiement de postes, câblage réseau, configuration
+          de switches managés Cisco Catalyst et assistance utilisateurs. Formation aux protocoles
+          TCP/IP et à l'administration Windows Server.
+        </div>
+        <span class="badge ok">
+          <i class="ti ti-award" aria-hidden="true"></i> BTS SIO SISR — Mention bien
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE — CERTIFICATIONS
+══════════════════════════════════════════ -->
+<div class="page" id="page-certs">
+  <div class="container">
+    <h2 class="section-title">Certifications</h2>
+    <p class="section-sub">Accréditations techniques obtenues et en cours de préparation</p>
+
+    <div class="certs-grid">
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#e0f2fe;">
+          <i class="ti ti-topology-star-ring" style="color:#0c4a6e; font-size:22px;" aria-hidden="true"></i>
+        </div>
+        <div class="cert-name">CCNP Enterprise</div>
+        <div class="cert-org">Cisco</div>
+        <div class="cert-date">Juin 2023</div>
+        <span class="cert-status valid">Valide</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#e0f2fe;">
+          <i class="ti ti-shield-check" style="color:#0c4a6e; font-size:22px;" aria-hidden="true"></i>
+        </div>
+        <div class="cert-name">CCNP Security</div>
+        <div class="cert-org">Cisco</div>
+        <div class="cert-date">Fév. 2023</div>
+        <span class="cert-status valid">Valide</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#d1fae5;">
+          <i class="ti ti-wall" style="color:#064e3b; font-size:22px;" aria-hidden="true"></i>
+        </div>
+        <div class="cert-name">NSE 4 — FortiGate</div>
+        <div class="cert-org">Fortinet</div>
+        <div class="cert-date">Oct. 2022</div>
+        <span class="cert-status valid">Valide</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#fef3c7;">
+          <i class="ti ti-brand-aws" style="color:#78350f; font-size:22px;" aria-hidden="true"></i>
+        </div>
+        <div class="cert-name">AWS Advanced Networking</div>
+        <div class="cert-org">Amazon Web Services</div>
+        <div class="cert-date">Mars 2024</div>
+        <span class="cert-status valid">Valide</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#ede9fe;">
+          <i class="ti ti-route" style="color:#3b0764; font-size:22px;" aria-hidden="true"></i>
+        </div>
+        <div class="cert-name">JNCIP-EN</div>
+        <div class="cert-org">Juniper Networks</div>
+        <div class="cert-date">Sept. 2023</div>
+        <span class="cert-status valid">Valide</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-logo" style="background:#fef3c7;">
+          <i class="ti ti-certificate" style="color:#78350f; font-size:22px;" aria-hidden="true"></i>
+        </div>
+        <div class="cert-name">CCIE Enterprise — Written</div>
+        <div class="cert-org">Cisco</div>
+        <div class="cert-date">En cours — 2025</div>
+        <span class="cert-status inprogress">En préparation</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE — CV
+══════════════════════════════════════════ -->
+<div class="page" id="page-cv">
+  <div class="container">
+    <h2 class="section-title">Curriculum vitae</h2>
+    <p class="section-sub">Aperçu — remplacer le bouton de téléchargement par le lien vers votre PDF</p>
+
+    <div class="cv-wrapper">
+
+      <div class="cv-header">
+        <div class="cv-name">Votre Prénom NOM</div>
+        <div class="cv-role-line">Ingénieur Réseaux &amp; Sécurité — CCNP Enterprise / Security · NSE 4</div>
+        <div class="cv-contact">
+          <span class="cv-contact-item">
+            <i class="ti ti-mail" aria-hidden="true"></i> prenom.nom@email.com
+          </span>
+          <span class="cv-contact-item">
+            <i class="ti ti-phone" aria-hidden="true"></i> +33 6 XX XX XX XX
+          </span>
+          <span class="cv-contact-item">
+            <i class="ti ti-map-pin" aria-hidden="true"></i> Paris, France
+          </span>
+          <span class="cv-contact-item">
+            <i class="ti ti-brand-linkedin" aria-hidden="true"></i> linkedin.com/in/prenom-nom
+          </span>
+        </div>
+      </div>
+
+      <div class="cv-body">
+
+        <div class="cv-col">
+          <div class="cv-section-head">Expérience</div>
+
+          <div class="cv-entry">
+            <div class="cv-entry-title">Ingénieur Réseaux Senior</div>
+            <div class="cv-entry-sub">ESN Réseau &amp; Cloud · 2022 – présent</div>
+            <div class="cv-entry-desc">Projets SD-WAN, sécurité périmétrique, datacenter fabric. Référent technique équipe de 8 ingénieurs.</div>
+          </div>
+
+          <div class="cv-entry">
+            <div class="cv-entry-title">Admin. Réseaux &amp; Sécurité</div>
+            <div class="cv-entry-sub">Groupe Hospitalier · 2019 – 2022</div>
+            <div class="cv-entry-desc">5 sites, 4 000 utilisateurs. Palo Alto NGFW, segmentation biomed/IT, MCO 24/7, conformité HDS.</div>
+          </div>
+
+          <div class="cv-entry">
+            <div class="cv-entry-title">Technicien Réseaux N2</div>
+            <div class="cv-entry-sub">Opérateur Télécom · 2017 – 2019</div>
+            <div class="cv-entry-desc">Support N2 xDSL/Fibre, Cisco IOS/IOS-XE, gestion incidents majeurs, astreintes.</div>
+          </div>
+
+          <div class="cv-section-head" style="margin-top:1.25rem;">Formation</div>
+
+          <div class="cv-entry">
+            <div class="cv-entry-title">Licence Pro Réseaux &amp; Télécom</div>
+            <div class="cv-entry-sub">Université · 2017</div>
+          </div>
+
+          <div class="cv-entry">
+            <div class="cv-entry-title">BTS SIO option SISR</div>
+            <div class="cv-entry-sub">Lycée technique · 2016 — Mention bien</div>
+          </div>
+        </div>
+
+        <div class="cv-col">
+          <div class="cv-section-head">Certifications clés</div>
+          <div class="cv-entry">
+            <div class="cv-entry-desc">
+              CCNP Enterprise · CCNP Security · NSE 4 FortiGate ·
+              AWS Advanced Networking · JNCIP-EN · CCIE Enterprise (en cours)
+            </div>
+          </div>
+
+          <div class="cv-section-head" style="margin-top:1.25rem;">Compétences techniques</div>
+          <div class="cv-skill-list">
+            <span class="cv-skill-tag">Cisco IOS/IOS-XE</span>
+            <span class="cv-skill-tag">BGP / OSPF / EIGRP</span>
+            <span class="cv-skill-tag">SD-WAN Viptela</span>
+            <span class="cv-skill-tag">MPLS / VRF</span>
+            <span class="cv-skill-tag">Fortinet FortiGate</span>
+            <span class="cv-skill-tag">Palo Alto NGFW</span>
+            <span class="cv-skill-tag">Juniper QFX / JunOS</span>
+            <span class="cv-skill-tag">EVPN / VXLAN</span>
+            <span class="cv-skill-tag">VPN IPsec / SSL / ZTNA</span>
+            <span class="cv-skill-tag">Cisco ISE / 802.1X</span>
+            <span class="cv-skill-tag">Zabbix / Grafana</span>
+            <span class="cv-skill-tag">SNMP / NetFlow</span>
+            <span class="cv-skill-tag">Ansible (network)</span>
+            <span class="cv-skill-tag">Python / Netmiko</span>
+            <span class="cv-skill-tag">AWS VPC / Direct Connect</span>
+            <span class="cv-skill-tag">Wireshark / tcpdump</span>
+          </div>
+
+          <div class="cv-section-head" style="margin-top:1.25rem;">Langues</div>
+          <div class="cv-entry">
+            <div class="cv-entry-desc">
+              Français — Natif &nbsp;·&nbsp; Anglais — Courant (technique, certifications)
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cv-footer">
+        <a class="btn-primary" href="cv.pdf" download>
+          <i class="ti ti-download" aria-hidden="true"></i> Télécharger le CV (PDF)
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE — COMPÉTENCES
+══════════════════════════════════════════ -->
+<div class="page" id="page-skills">
+  <div class="container">
+    <h2 class="section-title">Tableau de compétences</h2>
+    <p class="section-sub">Filtrer par domaine technique</p>
+
+    <div class="skill-filters">
+      <button class="skill-filter-btn active" onclick="filterSkills('all', this)">Tout</button>
+      <button class="skill-filter-btn" onclick="filterSkills('routing', this)">Routage &amp; Switching</button>
+      <button class="skill-filter-btn" onclick="filterSkills('secu', this)">Sécurité</button>
+      <button class="skill-filter-btn" onclick="filterSkills('dc', this)">Datacenter</button>
+      <button class="skill-filter-btn" onclick="filterSkills('super', this)">Supervision</button>
+      <button class="skill-filter-btn" onclick="filterSkills('auto', this)">Automatisation</button>
+      <button class="skill-filter-btn" onclick="filterSkills('cloud', this)">Cloud</button>
     </div>
 
-    <script>
-        // === 1. AUDIO SYNTHETIQUE (Effets sonores) ===
-        // Utilise l'API Web Audio pour générer des sons sans fichiers externes
-        let audioCtx;
-        function initAudio() { if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-        document.addEventListener('click', initAudio, { once: true }); // Initialisation au premier clic (sécurité navigateur)
+    <table class="skills-table">
+      <thead>
+        <tr>
+          <th>Technologie / Protocole</th>
+          <th>Domaine</th>
+          <th>Niveau</th>
+          <th>Maîtrise</th>
+          <th>Expérience</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="visible" data-cat="routing">
+          <td><div class="skill-name">Cisco IOS / IOS-XE</div></td>
+          <td><span class="tag blue">Routage</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:95%"></div></div></td>
+          <td><div class="skill-exp">7 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="routing">
+          <td><div class="skill-name">BGP / OSPF / EIGRP</div></td>
+          <td><span class="tag blue">Routage</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:92%"></div></div></td>
+          <td><div class="skill-exp">7 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="routing">
+          <td><div class="skill-name">SD-WAN Cisco Viptela</div></td>
+          <td><span class="tag blue">WAN</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:85%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="routing">
+          <td><div class="skill-name">MPLS / VRF / VPLS</div></td>
+          <td><span class="tag blue">WAN</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></td>
+          <td><div class="skill-exp">5 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="routing">
+          <td><div class="skill-name">Spanning Tree / RSTP / MSTP</div></td>
+          <td><span class="tag blue">Switching</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
+          <td><div class="skill-exp">7 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="secu">
+          <td><div class="skill-name">Fortinet FortiGate NGFW</div></td>
+          <td><span class="tag green">Firewall</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
+          <td><div class="skill-exp">5 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="secu">
+          <td><div class="skill-name">Palo Alto NGFW / Panorama</div></td>
+          <td><span class="tag green">Firewall</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:82%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="secu">
+          <td><div class="skill-name">VPN IPsec / SSL / ZTNA</div></td>
+          <td><span class="tag green">Sécurité</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
+          <td><div class="skill-exp">6 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="secu">
+          <td><div class="skill-name">Cisco ISE / 802.1X / NAC</div></td>
+          <td><span class="tag green">Sécurité</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="dc">
+          <td><div class="skill-name">Juniper QFX / EX</div></td>
+          <td><span class="tag">Datacenter</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="dc">
+          <td><div class="skill-name">EVPN / VXLAN</div></td>
+          <td><span class="tag">Datacenter</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="dc">
+          <td><div class="skill-name">Architecture Spine-Leaf</div></td>
+          <td><span class="tag">Datacenter</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:75%"></div></div></td>
+          <td><div class="skill-exp">2 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="super">
+          <td><div class="skill-name">Zabbix</div></td>
+          <td><span class="tag amber">Supervision</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:88%"></div></div></td>
+          <td><div class="skill-exp">5 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="super">
+          <td><div class="skill-name">Grafana / InfluxDB</div></td>
+          <td><span class="tag amber">Supervision</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:82%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="super">
+          <td><div class="skill-name">SNMP / NetFlow / sFlow</div></td>
+          <td><span class="tag amber">Supervision</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
+          <td><div class="skill-exp">6 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="super">
+          <td><div class="skill-name">Wireshark / tcpdump</div></td>
+          <td><span class="tag amber">Analyse</span></td>
+          <td><div class="skill-level">Expert</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:88%"></div></div></td>
+          <td><div class="skill-exp">7 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="auto">
+          <td><div class="skill-name">Ansible (modules network)</div></td>
+          <td><span class="tag">Automatisation</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="auto">
+          <td><div class="skill-name">Python / Netmiko / NAPALM</div></td>
+          <td><span class="tag">Automatisation</span></td>
+          <td><div class="skill-level">Intermédiaire</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:62%"></div></div></td>
+          <td><div class="skill-exp">2 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="auto">
+          <td><div class="skill-name">Terraform (réseau)</div></td>
+          <td><span class="tag">IaC</span></td>
+          <td><div class="skill-level">Intermédiaire</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:55%"></div></div></td>
+          <td><div class="skill-exp">1 an</div></td>
+        </tr>
+        <tr class="visible" data-cat="cloud">
+          <td><div class="skill-name">AWS VPC / Transit Gateway</div></td>
+          <td><span class="tag blue">Cloud</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></td>
+          <td><div class="skill-exp">3 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="cloud">
+          <td><div class="skill-name">AWS Direct Connect</div></td>
+          <td><span class="tag blue">Cloud</span></td>
+          <td><div class="skill-level">Avancé</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:75%"></div></div></td>
+          <td><div class="skill-exp">2 ans</div></td>
+        </tr>
+        <tr class="visible" data-cat="cloud">
+          <td><div class="skill-name">Azure ExpressRoute</div></td>
+          <td><span class="tag blue">Cloud</span></td>
+          <td><div class="skill-level">Intermédiaire</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:60%"></div></div></td>
+          <td><div class="skill-exp">1 an</div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-        function playSound(type) {
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+<footer class="footer">
+  <p>© 2025 Votre Prénom NOM — Ingénieur Réseaux &amp; Infrastructures</p>
+</footer>
 
-            if (type === 'hover') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(isOverclocked ? 1200 : 800, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-            } else if (type === 'click') {
-                osc.type = 'square'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } else if (type === 'type') {
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(1500 + Math.random()*500, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.005, audioCtx.currentTime);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.02);
-            }
-        }
-        // Attache les sons aux éléments ayant les classes 'sound-hover' et 'sound-click'
-        document.querySelectorAll('.sound-hover').forEach(el => el.addEventListener('mouseenter', () => playSound('hover')));
-        document.querySelectorAll('.sound-click').forEach(el => el.addEventListener('mousedown', () => playSound('click')));
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const btns = document.querySelectorAll('.nav-link');
+    const labels = ['hero','projects','proofs','certs','cv','skills'];
+    const idx = labels.indexOf(id);
+    if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const nl = document.getElementById('navLinks');
+    if (nl.classList.contains('open')) nl.classList.remove('open');
+  }
 
-        // === 2. PROTOCOLE OVERCLOCK (Bouton HUD) ===
-        // Change le thème CSS et accélère les particules du canvas
-        let isOverclocked = false;
-        let particleSpeedMultiplier = 1;
-        const btnOverclock = document.getElementById('btn-overclock');
-        const syncStatus = document.getElementById('sync-status');
-        
-        btnOverclock.addEventListener('click', () => {
-            isOverclocked = !isOverclocked;
-            document.body.classList.toggle('cyber-mode');
-            
-            if(isOverclocked) {
-                btnOverclock.innerText = "SYS.NORMAL()";
-                btnOverclock.style.background = "var(--red-marianne)";
-                btnOverclock.style.borderColor = "var(--red-marianne)";
-                syncStatus.innerText = "OVERRIDE"; syncStatus.style.color = "#ff003c";
-                particleSpeedMultiplier = 4; // Accélère l'animation réseau
-                playSound('click');
-            } else {
-                btnOverclock.innerText = "Overclock Mode";
-                btnOverclock.style.background = "transparent";
-                btnOverclock.style.borderColor = "var(--blue-france)";
-                syncStatus.innerText = "ACTIVE"; syncStatus.style.color = "var(--blue-france)";
-                particleSpeedMultiplier = 1; // Vitesse normale
-            }
-        });
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
 
-        // Tracking de la souris
-        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-        let smoothMouseX = mouseX, smoothMouseY = mouseY;
-        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+  function filterSkills(cat, btn) {
+    document.querySelectorAll('.skill-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.skills-table tbody tr').forEach(row => {
+      if (cat === 'all' || row.dataset.cat === cat) {
+        row.classList.add('visible');
+      } else {
+        row.classList.remove('visible');
+      }
+    });
+  }
+</script>
 
-        // === 3. TOILE IT (CANVAS) : GESTION DES NOEUDS RESEAUX ===
-        const canvas = document.getElementById('network-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height, hubs = [], trail = [];
-
-        function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
-        // Classe définissant un point du réseau
-        class NetworkHub {
-            constructor() {
-                this.x = Math.random() * width; this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.7; this.vy = (Math.random() - 0.5) * 0.7;
-                this.coreSize = Math.random() * 2 + 1.5; // Taille du point central
-                this.orbitRadius = Math.random() * 12 + 8; // Rayon de l'orbite
-                this.satellites = Math.floor(Math.random() * 3) + 1; // Nombre de paquets tournants
-                this.angle = Math.random() * Math.PI * 2;
-                this.rotationSpeed = (Math.random() - 0.5) * 0.04;
-            }
-            update() {
-                this.x += this.vx * particleSpeedMultiplier; this.y += this.vy * particleSpeedMultiplier;
-                // Rebond sur les bords
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-                this.angle += this.rotationSpeed * particleSpeedMultiplier;
-            }
-            draw() {
-                const colorMain = isOverclocked ? '#00ff00' : '#000091';
-                const colorAccent = isOverclocked ? '#ffffff' : '#E1000F';
-                
-                // Dessin du coeur
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.coreSize, 0, Math.PI * 2);
-                ctx.fillStyle = colorMain; ctx.shadowBlur = 8; ctx.shadowColor = colorMain;
-                ctx.fill(); ctx.shadowBlur = 0;
-
-                // Dessin de l'orbite
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.orbitRadius, 0, Math.PI * 2);
-                ctx.strokeStyle = isOverclocked ? 'rgba(0, 255, 0, 0.15)' : 'rgba(0, 0, 145, 0.15)';
-                ctx.lineWidth = 1; ctx.stroke();
-
-                // Dessin des satellites (données)
-                for(let i = 0; i < this.satellites; i++) {
-                    const satAngle = this.angle + (i * (Math.PI * 2 / this.satellites));
-                    const satX = this.x + Math.cos(satAngle) * this.orbitRadius;
-                    const satY = this.y + Math.sin(satAngle) * this.orbitRadius;
-                    
-                    ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.lineTo(satX, satY);
-                    ctx.strokeStyle = isOverclocked ? 'rgba(0, 255, 0, 0.4)' : 'rgba(0, 0, 145, 0.4)';
-                    ctx.lineWidth = 1; ctx.stroke();
-
-                    ctx.beginPath(); ctx.arc(satX, satY, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = colorAccent; ctx.fill();
-                }
-            }
-        }
-        
-        // MODIFICATION : Change "45" pour augmenter ou réduire la densité du réseau de fond
-        for(let i = 0; i < 45; i++) hubs.push(new NetworkHub());
-
-        function drawNetwork() {
-            ctx.clearRect(0, 0, width, height);
-            for (let i = 0; i < hubs.length; i++) {
-                const h1 = hubs[i]; h1.update(); h1.draw();
-                // Connexions entre les hubs s'ils sont proches
-                for (let j = i + 1; j < hubs.length; j++) {
-                    const h2 = hubs[j];
-                    const dist = Math.hypot(h1.x - h2.x, h1.y - h2.y);
-                    if (dist < 150) { // Distance max de liaison
-                        ctx.beginPath(); ctx.moveTo(h1.x, h1.y); ctx.lineTo(h2.x, h2.y);
-                        const opacity = 0.6 - (dist / 150);
-                        ctx.strokeStyle = isOverclocked ? `rgba(0, 255, 0, ${opacity})` : `rgba(0, 0, 145, ${opacity})`;
-                        ctx.lineWidth = 1.2; ctx.stroke();
-                    }
-                }
-                // Connexion du hub à la souris
-                const distMouse = Math.hypot(h1.x - mouseX, h1.y - mouseY);
-                if (distMouse < 200) {
-                    ctx.beginPath(); ctx.moveTo(h1.x, h1.y); ctx.lineTo(mouseX, mouseY);
-                    const opacity = 0.8 - (distMouse / 200);
-                    ctx.strokeStyle = isOverclocked ? `rgba(255, 0, 60, ${opacity})` : `rgba(225, 0, 15, ${opacity})`; 
-                    ctx.lineWidth = 1.5; ctx.stroke();
-                }
-            }
-
-            // Dessin du sillage (trail) de la souris
-            trail.push({x: mouseX, y: mouseY, alpha: 1});
-            if (trail.length > 30) trail.shift();
-            if (trail.length > 1) {
-                ctx.beginPath(); ctx.moveTo(trail[0].x, trail[0].y);
-                for (let i = 1; i < trail.length; i++) {
-                    trail[i].alpha -= 0.03;
-                    if (trail[i].alpha > 0) ctx.lineTo(trail[i].x, trail[i].y);
-                }
-                ctx.strokeStyle = isOverclocked ? `rgba(0, 255, 0, 0.4)` : `rgba(206, 206, 206, 0.6)`;
-                ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke();
-            }
-        }
-
-        // === 4. EFFET SCRAMBLE (Décodage de texte au survol) ===
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
-        document.querySelectorAll('.scramble').forEach(el => {
-            el.addEventListener('mouseenter', event => {
-                let iterations = 0; const originalText = event.target.dataset.value;
-                const interval = setInterval(() => {
-                    event.target.innerText = originalText.split("")
-                        .map((letter, index) => {
-                            if(index < iterations || letter === " ") return originalText[index];
-                            return letters[Math.floor(Math.random() * letters.length)];
-                        }).join("");
-                    if(iterations >= originalText.length) clearInterval(interval);
-                    iterations += 1 / 2;
-                }, 30);
-            });
-        });
-
-        // === 5. EFFET TYPEWRITER (Le bloc de code JSON de la Page 2) ===
-        // MODIFICATION : C'est ici que tu modifies le contenu de tes compétences. 
-        // Attention à bien garder les balises <span> pour garder les couleurs du code !
-        const codeSnippet = `{\n  <span class="json-key">"developer_profile"</span><span class="json-punct">:</span> {\n    <span class="json-key">"role"</span><span class="json-punct">:</span> <span class="json-string">"Fullstack Architect"</span><span class="json-punct">,</span>\n    <span class="json-key">"core_stack"</span><span class="json-punct">:</span> [\n      <span class="json-string">"TypeScript / Node.js"</span><span class="json-punct">,</span>\n      <span class="json-string">"React / Next.js"</span><span class="json-punct">,</span>\n      <span class="json-string">"Python / Go"</span>\n    ]<span class="json-punct">,</span>\n    <span class="json-key">"infrastructure"</span><span class="json-punct">:</span> [<span class="json-string">"Docker"</span><span class="json-punct">,</span> <span class="json-string">"Kubernetes"</span><span class="json-punct">,</span> <span class="json-string">"AWS"</span>]\n  }\n}`;
-        
-        const typeContainer = document.getElementById('typewriter-container');
-        let typeStarted = false;
-
-        function typeWriter() {
-            typeContainer.classList.add('typing-cursor');
-            let i = 0; typeContainer.innerHTML = '';
-            function type() {
-                if (i < codeSnippet.length) {
-                    if(codeSnippet.charAt(i) === '<') { // Protège les balises HTML lors de l'écriture
-                        let tag = "";
-                        while(codeSnippet.charAt(i) !== '>' && i < codeSnippet.length) { tag += codeSnippet.charAt(i); i++; }
-                        tag += '>'; i++; typeContainer.innerHTML += tag;
-                    } else {
-                        typeContainer.innerHTML += codeSnippet.charAt(i); i++;
-                        if(Math.random() > 0.6) playSound('type');
-                    }
-                    setTimeout(type, isOverclocked ? 5 : 15);
-                } else {
-                    typeContainer.classList.remove('typing-cursor'); // Enlève le curseur clignotant à la fin
-                }
-            }
-            type();
-        }
-
-        // === 6. INTERACTIVITÉ VITRINE PROJETS (Page 3) ===
-        // Gère l'affichage du contenu de droite quand on survole un menu à gauche
-        const projectItems = document.querySelectorAll('.project-item');
-        const detailPanes = document.querySelectorAll('.detail-pane');
-
-        projectItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                // Retire la classe 'active' partout
-                projectItems.forEach(p => p.classList.remove('active'));
-                detailPanes.forEach(d => d.classList.remove('active'));
-                
-                // Ajoute la classe 'active' à l'élément survolé et au panneau correspondant
-                item.classList.add('active');
-                document.getElementById(item.getAttribute('data-target')).classList.add('active');
-            });
-        });
-
-        // === 7. BOUTON MAGNÉTIQUE (Page 4) ===
-        // Attire le bouton vers la souris quand on le survole
-        const magneticWrapper = document.querySelector('.magnetic-btn-wrapper');
-        const magneticBtn = document.querySelector('.magnetic-btn');
-        magneticWrapper.addEventListener('mousemove', (e) => {
-            const rect = magneticWrapper.getBoundingClientRect();
-            magneticBtn.style.transform = `translate(${(e.clientX - (rect.left + rect.width / 2)) / 2.5}px, ${(e.clientY - (rect.top + rect.height / 2)) / 2.5}px)`;
-        });
-        magneticWrapper.addEventListener('mouseleave', () => { magneticBtn.style.transform = `translate(0px, 0px)`; });
-
-        // === 8. MOTEUR DE RENDU PRINCIPAL (Scroll, FPS, Parallaxe, Glitch) ===
-        const track = document.getElementById('track');
-        const progressIndicator = document.getElementById('progress');
-        const parallaxElements = document.querySelectorAll('.parallax-el');
-        const cursor = document.getElementById('cursor');
-        const mainTitle = document.getElementById('main-title');
-        
-        let currentScroll = 0, targetScroll = 0, lastTime = performance.now(), frames = 0, fps = 0;
-        const ease = 0.08; // Fluidité du scroll (plus bas = plus fluide mais plus lent)
-
-        window.addEventListener('scroll', () => { targetScroll = window.scrollY; });
-
-        function renderEngine(time) {
-            // Calcul des FPS pour le HUD
-            frames++;
-            if (time > lastTime + 1000) {
-                fps = Math.round((frames * 1000) / (time - lastTime));
-                document.getElementById('hud-fps').innerText = String(fps).padStart(2, '0');
-                lastTime = time; frames = 0;
-            }
-
-            // Calcul du LERP (Linear Interpolation) pour un scroll adouci
-            const prevScroll = currentScroll;
-            currentScroll += (targetScroll - currentScroll) * ease;
-            
-            // Calcul de la vélocité (vitesse de scroll)
-            const currentVelocity = Math.abs(currentScroll - prevScroll);
-            document.getElementById('hud-vel').innerText = currentVelocity.toFixed(2).padStart(5, '0');
-            
-            // Déclenche le glitch sur le titre si on scroll vite
-            if (currentVelocity > 40) mainTitle.classList.add('glitching');
-            else mainTitle.classList.remove('glitching');
-            
-            // Conversion du Scroll Vertical en Scroll Horizontal
-            const maxScroll = document.body.scrollHeight - window.innerHeight;
-            
-            if (maxScroll > 0) {
-                const scrollFraction = currentScroll / maxScroll;
-                const translateX = scrollFraction * (track.scrollWidth - window.innerWidth);
-                
-                track.style.transform = `translate3d(-${translateX}px, 0, 0)`;
-                progressIndicator.innerText = `[SYS_LOAD: ${Math.min(Math.max(Math.round(scrollFraction * 100), 0), 100)}%]`;
-
-                // Déclenche l'animation Typewriter quand on arrive sur la page 2
-                if (scrollFraction > 0.15 && !typeStarted) { typeStarted = true; typeWriter(); }
-
-                // Applique l'effet de parallaxe sur les éléments balisés
-                parallaxElements.forEach(el => {
-                    const speed = parseFloat(el.getAttribute('data-speed'));
-                    el.style.transform = `translate3d(${translateX * speed}px, 0, 0)`;
-                });
-            }
-
-            // Interpolation pour le curseur (Léger retard fluide par rapport à la souris)
-            if (!window.matchMedia("(pointer: coarse)").matches) { // Désactivé sur mobile/tactile
-                smoothMouseX += (mouseX - smoothMouseX) * 0.3; smoothMouseY += (mouseY - smoothMouseY) * 0.3;
-                cursor.style.transform = `translate(${smoothMouseX}px, ${smoothMouseY}px)`;
-            }
-
-            drawNetwork(); // Redessine le canvas en boucle
-            requestAnimationFrame(renderEngine); // Boucle infinie optimisée
-        }
-        requestAnimationFrame(renderEngine); // Lancement du moteur
-
-        // Changement d'état du curseur au survol d'éléments interactifs
-        document.querySelectorAll('.hoverable, a, button, .code-block, .showcase-container, .contact-node').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-    </script>
 </body>
 </html>
