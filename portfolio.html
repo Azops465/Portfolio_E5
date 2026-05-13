@@ -6,294 +6,234 @@
 <title>Portfolio BTS SIO — Pascal GRIFFON</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.19.0/iconfont/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --navy: #0d1f35;
-    --navy2: #16324f;
     --accent: #0ea5e9;
     --accent2: #0284c7;
-    --accent-bg: #e0f2fe;
-    --accent-text: #0c4a6e;
-    --green: #059669;
-    --green-bg: #d1fae5;
-    --green-text: #064e3b;
     --text: #0f172a;
     --text2: #475569;
     --text3: #94a3b8;
     --border: rgba(15, 27, 45, 0.12);
     --surface: #f8fafc;
     --white: #ffffff;
+    --green: #059669;
   }
 
-  html { scroll-behavior: smooth; }
   body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; }
-
-  /* ── NAV ── */
-  .nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2.5rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(255,255,255,0.94);
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
-  .logo-icon { width: 32px; height: 32px; background: var(--navy); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-  .logo-icon i { font-size: 17px; color: #38bdf8; }
-  .logo-text { font-size: 16px; font-weight: 500; }
-  .nav-links { display: flex; gap: 5px; }
-  .nav-link { font-size: 13px; font-weight: 500; color: var(--text2); padding: 8px 15px; border-radius: 8px; cursor: pointer; border: none; background: none; transition: 0.2s; font-family: inherit; }
-  .nav-link:hover, .nav-link.active { background: var(--navy); color: var(--white); }
-
-  /* ── LAYOUT ── */
-  .page { display: none; min-height: 80vh; }
-  .page.active { display: block; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
-  .section-header { margin-bottom: 2.5rem; }
-  .section-title { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--navy); }
-  .section-sub { font-size: 14px; color: var(--text3); }
-
-  /* ── HERO ── */
-  .hero { text-align: center; padding: 5rem 2rem; background: radial-gradient(circle at top right, #f0f9ff, transparent); }
-  .hero-name { font-family: 'DM Serif Display', serif; font-size: 56px; color: var(--navy); margin-bottom: 1rem; }
-  .hero-role { font-size: 20px; color: var(--text2); margin-bottom: 2.5rem; }
   
+  /* NAVIGATION */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem; border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 100;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-link { 
+    font-size: 13px; font-weight: 500; color: var(--text2); padding: 8px 16px; 
+    border-radius: 8px; cursor: pointer; border: none; background: none; transition: 0.2s;
+  }
+  .nav-link:hover, .nav-link.active { background: var(--navy); color: white; }
+
+  /* PAGES */
+  .page { display: none; padding-bottom: 5rem; }
+  .page.active { display: block; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 6rem 2rem; }
+  .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 8vw, 64px); color: var(--navy); margin-bottom: 1rem; }
+  .hero-role { font-size: 20px; color: var(--text2); margin-bottom: 3rem; }
   .btn-cv {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--navy);
-    color: white;
-    padding: 14px 28px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.2s;
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--navy); color: white; padding: 16px 32px;
+    border-radius: 14px; text-decoration: none; font-weight: 600; transition: 0.2s;
   }
-  .btn-cv:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(13,31,53,0.2); background: var(--accent2); }
+  .btn-cv:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); background: var(--accent2); }
 
-  /* ── PROJECTS ── */
-  .category-title { 
-    font-size: 14px; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    color: var(--accent2); 
-    margin: 2rem 0 1rem;
-    padding-left: 10px;
-    border-left: 3px solid var(--accent2);
+  /* GRILLE REALISATIONS */
+  .category-header { 
+    margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--surface);
+    color: var(--navy); font-family: 'DM Serif Display', serif; font-size: 24px;
   }
-  .grid-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-  .card { 
-    border: 1px solid var(--border); 
-    border-radius: 12px; 
-    padding: 1.5rem; 
-    text-decoration: none; 
-    color: inherit; 
-    transition: 0.2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  .grid-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .card {
+    border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;
+    text-decoration: none; color: inherit; transition: 0.2s; background: var(--white);
   }
-  .card:hover { border-color: var(--accent2); background: var(--surface); transform: translateY(-3px); }
-  .card-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: var(--navy); }
-  .card-desc { font-size: 13px; color: var(--text2); margin-bottom: 15px; flex-grow: 1; }
-  .card-footer { font-size: 11px; color: var(--accent2); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+  .card:hover { border-color: var(--accent2); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+  .card-title { font-weight: 600; margin-bottom: 10px; color: var(--navy); display: flex; justify-content: space-between; }
+  .card-desc { font-size: 13px; color: var(--text2); margin-bottom: 15px; }
+  .card-link { font-size: 12px; color: var(--accent2); font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
-  /* ── TABLEAU E4 ── */
-  .table-container { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
-  table { width: 100%; border-collapse: collapse; font-size: 12px; background: white; }
-  th { background: var(--navy); color: white; padding: 12px; text-align: left; border: 1px solid #2d3e50; }
+  /* TABLEAU E4 */
+  .table-scroll { overflow-x: auto; margin-top: 2rem; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; }
+  th { background: var(--navy); color: white; padding: 12px; text-align: left; border: 1px solid #1e293b; }
   td { padding: 10px; border: 1px solid var(--border); text-align: center; }
-  td:first-child { text-align: left; font-weight: 500; background: var(--surface); width: 350px; }
-  .check { color: var(--green); font-weight: bold; font-size: 16px; }
+  td.task-name { text-align: left; font-weight: 500; background: var(--surface); width: 40%; }
+  .x-mark { color: var(--green); font-weight: bold; font-size: 16px; }
 
-  @media (max-width: 768px) {
-    .hero-name { font-size: 38px; }
-    .grid-projects { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 768px) { .nav { padding: 1rem; } .nav-links { display: none; } }
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <a class="logo" href="#" onclick="showPage('hero');return false;">
-    <div class="logo-icon"><i class="ti ti-binary"></i></div>
-    <span class="logo-text">Pascal GRIFFON</span>
-  </a>
+  <a class="logo" href="#" onclick="showPage('hero')">Pascal GRIFFON</a>
   <div class="nav-links">
     <button class="nav-link active" onclick="showPage('hero')">Accueil</button>
     <button class="nav-link" onclick="showPage('projects')">Réalisations</button>
-    <button class="nav-link" onclick="showPage('table')">Synthèse E4</button>
-    <button class="nav-link" onclick="showPage('certs')">Certs</button>
+    <button class="nav-link" onclick="showPage('e4')">Synthèse E4</button>
+    <button class="nav-link" onclick="showPage('certs')">Certifications</button>
   </div>
 </nav>
 
 <div class="page active" id="page-hero">
-  <section class="hero">
+  <div class="hero">
     <h1 class="hero-name">Pascal GRIFFON</h1>
-    <p class="hero-role">Étudiant en BTS SIO — Option SISR<br><small>Expertise Systèmes, Réseaux et Cybersécurité</small></p>
+    <p class="hero-role">Étudiant BTS SIO — Option SISR<br><small>Solutions d'Infrastructure, Systèmes et Réseaux</small></p>
     <a href="CV_Pascal_GRIFFON.pdf" target="_blank" class="btn-cv">
-      <i class="ti ti-file-download"></i> Consulter mon CV
+      <i class="ti ti-download"></i> Télécharger mon CV (PDF)
     </a>
-  </section>
+  </div>
 </div>
 
 <div class="page" id="page-projects">
   <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Mes Réalisations Professionnelles</h2>
-      <p class="section-sub">Cliquez sur un projet pour ouvrir la preuve associée</p>
+    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Portefeuille de Compétences</h2>
+    <p class="text2">Cliquez sur une réalisation pour ouvrir la preuve technique dans un nouvel onglet.</p>
+
+    <h3 class="category-header">En cours de formation</h3>
+    <div class="grid-projects">
+      <script>
+        const formations = [
+          ["Infrastructure de contexte", "Mise en place de l'architecture réseau complète."],
+          ["Serveur GLPI", "Gestion de parc informatique et helpdesk."],
+          ["Serveur de log rsyslog", "Centralisation et analyse des journaux système."],
+          ["Supervision Zabbix", "Monitoring des équipements et alertes."],
+          ["Serveur de fichiers", "Partage de ressources et gestion des droits."],
+          ["Serveur Proxy", "Filtrage web et sécurisation des accès."],
+          ["Messagerie", "Installation d'une solution de mail interne."],
+          ["Annuaire OpenLDAP", "Gestion centralisée des utilisateurs."]
+        ];
+        formations.forEach(p => document.write(`
+          <a href="preuves/${p[0].toLowerCase().replace(/ /g,'_')}.pdf" target="_blank" class="card">
+            <div class="card-title">${p[0]} <i class="ti ti-external-link"></i></div>
+            <p class="card-desc">${p[1]}</p>
+            <div class="card-link">Consulter la preuve</div>
+          </a>
+        `));
+      </script>
     </div>
 
-    <h3 class="category-title">Réalisations en formation</h3>
+    <h3 class="category-header">Stage 1ère Année</h3>
     <div class="grid-projects">
-      <a href="preuves/infra_contexte.pdf" target="_blank" class="card">
-        <div class="card-title">Infrastructure de contexte</div>
-        <div class="card-desc">Mise en œuvre d'une infrastructure réseau complète simulant un environnement d'entreprise.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-      <a href="preuves/glpi.pdf" target="_blank" class="card">
-        <div class="card-title">Serveur GLPI</div>
-        <div class="card-desc">Installation et configuration pour la gestion de parc et helpdesk.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-      <a href="preuves/rsyslog.pdf" target="_blank" class="card">
-        <div class="card-title">Serveur de logs rsyslog</div>
-        <div class="card-desc">Centralisation des journaux d'événements pour la sécurité.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-      <a href="preuves/zabbix.pdf" target="_blank" class="card">
-        <div class="card-title">Supervision Zabbix</div>
-        <div class="card-desc">Mise en place de sondes SNMP et monitoring serveur.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
+      <script>
+        const stage1 = [
+          ["Sauvegarde Robocopy", "Automatisation des sauvegardes locales."],
+          ["Masterisation de PC", "Déploiement d'images système via réseau."],
+          ["Serveur Grafana", "Visualisation de données métriques."],
+          ["Sauvegarde Veeam", "Mise en place de plans de sauvegarde VM."],
+          ["Brassage réseaux", "Organisation et câblage de baies informatiques."],
+          ["Clichés instantanés", "Protection des données utilisateurs."],
+          ["Installation NAS", "Stockage réseau sécurisé."],
+          ["Configuration Nagios", "Supervision Open Source."]
+        ];
+        stage1.forEach(p => document.write(`
+          <a href="preuves/${p[0].toLowerCase().replace(/ /g,'_')}.pdf" target="_blank" class="card">
+            <div class="card-title">${p[0]} <i class="ti ti-external-link"></i></div>
+            <p class="card-desc">${p[1]}</p>
+            <div class="card-link">Consulter la preuve</div>
+          </a>
+        `));
+      </script>
     </div>
 
-    <h3 class="category-title">Stage 1ère Année</h3>
+    <h3 class="category-header">Stage 2ème Année</h3>
     <div class="grid-projects">
-      <a href="preuves/robocopy.pdf" target="_blank" class="card">
-        <div class="card-title">Sauvegarde Robocopy</div>
-        <div class="card-desc">Automatisation des backups de données critiques.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-      <a href="preuves/mastering.pdf" target="_blank" class="card">
-        <div class="card-title">Masterisation de PC</div>
-        <div class="card-desc">Déploiement d'images système uniformisées sur le parc.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-      <a href="preuves/graphana.pdf" target="_blank" class="card">
-        <div class="card-title">Serveur Grafana</div>
-        <div class="card-desc">Visualisation de données et dashboarding en test.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-      <a href="preuves/veeam.pdf" target="_blank" class="card">
-        <div class="card-title">Sauvegarde Veeam</div>
-        <div class="card-desc">Gestion de la continuité d'activité (PCA/PRA).</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-    </div>
-
-    <h3 class="category-title">Stage 2ème Année</h3>
-    <div class="grid-projects">
-      <a href="preuves/windows_server.pdf" target="_blank" class="card">
-        <div class="card-title">Mise à jour Serveur Windows</div>
-        <div class="card-desc">Migration et application des correctifs de sécurité.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
-      <a href="preuves/ipxe.pdf" target="_blank" class="card">
-        <div class="card-title">Service iPXE Linux</div>
-        <div class="card-desc">Installation d'un service de boot réseau pour déploiement.</div>
-        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
-      </a>
+      <script>
+        const stage2 = [
+          ["Gestion des tickets", "Support utilisateur et résolution d'incidents."],
+          ["MAJ Serveur Windows", "Maintenance et correctifs de sécurité."],
+          ["Système de visio", "Installation de solutions de collaboration."],
+          ["Intranet Web", "Mise à jour de portails internes."],
+          ["Service iPXE Linux", "Boot réseau pour installations automatisées."],
+          ["Référencement Web", "Optimisation de visibilité."]
+        ];
+        stage2.forEach(p => document.write(`
+          <a href="preuves/${p[0].toLowerCase().replace(/ /g,'_')}.pdf" target="_blank" class="card">
+            <div class="card-title">${p[0]} <i class="ti ti-external-link"></i></div>
+            <p class="card-desc">${p[1]}</p>
+            <div class="card-link">Consulter la preuve</div>
+          </a>
+        `));
+      </script>
     </div>
   </div>
 </div>
 
-<div class="page" id="page-table">
+<div class="page" id="page-e4">
   <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Tableau de Synthèse</h2>
-      <p class="section-sub">Épreuve E4 - Session 2026</p>
-    </div>
-
-    <div class="table-container">
+    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Tableau de Synthèse — E4</h2>
+    <div class="table-scroll">
       <table>
         <thead>
           <tr>
-            <th>Réalisations professionnelles</th>
-            <th>C1</th>
-            <th>C2</th>
-            <th>C3</th>
-            <th>C4</th>
-            <th>C5</th>
-            <th>C6</th>
+            <th>Réalisations Professionnelles</th>
+            <th>C1</th><th>C2</th><th>C3</th><th>C4</th><th>C5</th><th>C6</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Infrastructure de contexte</td><td></td><td></td><td></td><td></td><td class="check">X</td><td class="check">X</td></tr>
-          <tr><td>Installation serveur GLPI</td><td></td><td class="check">X</td><td class="check">X</td><td></td><td></td><td class="check">X</td></tr>
-          <tr><td>Serveur rsyslog</td><td></td><td></td><td></td><td></td><td></td><td class="check">X</td></tr>
-          <tr><td>Supervision Zabbix</td><td></td><td class="check">X</td><td></td><td></td><td></td><td class="check">X</td></tr>
-          <tr><td style="color:var(--accent2)">STAGE 1ÈRE ANNÉE</td><td colspan="6"></td></tr>
-          <tr><td>Sauvegarde Robocopy</td><td></td><td class="check">X</td><td></td><td></td><td></td><td></td></tr>
-          <tr><td>Masterisation PC</td><td></td><td></td><td class="check">X</td><td></td><td></td><td class="check">X</td></tr>
-          <tr><td>Grafana</td><td></td><td class="check">X</td><td></td><td></td><td></td><td class="check">X</td></tr>
-          <tr><td>Sauvegarde Veeam</td><td></td><td class="check">X</td><td></td><td></td><td></td><td></td></tr>
-          <tr><td style="color:var(--accent2)">STAGE 2ÈME ANNÉE</td><td colspan="6"></td></tr>
-          <tr><td>Gestion tickets / appels</td><td></td><td></td><td class="check">X</td><td></td><td></td><td></td></tr>
-          <tr><td>MAJ Serveur Windows</td><td></td><td></td><td></td><td></td><td class="check">X</td><td></td></tr>
-          <tr><td>Service iPXE Linux</td><td></td><td></td><td></td><td></td><td></td><td class="check">X</td></tr>
+          <tr><td class="task-name">Infrastructure de contexte</td><td></td><td></td><td></td><td></td><td class="x-mark">X</td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">Serveur GLPI</td><td></td><td class="x-mark">X</td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">Serveur de log rsyslog</td><td></td><td></td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">Supervision Zabbix</td><td></td><td class="x-mark">X</td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">Serveur de fichiers / Proxy / LDAP</td><td></td><td></td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr style="background:#f1f5f9; font-weight:bold;"><td colspan="7">STAGE 1ère ANNÉE</td></tr>
+          <tr><td class="task-name">Sauvegarde Robocopy / Veeam</td><td></td><td class="x-mark">X</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td class="task-name">Masterisation de PC</td><td></td><td></td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">Grafana / Nagios</td><td></td><td class="x-mark">X</td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">Brassage réseaux</td><td></td><td class="x-mark">X</td><td class="x-mark">X</td><td></td><td></td><td></td></tr>
+          <tr><td class="task-name">Installation NAS</td><td></td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td><td class="x-mark">X</td></tr>
+          <tr style="background:#f1f5f9; font-weight:bold;"><td colspan="7">STAGE 2ème ANNÉE</td></tr>
+          <tr><td class="task-name">Gestion tickets / Visio</td><td></td><td></td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">MAJ Serveur Windows</td><td></td><td></td><td></td><td></td><td class="x-mark">X</td><td></td></tr>
+          <tr><td class="task-name">Service iPXE Linux</td><td></td><td></td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
+          <tr><td class="task-name">Intranet / Référencement</td><td></td><td></td><td></td><td class="x-mark">X</td><td></td><td></td></tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size: 11px; margin-top: 15px; color: var(--text3)">
-      C1: Patrimoine | C2: Incidents | C3: Présence en ligne | C4: Mode projet | C5: Service IT | C6: Développement Pro
-    </p>
   </div>
 </div>
 
 <div class="page" id="page-certs">
   <div class="container">
-    <h2 class="section-title">Certifications</h2>
-    <div class="grid-projects" style="margin-top:20px">
-        <div class="card" style="text-align:center">
-            <i class="ti ti-shield-lock" style="font-size:40px; color:var(--accent2)"></i>
-            <div class="card-title">ANSSI - SecNumAcadémie</div>
-            <div class="card-desc">Certification en cybersécurité</div>
-        </div>
-        <div class="card" style="text-align:center">
-            <i class="ti ti-network" style="font-size:40px; color:var(--accent2)"></i>
-            <div class="card-title">Cisco Networking Academy</div>
-            <div class="card-desc">CCNA Introduction to Networks</div>
-        </div>
+    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Certifications</h2>
+    <div class="grid-projects" style="margin-top: 2rem;">
+      <div class="card">
+        <div class="card-title">ANSSI SecNumAcadémie</div>
+        <p class="card-desc">Maîtrise des fondamentaux de la cybersécurité.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Cisco Networking Academy</div>
+        <p class="card-desc">CCNA 1 - Introduction to Networks.</p>
+      </div>
     </div>
   </div>
 </div>
 
-<footer style="text-align: center; padding: 4rem 2rem; color: var(--text3); font-size: 13px;">
-  Pascal GRIFFON — BTS SIO SISR — Session 2026
-</footer>
-
 <script>
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-    
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    
-    // Set active link
-    const links = { 'hero':0, 'projects':1, 'table':2, 'certs':3 };
-    document.querySelectorAll('.nav-link')[links[id]].classList.add('active');
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    event.currentTarget.classList.add('active');
+    window.scrollTo(0,0);
   }
 </script>
 
