@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Pascal GRIFFON</title>
+<title>Portfolio BTS SIO — Pascal GRIFFON</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.19.0/iconfont/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,27 +21,16 @@
     --green: #059669;
     --green-bg: #d1fae5;
     --green-text: #064e3b;
-    --amber: #d97706;
-    --amber-bg: #fef3c7;
-    --amber-text: #78350f;
     --text: #0f172a;
     --text2: #475569;
     --text3: #94a3b8;
     --border: rgba(15, 27, 45, 0.12);
-    --border2: rgba(15, 27, 45, 0.22);
     --surface: #f8fafc;
     --white: #ffffff;
   }
 
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--white);
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+  body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; }
 
   /* ── NAV ── */
   .nav {
@@ -56,211 +45,79 @@
     top: 0;
     z-index: 100;
   }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--text);
-  }
-
-  .logo-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--navy);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .logo-icon { width: 32px; height: 32px; background: var(--navy); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
   .logo-icon i { font-size: 17px; color: #38bdf8; }
   .logo-text { font-size: 16px; font-weight: 500; }
-  .logo-text span { color: var(--accent2); }
-
-  .nav-links {
-    display: flex;
-    gap: 2px;
-  }
-
-  .nav-link {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text2);
-    padding: 6px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    background: none;
-    transition: all 0.15s;
-    font-family: 'Outfit', sans-serif;
-  }
-
-  .nav-link:hover, .nav-link.active {
-    background: var(--surface);
-    color: var(--accent2);
-  }
+  .nav-links { display: flex; gap: 5px; }
+  .nav-link { font-size: 13px; font-weight: 500; color: var(--text2); padding: 8px 15px; border-radius: 8px; cursor: pointer; border: none; background: none; transition: 0.2s; font-family: inherit; }
+  .nav-link:hover, .nav-link.active { background: var(--navy); color: var(--white); }
 
   /* ── LAYOUT ── */
-  .page { display: none; }
+  .page { display: none; min-height: 80vh; }
   .page.active { display: block; }
-
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 3rem 2.5rem;
-  }
-
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 30px;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-
-  .section-sub {
-    font-size: 14px;
-    color: var(--text3);
-    margin-bottom: 2rem;
-  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+  .section-header { margin-bottom: 2.5rem; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--navy); }
+  .section-sub { font-size: 14px; color: var(--text3); }
 
   /* ── HERO ── */
-  .hero { padding: 4rem 2.5rem 3rem; max-width: 960px; margin: 0 auto; }
-
-  .online-badge {
+  .hero { text-align: center; padding: 5rem 2rem; background: radial-gradient(circle at top right, #f0f9ff, transparent); }
+  .hero-name { font-family: 'DM Serif Display', serif; font-size: 56px; color: var(--navy); margin-bottom: 1rem; }
+  .hero-role { font-size: 20px; color: var(--text2); margin-bottom: 2.5rem; }
+  
+  .btn-cv {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--green-text);
-    background: var(--green-bg);
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 1.5rem;
-  }
-
-  .pulse {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-  .hero-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 50px;
-    color: var(--navy);
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-
-  .hero-name em { font-style: italic; color: var(--accent2); }
-
-  .hero-role {
-    font-size: 17px;
-    color: var(--text2);
-    margin-bottom: 2.5rem;
-    max-width: 600px;
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 0;
-    border: 1px solid var(--border);
+    gap: 10px;
+    background: var(--navy);
+    color: white;
+    padding: 14px 28px;
     border-radius: 12px;
-    overflow: hidden;
-    max-width: 520px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
   }
-
-  .stat-item {
-    flex: 1;
-    padding: 1rem;
-    text-align: center;
-    border-right: 1px solid var(--border);
-  }
-
-  .stat-item:last-child { border-right: none; }
-  .stat-num { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--navy); }
-  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; margin-top: 3px; }
+  .btn-cv:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(13,31,53,0.2); background: var(--accent2); }
 
   /* ── PROJECTS ── */
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+  .category-title { 
+    font-size: 14px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    color: var(--accent2); 
+    margin: 2rem 0 1rem;
+    padding-left: 10px;
+    border-left: 3px solid var(--accent2);
   }
-
-  .project-card {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    background: var(--white);
-    transition: all 0.2s;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
-  }
-
-  .project-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(14,165,233,0.1);
-  }
-
-  .card-thumb {
-    height: 120px;
+  .grid-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .card { 
+    border: 1px solid var(--border); 
+    border-radius: 12px; 
+    padding: 1.5rem; 
+    text-decoration: none; 
+    color: inherit; 
+    transition: 0.2s;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--surface);
+    flex-direction: column;
+    justify-content: space-between;
   }
+  .card:hover { border-color: var(--accent2); background: var(--surface); transform: translateY(-3px); }
+  .card-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: var(--navy); }
+  .card-desc { font-size: 13px; color: var(--text2); margin-bottom: 15px; flex-grow: 1; }
+  .card-footer { font-size: 11px; color: var(--accent2); font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
-  .card-thumb i { font-size: 48px; color: var(--accent2); }
-
-  .card-body { padding: 1.5rem; }
-
-  .card-tags { display: flex; gap: 6px; margin-bottom: 10px; }
-
-  .tag {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 6px;
-    background: var(--accent-bg);
-    color: var(--accent-text);
-  }
-
-  .card-name { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
-  .card-desc { font-size: 13px; color: var(--text2); line-height: 1.5; margin-bottom: 12px; }
-  
-  .proof-hint {
-    font-size: 11px;
-    color: var(--accent2);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-weight: 500;
-  }
-
-  /* ── SKILLS TABLE ── */
-  .skills-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-  .skills-table th { text-align: left; font-size: 11px; color: var(--text3); padding: 12px; border-bottom: 1px solid var(--border); text-transform: uppercase; }
-  .skills-table td { padding: 15px 12px; border-bottom: 1px solid var(--border); }
-  .skill-name { font-size: 14px; font-weight: 500; color: var(--navy); }
-  
-  .bar-wrap { width: 100px; height: 6px; background: var(--surface); border-radius: 3px; border: 1px solid var(--border); }
-  .bar-fill { height: 100%; border-radius: 3px; background: var(--accent2); }
+  /* ── TABLEAU E4 ── */
+  .table-container { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; background: white; }
+  th { background: var(--navy); color: white; padding: 12px; text-align: left; border: 1px solid #2d3e50; }
+  td { padding: 10px; border: 1px solid var(--border); text-align: center; }
+  td:first-child { text-align: left; font-weight: 500; background: var(--surface); width: 350px; }
+  .check { color: var(--green); font-weight: bold; font-size: 16px; }
 
   @media (max-width: 768px) {
-    .grid-2 { grid-template-columns: 1fr; }
-    .hero-name { font-size: 36px; }
-    .nav { padding: 1rem; }
+    .hero-name { font-size: 38px; }
+    .grid-projects { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -268,162 +125,173 @@
 
 <nav class="nav">
   <a class="logo" href="#" onclick="showPage('hero');return false;">
-    <div class="logo-icon"><i class="ti ti-terminal-2"></i></div>
-    <span class="logo-text">pascal<span>.</span>sio</span>
+    <div class="logo-icon"><i class="ti ti-binary"></i></div>
+    <span class="logo-text">Pascal GRIFFON</span>
   </a>
   <div class="nav-links">
     <button class="nav-link active" onclick="showPage('hero')">Accueil</button>
-    <button class="nav-link" onclick="showPage('projects')">Portfolio Projets</button>
-    <button class="nav-link" onclick="showPage('certs')">Certifications</button>
-    <button class="nav-link" onclick="showPage('skills')">Compétences</button>
+    <button class="nav-link" onclick="showPage('projects')">Réalisations</button>
+    <button class="nav-link" onclick="showPage('table')">Synthèse E4</button>
+    <button class="nav-link" onclick="showPage('certs')">Certs</button>
   </div>
 </nav>
 
 <div class="page active" id="page-hero">
-  <div class="hero">
-    <div class="online-badge"><span class="pulse"></span> Étudiant BTS SIO option SISR</div>
-    <h1 class="hero-name">Pascal GRIFFON<br><em>Cyber &amp; Réseaux</em></h1>
-    <p class="hero-role">
-      Futur technicien supérieur spécialisé dans les solutions d'infrastructure, systèmes et réseaux. 
-      Passionné par la cybersécurité et l'administration système Linux/Windows.
-    </p>
-    <div class="hero-stats">
-      <div class="stat-item"><div class="stat-num">BTS SIO</div><div class="stat-label">Parcours SISR</div></div>
-      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Stages réalisés</div></div>
-      <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Projets de TP</div></div>
-    </div>
-  </div>
+  <section class="hero">
+    <h1 class="hero-name">Pascal GRIFFON</h1>
+    <p class="hero-role">Étudiant en BTS SIO — Option SISR<br><small>Expertise Systèmes, Réseaux et Cybersécurité</small></p>
+    <a href="CV_Pascal_GRIFFON.pdf" target="_blank" class="btn-cv">
+      <i class="ti ti-file-download"></i> Consulter mon CV
+    </a>
+  </section>
 </div>
 
 <div class="page" id="page-projects">
   <div class="container">
-    <h2 class="section-title">Portfolio de Réalisations</h2>
-    <p class="section-sub">Cliquez sur un projet pour ouvrir la preuve technique (PDF/Doc)</p>
+    <div class="section-header">
+      <h2 class="section-title">Mes Réalisations Professionnelles</h2>
+      <p class="section-sub">Cliquez sur un projet pour ouvrir la preuve associée</p>
+    </div>
 
-    <div class="grid-2">
-      <a href="preuves/installation_glpi.pdf" target="_blank" class="project-card">
-        <div class="card-thumb" style="background:#f0f9ff;"><i class="ti ti-tools"></i></div>
-        <div class="card-body">
-          <div class="card-tags"><span class="tag">MCO</span><span class="tag">Support</span></div>
-          <div class="card-name">Mise en place d'un helpdesk (GLPI)</div>
-          <div class="card-desc">Installation et configuration d'une solution de gestion de parc et de tickets avec inventaire automatisé FusionInventory.</div>
-          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir le compte-rendu</div>
-        </div>
+    <h3 class="category-title">Réalisations en formation</h3>
+    <div class="grid-projects">
+      <a href="preuves/infra_contexte.pdf" target="_blank" class="card">
+        <div class="card-title">Infrastructure de contexte</div>
+        <div class="card-desc">Mise en œuvre d'une infrastructure réseau complète simulant un environnement d'entreprise.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
       </a>
-
-      <a href="preuves/segmentation_vlan.pdf" target="_blank" class="project-card">
-        <div class="card-thumb" style="background:#f0fdf4;"><i class="ti ti-shield-check"></i></div>
-        <div class="card-body">
-          <div class="card-tags"><span class="tag">Réseau</span><span class="tag">Sécurité</span></div>
-          <div class="card-name">Segmentation réseau & VLANs</div>
-          <div class="card-desc">Conception d'une architecture réseau sécurisée avec isolation des services via VLANs et routage inter-VLAN sur switch Cisco.</div>
-          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir la topologie Packet Tracer</div>
-        </div>
+      <a href="preuves/glpi.pdf" target="_blank" class="card">
+        <div class="card-title">Serveur GLPI</div>
+        <div class="card-desc">Installation et configuration pour la gestion de parc et helpdesk.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
       </a>
-
-      <a href="preuves/active_directory.pdf" target="_blank" class="project-card">
-        <div class="card-thumb" style="background:#fff7ed;"><i class="ti ti-users"></i></div>
-        <div class="card-body">
-          <div class="card-tags"><span class="tag">Système</span><span class="tag">Windows</span></div>
-          <div class="card-name">Déploiement Active Directory</div>
-          <div class="card-desc">Mise en œuvre d'un domaine Windows Server 2022 : GPO, scripts d'ouverture de session et gestion des droits utilisateurs.</div>
-          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir la documentation technique</div>
-        </div>
+      <a href="preuves/rsyslog.pdf" target="_blank" class="card">
+        <div class="card-title">Serveur de logs rsyslog</div>
+        <div class="card-desc">Centralisation des journaux d'événements pour la sécurité.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
       </a>
-
-      <a href="preuves/supervision_zabbix.pdf" target="_blank" class="project-card">
-        <div class="card-thumb" style="background:#f5f3ff;"><i class="ti ti-activity"></i></div>
-        <div class="card-body">
-          <div class="card-tags"><span class="tag">Supervision</span><span class="tag">Linux</span></div>
-          <div class="card-name">Supervision avec Zabbix</div>
-          <div class="card-desc">Mise en place d'une sonde de supervision pour serveurs Linux et équipements réseau avec alertes par mail.</div>
-          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir le dashboard</div>
-        </div>
+      <a href="preuves/zabbix.pdf" target="_blank" class="card">
+        <div class="card-title">Supervision Zabbix</div>
+        <div class="card-desc">Mise en place de sondes SNMP et monitoring serveur.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
       </a>
     </div>
+
+    <h3 class="category-title">Stage 1ère Année</h3>
+    <div class="grid-projects">
+      <a href="preuves/robocopy.pdf" target="_blank" class="card">
+        <div class="card-title">Sauvegarde Robocopy</div>
+        <div class="card-desc">Automatisation des backups de données critiques.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
+      </a>
+      <a href="preuves/mastering.pdf" target="_blank" class="card">
+        <div class="card-title">Masterisation de PC</div>
+        <div class="card-desc">Déploiement d'images système uniformisées sur le parc.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
+      </a>
+      <a href="preuves/graphana.pdf" target="_blank" class="card">
+        <div class="card-title">Serveur Grafana</div>
+        <div class="card-desc">Visualisation de données et dashboarding en test.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
+      </a>
+      <a href="preuves/veeam.pdf" target="_blank" class="card">
+        <div class="card-title">Sauvegarde Veeam</div>
+        <div class="card-desc">Gestion de la continuité d'activité (PCA/PRA).</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
+      </a>
+    </div>
+
+    <h3 class="category-title">Stage 2ème Année</h3>
+    <div class="grid-projects">
+      <a href="preuves/windows_server.pdf" target="_blank" class="card">
+        <div class="card-title">Mise à jour Serveur Windows</div>
+        <div class="card-desc">Migration et application des correctifs de sécurité.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
+      </a>
+      <a href="preuves/ipxe.pdf" target="_blank" class="card">
+        <div class="card-title">Service iPXE Linux</div>
+        <div class="card-desc">Installation d'un service de boot réseau pour déploiement.</div>
+        <div class="card-footer"><i class="ti ti-link"></i> Voir la preuve</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-table">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Tableau de Synthèse</h2>
+      <p class="section-sub">Épreuve E4 - Session 2026</p>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Réalisations professionnelles</th>
+            <th>C1</th>
+            <th>C2</th>
+            <th>C3</th>
+            <th>C4</th>
+            <th>C5</th>
+            <th>C6</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Infrastructure de contexte</td><td></td><td></td><td></td><td></td><td class="check">X</td><td class="check">X</td></tr>
+          <tr><td>Installation serveur GLPI</td><td></td><td class="check">X</td><td class="check">X</td><td></td><td></td><td class="check">X</td></tr>
+          <tr><td>Serveur rsyslog</td><td></td><td></td><td></td><td></td><td></td><td class="check">X</td></tr>
+          <tr><td>Supervision Zabbix</td><td></td><td class="check">X</td><td></td><td></td><td></td><td class="check">X</td></tr>
+          <tr><td style="color:var(--accent2)">STAGE 1ÈRE ANNÉE</td><td colspan="6"></td></tr>
+          <tr><td>Sauvegarde Robocopy</td><td></td><td class="check">X</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>Masterisation PC</td><td></td><td></td><td class="check">X</td><td></td><td></td><td class="check">X</td></tr>
+          <tr><td>Grafana</td><td></td><td class="check">X</td><td></td><td></td><td></td><td class="check">X</td></tr>
+          <tr><td>Sauvegarde Veeam</td><td></td><td class="check">X</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td style="color:var(--accent2)">STAGE 2ÈME ANNÉE</td><td colspan="6"></td></tr>
+          <tr><td>Gestion tickets / appels</td><td></td><td></td><td class="check">X</td><td></td><td></td><td></td></tr>
+          <tr><td>MAJ Serveur Windows</td><td></td><td></td><td></td><td></td><td class="check">X</td><td></td></tr>
+          <tr><td>Service iPXE Linux</td><td></td><td></td><td></td><td></td><td></td><td class="check">X</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 11px; margin-top: 15px; color: var(--text3)">
+      C1: Patrimoine | C2: Incidents | C3: Présence en ligne | C4: Mode projet | C5: Service IT | C6: Développement Pro
+    </p>
   </div>
 </div>
 
 <div class="page" id="page-certs">
   <div class="container">
-    <h2 class="section-title">Certifications & Formations</h2>
-    <p class="section-sub">Validation des compétences académiques et professionnelles</p>
-    <div class="grid-2">
-        <div class="project-card" style="padding: 20px; text-align: center; cursor: default;">
-            <i class="ti ti-award" style="font-size: 40px; color: var(--amber);"></i>
-            <h3 class="card-name">Certification ANSSI</h3>
-            <p class="card-desc">SecNumAcadémie - Sensibilisation à la cybersécurité</p>
-            <span class="tag">Obtenue</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="grid-projects" style="margin-top:20px">
+        <div class="card" style="text-align:center">
+            <i class="ti ti-shield-lock" style="font-size:40px; color:var(--accent2)"></i>
+            <div class="card-title">ANSSI - SecNumAcadémie</div>
+            <div class="card-desc">Certification en cybersécurité</div>
         </div>
-        <div class="project-card" style="padding: 20px; text-align: center; cursor: default;">
-            <i class="ti ti-brand-python" style="font-size: 40px; color: var(--accent2);"></i>
-            <h3 class="card-name">Cisco Networking Academy</h3>
-            <p class="card-desc">Introduction to Cybersecurity / CCNA 1</p>
-            <span class="tag">En cours</span>
+        <div class="card" style="text-align:center">
+            <i class="ti ti-network" style="font-size:40px; color:var(--accent2)"></i>
+            <div class="card-title">Cisco Networking Academy</div>
+            <div class="card-desc">CCNA Introduction to Networks</div>
         </div>
     </div>
   </div>
 </div>
 
-<div class="page" id="page-skills">
-  <div class="container">
-    <h2 class="section-title">Tableau des compétences SIO</h2>
-    <p class="section-sub">Maîtrise technique par domaine</p>
-
-    <table class="skills-table">
-      <thead>
-        <tr>
-          <th>Domaine</th>
-          <th>Technologie</th>
-          <th>Maîtrise</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="tag">Réseau</span></td>
-          <td><div class="skill-name">Cisco IOS (Switch/Router)</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:75%"></div></div></td>
-        </tr>
-        <tr>
-          <td><span class="tag">Système</span></td>
-          <td><div class="skill-name">Windows Server / Active Directory</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></td>
-        </tr>
-        <tr>
-          <td><span class="tag">Système</span></td>
-          <td><div class="skill-name">Linux (Debian/Ubuntu Server)</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:70%"></div></div></td>
-        </tr>
-        <tr>
-          <td><span class="tag">Sécurité</span></td>
-          <td><div class="skill-name">Pare-feu (pfSense/Stormshield)</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:65%"></div></div></td>
-        </tr>
-        <tr>
-          <td><span class="tag">Virtu.</span></td>
-          <td><div class="skill-name">VMware ESXi / Proxmox</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:70%"></div></div></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<footer style="text-align: center; padding: 3rem; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border);">
-  © 2025 Pascal GRIFFON — Portfolio BTS SIO SISR
+<footer style="text-align: center; padding: 4rem 2rem; color: var(--text3); font-size: 13px;">
+  Pascal GRIFFON — BTS SIO SISR — Session 2026
 </footer>
 
 <script>
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+    
     document.getElementById('page-' + id).classList.add('active');
     
-    // Update nav links active state
-    const btns = document.querySelectorAll('.nav-link');
-    const labels = ['hero','projects','certs','skills'];
-    const idx = labels.indexOf(id);
-    if (idx >= 0) btns[idx].classList.add('active');
+    // Set active link
+    const links = { 'hero':0, 'projects':1, 'table':2, 'certs':3 };
+    document.querySelectorAll('.nav-link')[links[id]].classList.add('active');
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
