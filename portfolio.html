@@ -25,7 +25,6 @@
 
   body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; }
   
-  /* NAVIGATION */
   .nav {
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 2.5rem; border-bottom: 1px solid var(--border);
@@ -39,46 +38,42 @@
   }
   .nav-link:hover, .nav-link.active { background: var(--navy); color: white; }
 
-  /* PAGES */
   .page { display: none; padding-bottom: 5rem; }
   .page.active { display: block; }
   .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
 
-  /* HERO */
-  .hero { text-align: center; padding: 6rem 2rem; }
-  .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 8vw, 64px); color: var(--navy); margin-bottom: 1rem; }
-  .hero-role { font-size: 20px; color: var(--text2); margin-bottom: 3rem; }
+  .hero { text-align: center; padding: 5rem 2rem; }
+  .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 8vw, 60px); color: var(--navy); margin-bottom: 1rem; }
   .btn-cv {
     display: inline-flex; align-items: center; gap: 12px;
     background: var(--navy); color: white; padding: 16px 32px;
     border-radius: 14px; text-decoration: none; font-weight: 600; transition: 0.2s;
   }
-  .btn-cv:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); background: var(--accent2); }
+  .btn-cv:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); background: var(--accent2); }
 
-  /* GRILLE REALISATIONS */
   .category-header { 
     margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--surface);
     color: var(--navy); font-family: 'DM Serif Display', serif; font-size: 24px;
   }
-  .grid-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .grid-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
   .card {
-    border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;
+    border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem;
     text-decoration: none; color: inherit; transition: 0.2s; background: var(--white);
+    display: flex; flex-direction: column; height: 100%;
   }
-  .card:hover { border-color: var(--accent2); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-  .card-title { font-weight: 600; margin-bottom: 10px; color: var(--navy); display: flex; justify-content: space-between; }
-  .card-desc { font-size: 13px; color: var(--text2); margin-bottom: 15px; }
-  .card-link { font-size: 12px; color: var(--accent2); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+  .card:hover { border-color: var(--accent2); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+  .card-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--navy); }
+  .card-desc { font-size: 12px; color: var(--text2); flex-grow: 1; margin-bottom: 12px; }
+  .card-link { font-size: 11px; color: var(--accent2); font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
-  /* TABLEAU E4 */
   .table-scroll { overflow-x: auto; margin-top: 2rem; border-radius: 12px; border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; }
-  th { background: var(--navy); color: white; padding: 12px; text-align: left; border: 1px solid #1e293b; }
-  td { padding: 10px; border: 1px solid var(--border); text-align: center; }
-  td.task-name { text-align: left; font-weight: 500; background: var(--surface); width: 40%; }
-  .x-mark { color: var(--green); font-weight: bold; font-size: 16px; }
+  table { width: 100%; border-collapse: collapse; background: white; font-size: 11px; }
+  th { background: var(--navy); color: white; padding: 10px; text-align: center; border: 1px solid #1e293b; }
+  td { padding: 8px; border: 1px solid var(--border); text-align: center; }
+  td.task-name { text-align: left; font-weight: 500; background: var(--surface); width: 40%; font-size: 12px; padding-left: 15px; }
+  .x-mark { color: var(--green); font-weight: bold; font-size: 14px; }
 
-  @media (max-width: 768px) { .nav { padding: 1rem; } .nav-links { display: none; } }
+  @media (max-width: 768px) { .nav-links { display: none; } }
 </style>
 </head>
 <body>
@@ -88,98 +83,42 @@
   <div class="nav-links">
     <button class="nav-link active" onclick="showPage('hero')">Accueil</button>
     <button class="nav-link" onclick="showPage('projects')">Réalisations</button>
-    <button class="nav-link" onclick="showPage('e4')">Synthèse E4</button>
-    <button class="nav-link" onclick="showPage('certs')">Certifications</button>
+    <button class="nav-link" onclick="showPage('e4')">Tableau E4</button>
+    <button class="nav-link" onclick="showPage('certs')">Veille & Certifs</button>
   </div>
 </nav>
 
 <div class="page active" id="page-hero">
   <div class="hero">
     <h1 class="hero-name">Pascal GRIFFON</h1>
-    <p class="hero-role">Étudiant BTS SIO — Option SISR<br><small>Solutions d'Infrastructure, Systèmes et Réseaux</small></p>
+    <p style="font-size: 20px; color: var(--text2); margin-bottom: 2rem;">Étudiant BTS SIO option SISR</p>
     <a href="CV_Pascal_GRIFFON.pdf" target="_blank" class="btn-cv">
-      <i class="ti ti-download"></i> Télécharger mon CV (PDF)
+      <i class="ti ti-file-text"></i> Mon Curriculum Vitae
     </a>
   </div>
 </div>
 
 <div class="page" id="page-projects">
   <div class="container">
-    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Portefeuille de Compétences</h2>
-    <p class="text2">Cliquez sur une réalisation pour ouvrir la preuve technique dans un nouvel onglet.</p>
+    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Portefeuille de Réalisations</h2>
 
-    <h3 class="category-header">En cours de formation</h3>
-    <div class="grid-projects">
-      <script>
-        const formations = [
-          ["Infrastructure de contexte", "Mise en place de l'architecture réseau complète."],
-          ["Serveur GLPI", "Gestion de parc informatique et helpdesk."],
-          ["Serveur de log rsyslog", "Centralisation et analyse des journaux système."],
-          ["Supervision Zabbix", "Monitoring des équipements et alertes."],
-          ["Serveur de fichiers", "Partage de ressources et gestion des droits."],
-          ["Serveur Proxy", "Filtrage web et sécurisation des accès."],
-          ["Messagerie", "Installation d'une solution de mail interne."],
-          ["Annuaire OpenLDAP", "Gestion centralisée des utilisateurs."]
-        ];
-        formations.forEach(p => document.write(`
-          <a href="preuves/${p[0].toLowerCase().replace(/ /g,'_')}.pdf" target="_blank" class="card">
-            <div class="card-title">${p[0]} <i class="ti ti-external-link"></i></div>
-            <p class="card-desc">${p[1]}</p>
-            <div class="card-link">Consulter la preuve</div>
-          </a>
-        `));
-      </script>
-    </div>
+    <h3 class="category-header">Réalisations en cours de formation</h3>
+    <div class="grid-projects" id="grid-formation">
+        </div>
 
     <h3 class="category-header">Stage 1ère Année</h3>
-    <div class="grid-projects">
-      <script>
-        const stage1 = [
-          ["Sauvegarde Robocopy", "Automatisation des sauvegardes locales."],
-          ["Masterisation de PC", "Déploiement d'images système via réseau."],
-          ["Serveur Grafana", "Visualisation de données métriques."],
-          ["Sauvegarde Veeam", "Mise en place de plans de sauvegarde VM."],
-          ["Brassage réseaux", "Organisation et câblage de baies informatiques."],
-          ["Clichés instantanés", "Protection des données utilisateurs."],
-          ["Installation NAS", "Stockage réseau sécurisé."],
-          ["Configuration Nagios", "Supervision Open Source."]
-        ];
-        stage1.forEach(p => document.write(`
-          <a href="preuves/${p[0].toLowerCase().replace(/ /g,'_')}.pdf" target="_blank" class="card">
-            <div class="card-title">${p[0]} <i class="ti ti-external-link"></i></div>
-            <p class="card-desc">${p[1]}</p>
-            <div class="card-link">Consulter la preuve</div>
-          </a>
-        `));
-      </script>
+    <div class="grid-projects" id="grid-stage1">
     </div>
 
     <h3 class="category-header">Stage 2ème Année</h3>
-    <div class="grid-projects">
-      <script>
-        const stage2 = [
-          ["Gestion des tickets", "Support utilisateur et résolution d'incidents."],
-          ["MAJ Serveur Windows", "Maintenance et correctifs de sécurité."],
-          ["Système de visio", "Installation de solutions de collaboration."],
-          ["Intranet Web", "Mise à jour de portails internes."],
-          ["Service iPXE Linux", "Boot réseau pour installations automatisées."],
-          ["Référencement Web", "Optimisation de visibilité."]
-        ];
-        stage2.forEach(p => document.write(`
-          <a href="preuves/${p[0].toLowerCase().replace(/ /g,'_')}.pdf" target="_blank" class="card">
-            <div class="card-title">${p[0]} <i class="ti ti-external-link"></i></div>
-            <p class="card-desc">${p[1]}</p>
-            <div class="card-link">Consulter la preuve</div>
-          </a>
-        `));
-      </script>
+    <div class="grid-projects" id="grid-stage2">
     </div>
   </div>
 </div>
 
 <div class="page" id="page-e4">
   <div class="container">
-    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Tableau de Synthèse — E4</h2>
+    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Tableau de Synthèse Épreuve E4</h2>
     <div class="table-scroll">
       <table>
         <thead>
@@ -188,24 +127,8 @@
             <th>C1</th><th>C2</th><th>C3</th><th>C4</th><th>C5</th><th>C6</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td class="task-name">Infrastructure de contexte</td><td></td><td></td><td></td><td></td><td class="x-mark">X</td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">Serveur GLPI</td><td></td><td class="x-mark">X</td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">Serveur de log rsyslog</td><td></td><td></td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">Supervision Zabbix</td><td></td><td class="x-mark">X</td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">Serveur de fichiers / Proxy / LDAP</td><td></td><td></td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr style="background:#f1f5f9; font-weight:bold;"><td colspan="7">STAGE 1ère ANNÉE</td></tr>
-          <tr><td class="task-name">Sauvegarde Robocopy / Veeam</td><td></td><td class="x-mark">X</td><td></td><td></td><td></td><td></td></tr>
-          <tr><td class="task-name">Masterisation de PC</td><td></td><td></td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">Grafana / Nagios</td><td></td><td class="x-mark">X</td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">Brassage réseaux</td><td></td><td class="x-mark">X</td><td class="x-mark">X</td><td></td><td></td><td></td></tr>
-          <tr><td class="task-name">Installation NAS</td><td></td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td><td class="x-mark">X</td></tr>
-          <tr style="background:#f1f5f9; font-weight:bold;"><td colspan="7">STAGE 2ème ANNÉE</td></tr>
-          <tr><td class="task-name">Gestion tickets / Visio</td><td></td><td></td><td class="x-mark">X</td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">MAJ Serveur Windows</td><td></td><td></td><td></td><td></td><td class="x-mark">X</td><td></td></tr>
-          <tr><td class="task-name">Service iPXE Linux</td><td></td><td></td><td></td><td></td><td></td><td class="x-mark">X</td></tr>
-          <tr><td class="task-name">Intranet / Référencement</td><td></td><td></td><td></td><td class="x-mark">X</td><td></td><td></td></tr>
-        </tbody>
+        <tbody id="table-body">
+            </tbody>
       </table>
     </div>
   </div>
@@ -213,21 +136,101 @@
 
 <div class="page" id="page-certs">
   <div class="container">
-    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Certifications</h2>
-    <div class="grid-projects" style="margin-top: 2rem;">
-      <div class="card">
-        <div class="card-title">ANSSI SecNumAcadémie</div>
-        <p class="card-desc">Maîtrise des fondamentaux de la cybersécurité.</p>
-      </div>
-      <div class="card">
-        <div class="card-title">Cisco Networking Academy</div>
-        <p class="card-desc">CCNA 1 - Introduction to Networks.</p>
-      </div>
+    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Veille Technologique & Certifications</h2>
+    <div class="category-header">Veille Technologique</div>
+    <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-title">Sujet : La Cybersécurité dans les environnements Cloud</div>
+        <p class="card-desc">Outils utilisés : Feedly, Google Alerts, Twitter (X) - Suivi des vulnérabilités et des nouvelles normes de protection.</p>
+    </div>
+    
+    <div class="category-header">Certifications</div>
+    <div class="grid-projects">
+        <div class="card">
+            <div class="card-title">ANSSI SecNumAcadémie</div>
+            <p class="card-desc">MOOC sur la cybersécurité validé.</p>
+        </div>
+        <div class="card">
+            <div class="card-title">Cisco Networking Academy</div>
+            <p class="card-desc">Validation du module Introduction to Networks.</p>
+        </div>
     </div>
   </div>
 </div>
 
 <script>
+  // Données centralisées pour les cartes et le tableau
+  const data = {
+    formation: [
+      { n: "Infrastructure de contexte", d: "Mise en place de l'architecture réseau globale.", c: [0,0,0,0,1,1] },
+      { n: "Installation serveur GLPI", d: "Gestion de parc et helpdesk.", c: [0,1,1,0,0,1] },
+      { n: "Installation serveur rsyslog", d: "Centralisation des logs système.", c: [0,0,0,0,0,1] },
+      { n: "Installation serveur Zabbix", d: "Supervision et monitoring réseau.", c: [0,1,0,0,0,1] },
+      { n: "Installation serveur de fichiers", d: "Gestion des partages Windows/Linux.", c: [0,0,0,0,0,1] },
+      { n: "Installation serveur Proxy", d: "Filtrage et sécurisation des accès web.", c: [0,0,0,0,0,1] },
+      { n: "Installation serveur de messagerie", d: "Solution de courriels interne.", c: [0,0,0,0,0,1] },
+      { n: "Installation annuaire OpenLDAP", d: "Gestion centralisée des identités.", c: [0,0,0,0,0,1] },
+      { n: "Certifications", d: "Suivi et obtention de certifications (ANSSI, Cisco).", c: [0,0,0,0,0,1] }
+    ],
+    stage1: [
+      { n: "Sauvegarde Robocopy", d: "Automatisation des backups de fichiers.", c: [0,1,0,0,0,0] },
+      { n: "Sauvegarde Veeam", d: "Sauvegarde de machines virtuelles.", c: [0,1,0,0,0,0] },
+      { n: "Masterisation de PC", d: "Déploiement d'images via WDS/MDT.", c: [0,0,1,0,0,1] },
+      { n: "Installation serveur Grafana", d: "Tableaux de bord de métriques.", c: [0,1,0,0,0,1] },
+      { n: "Configuration de Nagios", d: "Supervision d'équipements critiques.", c: [0,1,0,0,0,1] },
+      { n: "Brassage réseaux", d: "Câblage et organisation des baies.", c: [0,1,1,0,0,0] },
+      { n: "Gestion des clichés instantanés", d: "Protection contre les suppressions accidentelles.", c: [0,1,0,0,0,0] },
+      { n: "Installation NAS", d: "Mise en place stockage réseau sécurisé.", c: [0,1,0,0,1,1] }
+    ],
+    stage2: [
+      { n: "Gestion des tickets", d: "Support utilisateur et incidents niveau 1 & 2.", c: [0,0,1,0,0,0] },
+      { n: "Système de visio", d: "Installation et support solutions collaboratives.", c: [0,0,1,0,0,1] },
+      { n: "Installation Dépôt Secondaire WAPT", d: "Gestion de parc et déploiement logiciel.", c: [0,0,0,0,1,1] },
+      { n: "Migration de Serveurs Windows", d: "Passage vers Windows Server 2022.", c: [0,0,0,0,1,0] },
+      { n: "Intranet Web", d: "Maintenance et mise à jour du portail interne.", c: [0,0,0,1,0,0] },
+      { n: "Référencement site web", d: "Optimisation SEO pour la sécurité routière.", c: [0,0,0,1,0,0] },
+      { n: "Service iPXE sur Linux", d: "Boot réseau pour installations.", c: [0,0,0,0,0,1] },
+      { n: "Veille Technologique", d: "Méthodologie et outils de veille active.", c: [0,0,0,0,0,1] }
+    ]
+  };
+
+  function render() {
+    const tableBody = document.getElementById('table-body');
+    
+    Object.keys(data).forEach(cat => {
+      const grid = document.getElementById('grid-' + cat);
+      if(tableBody) {
+        const rowHeader = document.createElement('tr');
+        rowHeader.innerHTML = `<td colspan="7" style="background:#f1f5f9; font-weight:bold; text-align:left; padding-left:10px;">${cat.toUpperCase()}</td>`;
+        tableBody.appendChild(rowHeader);
+      }
+
+      data[cat].forEach(item => {
+        // Ajouter carte
+        if(grid) {
+          const card = document.createElement('a');
+          card.className = 'card';
+          card.target = '_blank';
+          card.href = `preuves/${item.n.toLowerCase().replace(/ /g,'_')}.pdf`;
+          card.innerHTML = `
+            <div class="card-title">${item.n}</div>
+            <p class="card-desc">${item.d}</p>
+            <div class="card-link"><i class="ti ti-external-link"></i> Voir la preuve</div>
+          `;
+          grid.appendChild(card);
+        }
+        
+        // Ajouter ligne tableau
+        if(tableBody) {
+          const tr = document.createElement('tr');
+          let checks = '';
+          item.c.forEach(val => checks += `<td>${val ? '<span class="x-mark">X</span>' : ''}</td>`);
+          tr.innerHTML = `<td class="task-name">${item.n}</td>${checks}`;
+          tableBody.appendChild(tr);
+        }
+      });
+    });
+  }
+
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -235,6 +238,8 @@
     event.currentTarget.classList.add('active');
     window.scrollTo(0,0);
   }
+
+  window.onload = render;
 </script>
 
 </body>
