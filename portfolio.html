@@ -24,9 +24,6 @@
     --amber: #d97706;
     --amber-bg: #fef3c7;
     --amber-text: #78350f;
-    --red: #dc2626;
-    --red-bg: #fee2e2;
-    --red-text: #7f1d1d;
     --text: #0f172a;
     --text2: #475569;
     --text3: #94a3b8;
@@ -80,15 +77,12 @@
   }
 
   .logo-icon i { font-size: 17px; color: #38bdf8; }
-
   .logo-text { font-size: 16px; font-weight: 500; }
   .logo-text span { color: var(--accent2); }
 
   .nav-links {
     display: flex;
     gap: 2px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
   }
 
   .nav-link {
@@ -102,24 +96,11 @@
     background: none;
     transition: all 0.15s;
     font-family: 'Outfit', sans-serif;
-    text-decoration: none;
-    display: inline-block;
   }
 
   .nav-link:hover, .nav-link.active {
     background: var(--surface);
     color: var(--accent2);
-  }
-
-  .nav-toggle {
-    display: none;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 10px;
-    cursor: pointer;
-    font-size: 18px;
-    color: var(--text);
   }
 
   /* ── LAYOUT ── */
@@ -137,7 +118,6 @@
     font-size: 30px;
     color: var(--navy);
     margin-bottom: 6px;
-    line-height: 1.2;
   }
 
   .section-sub {
@@ -147,7 +127,7 @@
   }
 
   /* ── HERO ── */
-  .hero { padding: 3.5rem 2.5rem 3rem; max-width: 960px; margin: 0 auto; }
+  .hero { padding: 4rem 2.5rem 3rem; max-width: 960px; margin: 0 auto; }
 
   .online-badge {
     display: inline-flex;
@@ -170,10 +150,7 @@
     animation: pulse 2s infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   .hero-name {
     font-family: 'DM Serif Display', serif;
@@ -183,67 +160,13 @@
     margin-bottom: 8px;
   }
 
-  .hero-name em {
-    font-style: italic;
-    color: var(--accent2);
-  }
+  .hero-name em { font-style: italic; color: var(--accent2); }
 
   .hero-role {
-    font-size: 16px;
+    font-size: 17px;
     color: var(--text2);
-    font-weight: 400;
-    margin-bottom: 2rem;
-    max-width: 560px;
-    line-height: 1.65;
-  }
-
-  .hero-btns {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
     margin-bottom: 2.5rem;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 10px 20px;
-    background: var(--navy);
-    color: #fff;
-    border: none;
-    border-radius: 9px;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: 'Outfit', sans-serif;
-    text-decoration: none;
-  }
-
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 10px 20px;
-    background: none;
-    color: var(--text);
-    border: 1px solid var(--border2);
-    border-radius: 9px;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: 'Outfit', sans-serif;
-    text-decoration: none;
-  }
-
-  .btn-outline:hover {
-    border-color: var(--accent);
-    color: var(--accent2);
-    background: var(--accent-bg);
+    max-width: 600px;
   }
 
   .hero-stats {
@@ -263,43 +186,14 @@
   }
 
   .stat-item:last-child { border-right: none; }
-
-  .stat-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--navy);
-  }
-
-  .stat-label {
-    font-size: 11px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 3px;
-  }
-
-  /* ── TAGS ── */
-  .tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text2);
-  }
-
-  .tag.blue { background: var(--accent-bg); color: var(--accent-text); border-color: transparent; }
-  .tag.green { background: var(--green-bg); color: var(--green-text); border-color: transparent; }
-  .tag.amber { background: var(--amber-bg); color: var(--amber-text); border-color: transparent; }
+  .stat-num { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--navy); }
+  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; margin-top: 3px; }
 
   /* ── PROJECTS ── */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 20px;
   }
 
   .project-card {
@@ -308,993 +202,215 @@
     overflow: hidden;
     background: var(--white);
     transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
   }
 
   .project-card:hover {
     border-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(14,165,233,0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(14,165,233,0.1);
   }
 
   .card-thumb {
-    height: 100px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--surface);
   }
 
-  .card-thumb i { font-size: 42px; color: var(--accent2); }
+  .card-thumb i { font-size: 48px; color: var(--accent2); }
 
-  .card-body { padding: 1.1rem 1.2rem; }
+  .card-body { padding: 1.5rem; }
 
-  .card-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
+  .card-tags { display: flex; gap: 6px; margin-bottom: 10px; }
 
-  .card-name { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
-
-  .card-desc { font-size: 12px; color: var(--text2); line-height: 1.55; margin-bottom: 11px; }
-
-  .card-links { display: flex; gap: 12px; }
-
-  .card-link {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--accent2);
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    text-decoration: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'Outfit', sans-serif;
-    padding: 0;
-  }
-
-  .card-link:hover { text-decoration: underline; }
-
-  /* ── TIMELINE ── */
-  .timeline { padding-left: 1.5rem; position: relative; }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 4px; top: 8px; bottom: 8px;
-    width: 1px;
-    background: var(--border);
-  }
-
-  .tl-item { position: relative; margin-bottom: 1.75rem; }
-
-  .tl-dot {
-    position: absolute;
-    left: -1.5rem;
-    top: 5px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--white);
-    border: 2px solid var(--accent2);
-  }
-
-  .tl-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    margin-bottom: 4px;
-  }
-
-  .tl-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
-
-  .tl-detail { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 7px; }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 9px;
-    border-radius: 6px;
-  }
-
-  .badge.ok { background: var(--green-bg); color: var(--green-text); }
-  .badge.warn { background: var(--amber-bg); color: var(--amber-text); }
-
-  /* ── CERTIFICATIONS ── */
-  .certs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-
-  .cert-card {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.25rem 1rem;
-    background: var(--white);
-    text-align: center;
-    transition: all 0.2s;
-    cursor: default;
-  }
-
-  .cert-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 4px 16px rgba(14,165,233,0.08);
-  }
-
-  .cert-logo {
-    width: 46px;
-    height: 46px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 10px;
-    font-size: 22px;
-  }
-
-  .cert-name { font-size: 13px; font-weight: 600; color: var(--navy); line-height: 1.3; margin-bottom: 4px; }
-  .cert-org { font-size: 11px; color: var(--text3); margin-bottom: 5px; }
-  .cert-date { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); margin-bottom: 9px; }
-
-  .cert-status {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    padding: 3px 9px;
-    border-radius: 10px;
-  }
-
-  .cert-status.valid { background: var(--green-bg); color: var(--green-text); }
-  .cert-status.inprogress { background: var(--amber-bg); color: var(--amber-text); }
-
-  /* ── CV ── */
-  .cv-wrapper { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-
-  .cv-header { background: var(--navy); padding: 2rem 2rem 1.75rem; color: #fff; }
-
-  .cv-name { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 5px; }
-  .cv-role-line { font-size: 13px; color: #7dd3fc; font-weight: 400; margin-bottom: 1.25rem; }
-
-  .cv-contact { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-
-  .cv-contact-item {
-    font-size: 12px;
-    color: #94a3b8;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .cv-body { display: grid; grid-template-columns: 1fr 1fr; }
-
-  .cv-col { padding: 1.5rem 1.75rem; border-right: 1px solid var(--border); }
-  .cv-col:last-child { border-right: none; }
-
-  .cv-section-head {
+  .tag {
     font-size: 10px;
     font-weight: 600;
-    color: var(--accent2);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 6px;
-    margin-bottom: 12px;
-  }
-
-  .cv-section-head + .cv-section-head { margin-top: 1.25rem; }
-
-  .cv-entry { margin-bottom: 14px; }
-  .cv-entry-title { font-size: 13px; font-weight: 600; color: var(--navy); }
-  .cv-entry-sub { font-size: 11px; color: var(--text3); margin-bottom: 3px; }
-  .cv-entry-desc { font-size: 12px; color: var(--text2); line-height: 1.55; }
-
-  .cv-skill-list { display: flex; flex-wrap: wrap; gap: 5px; }
-
-  .cv-skill-tag {
-    font-size: 11px;
-    padding: 3px 8px;
+    padding: 2px 8px;
     border-radius: 6px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text2);
+    background: var(--accent-bg);
+    color: var(--accent-text);
   }
 
-  .cv-footer {
-    padding: 1rem 1.75rem;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  /* ── SKILLS ── */
-  .skill-filters {
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
-
-  .skill-filter-btn {
-    font-size: 12px;
-    font-weight: 500;
-    padding: 5px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 1px solid var(--border);
-    background: none;
-    color: var(--text2);
-    font-family: 'Outfit', sans-serif;
-  }
-
-  .skill-filter-btn:hover { border-color: var(--accent); color: var(--accent2); }
-  .skill-filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-
-  .skills-table { width: 100%; border-collapse: collapse; }
-
-  .skills-table th {
-    text-align: left;
+  .card-name { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .card-desc { font-size: 13px; color: var(--text2); line-height: 1.5; margin-bottom: 12px; }
+  
+  .proof-hint {
     font-size: 11px;
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-weight: 500;
-    color: var(--text3);
-    padding: 8px 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 1px solid var(--border);
   }
 
-  .skills-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-
-  .skills-table tbody tr:last-child td { border-bottom: none; }
-
-  .skills-table tbody tr { display: none; }
-  .skills-table tbody tr.visible { display: table-row; }
-
-  .skill-name { font-size: 13px; font-weight: 500; color: var(--navy); }
-  .skill-level { font-size: 12px; color: var(--text3); }
-
-  .bar-wrap {
-    width: 120px;
-    height: 6px;
-    background: var(--surface);
-    border-radius: 3px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
+  /* ── SKILLS TABLE ── */
+  .skills-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+  .skills-table th { text-align: left; font-size: 11px; color: var(--text3); padding: 12px; border-bottom: 1px solid var(--border); text-transform: uppercase; }
+  .skills-table td { padding: 15px 12px; border-bottom: 1px solid var(--border); }
+  .skill-name { font-size: 14px; font-weight: 500; color: var(--navy); }
+  
+  .bar-wrap { width: 100px; height: 6px; background: var(--surface); border-radius: 3px; border: 1px solid var(--border); }
   .bar-fill { height: 100%; border-radius: 3px; background: var(--accent2); }
 
-  .skill-exp { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
-
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    padding: 2rem;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--text3);
-    margin-top: 2rem;
-  }
-
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .nav { padding: 0.9rem 1.25rem; }
-    .nav-links { display: none; flex-direction: column; width: 100%; }
-    .nav-links.open { display: flex; }
-    .nav-toggle { display: block; }
-    .nav { flex-wrap: wrap; gap: 10px; }
-
-    .hero { padding: 2rem 1.25rem; }
-    .hero-name { font-size: 34px; }
-    .container { padding: 2rem 1.25rem; }
-
     .grid-2 { grid-template-columns: 1fr; }
-    .certs-grid { grid-template-columns: 1fr 1fr; }
-    .cv-body { grid-template-columns: 1fr; }
-    .cv-col { border-right: none; border-bottom: 1px solid var(--border); }
-    .cv-col:last-child { border-bottom: none; }
-    .hero-stats { max-width: 100%; }
-    .bar-wrap { width: 80px; }
-  }
-
-  @media (max-width: 480px) {
-    .certs-grid { grid-template-columns: 1fr; }
-    .hero-name { font-size: 28px; }
+    .hero-name { font-size: 36px; }
+    .nav { padding: 1rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- ── NAVIGATION ── -->
 <nav class="nav">
   <a class="logo" href="#" onclick="showPage('hero');return false;">
-    <div class="logo-icon"><i class="ti ti-network" aria-hidden="true"></i></div>
-    <span class="logo-text">réseau<span>.</span>folio</span>
+    <div class="logo-icon"><i class="ti ti-terminal-2"></i></div>
+    <span class="logo-text">pascal<span>.</span>sio</span>
   </a>
-  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
-    <i class="ti ti-menu-2"></i>
-  </button>
-  <div class="nav-links" id="navLinks">
+  <div class="nav-links">
     <button class="nav-link active" onclick="showPage('hero')">Accueil</button>
-    <button class="nav-link" onclick="showPage('projects')">Réalisations</button>
-    <button class="nav-link" onclick="showPage('proofs')">Expérience</button>
+    <button class="nav-link" onclick="showPage('projects')">Portfolio Projets</button>
     <button class="nav-link" onclick="showPage('certs')">Certifications</button>
-    <button class="nav-link" onclick="showPage('cv')">CV</button>
     <button class="nav-link" onclick="showPage('skills')">Compétences</button>
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════════
-     PAGE — ACCUEIL
-══════════════════════════════════════════ -->
 <div class="page active" id="page-hero">
   <div class="hero">
-    <div class="online-badge">
-      <span class="pulse"></span>
-      Disponible pour de nouvelles missions
-    </div>
-
-    <h1 class="hero-name">
-      Pascal GRIFFON<br>
-      <em>Étudiant en BTS SIO</em>
-    </h1>
-
+    <div class="online-badge"><span class="pulse"></span> Étudiant BTS SIO option SISR</div>
+    <h1 class="hero-name">Pascal GRIFFON<br><em>Cyber &amp; Réseaux</em></h1>
     <p class="hero-role">
-      Conception, déploiement et sécurisation d'infrastructures réseau complexes —
-      LAN/WAN, SD-WAN, firewall, VPN et supervision. Expert Cisco, Fortinet &amp; Juniper.
+      Futur technicien supérieur spécialisé dans les solutions d'infrastructure, systèmes et réseaux. 
+      Passionné par la cybersécurité et l'administration système Linux/Windows.
     </p>
-
-    <div class="hero-btns">
-      <button class="btn-primary" onclick="showPage('projects')">
-        <i class="ti ti-topology-star" aria-hidden="true"></i>
-        Mes réalisations
-      </button>
-      <button class="btn-outline" onclick="showPage('certs')">
-        <i class="ti ti-certificate" aria-hidden="true"></i>
-        Certifications
-      </button>
-      <button class="btn-outline" onclick="showPage('cv')">
-        <i class="ti ti-file-cv" aria-hidden="true"></i>
-        Mon CV
-      </button>
-    </div>
-
     <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">7+</div>
-        <div class="stat-label">Années d'exp.</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">15</div>
-        <div class="stat-label">Projets livrés</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">6</div>
-        <div class="stat-label">Certifications</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">500+</div>
-        <div class="stat-label">Équipements gérés</div>
-      </div>
+      <div class="stat-item"><div class="stat-num">BTS SIO</div><div class="stat-label">Parcours SISR</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Stages réalisés</div></div>
+      <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Projets de TP</div></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     PAGE — RÉALISATIONS
-══════════════════════════════════════════ -->
 <div class="page" id="page-projects">
   <div class="container">
-    <h2 class="section-title">Réalisations professionnelles</h2>
-    <p class="section-sub">Projets réseau sélectionnés — infrastructure, sécurité, supervision</p>
+    <h2 class="section-title">Portfolio de Réalisations</h2>
+    <p class="section-sub">Cliquez sur un projet pour ouvrir la preuve technique (PDF/Doc)</p>
 
     <div class="grid-2">
-
-      <div class="project-card">
-        <div class="card-thumb" style="background:#eff6ff;">
-          <i class="ti ti-building-skyscraper" style="color:#1d4ed8;" aria-hidden="true"></i>
-        </div>
+      <a href="preuves/installation_glpi.pdf" target="_blank" class="project-card">
+        <div class="card-thumb" style="background:#f0f9ff;"><i class="ti ti-tools"></i></div>
         <div class="card-body">
-          <div class="card-tags">
-            <span class="tag blue">WAN</span>
-            <span class="tag">Cisco</span>
-            <span class="tag">SD-WAN</span>
-            <span class="tag">MPLS</span>
-          </div>
-          <div class="card-name">Refonte WAN multi-sites — Groupe industriel</div>
-          <div class="card-desc">
-            Migration de 32 sites de liaisons MPLS vers architecture SD-WAN Cisco Viptela.
-            Réduction des coûts d'exploitation de 35% et amélioration de la disponibilité à 99,98%.
-          </div>
-          <div class="card-links">
-            <a class="card-link" href="#">
-              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
-            </a>
-            <a class="card-link" href="#">
-              <i class="ti ti-external-link" aria-hidden="true"></i> Démo
-            </a>
-          </div>
+          <div class="card-tags"><span class="tag">MCO</span><span class="tag">Support</span></div>
+          <div class="card-name">Mise en place d'un helpdesk (GLPI)</div>
+          <div class="card-desc">Installation et configuration d'une solution de gestion de parc et de tickets avec inventaire automatisé FusionInventory.</div>
+          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir le compte-rendu</div>
         </div>
-      </div>
+      </a>
 
-      <div class="project-card">
-        <div class="card-thumb" style="background:#f0fdf4;">
-          <i class="ti ti-shield-lock" style="color:#15803d;" aria-hidden="true"></i>
-        </div>
+      <a href="preuves/segmentation_vlan.pdf" target="_blank" class="project-card">
+        <div class="card-thumb" style="background:#f0fdf4;"><i class="ti ti-shield-check"></i></div>
         <div class="card-body">
-          <div class="card-tags">
-            <span class="tag green">Sécurité</span>
-            <span class="tag">Fortinet</span>
-            <span class="tag">VPN</span>
-            <span class="tag">Zero Trust</span>
-          </div>
-          <div class="card-name">Infrastructure Zero Trust — Secteur bancaire</div>
-          <div class="card-desc">
-            Déploiement d'une architecture Zero Trust Network Access avec FortiGate 4200F,
-            segmentation micro-périmétrique et authentification MFA pour 2 000 utilisateurs.
-          </div>
-          <div class="card-links">
-            <a class="card-link" href="#">
-              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
-            </a>
-          </div>
+          <div class="card-tags"><span class="tag">Réseau</span><span class="tag">Sécurité</span></div>
+          <div class="card-name">Segmentation réseau & VLANs</div>
+          <div class="card-desc">Conception d'une architecture réseau sécurisée avec isolation des services via VLANs et routage inter-VLAN sur switch Cisco.</div>
+          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir la topologie Packet Tracer</div>
         </div>
-      </div>
+      </a>
 
-      <div class="project-card">
-        <div class="card-thumb" style="background:#faf5ff;">
-          <i class="ti ti-server-2" style="color:#7c3aed;" aria-hidden="true"></i>
-        </div>
+      <a href="preuves/active_directory.pdf" target="_blank" class="project-card">
+        <div class="card-thumb" style="background:#fff7ed;"><i class="ti ti-users"></i></div>
         <div class="card-body">
-          <div class="card-tags">
-            <span class="tag blue">Datacenter</span>
-            <span class="tag">Juniper</span>
-            <span class="tag">BGP</span>
-            <span class="tag">EVPN</span>
-          </div>
-          <div class="card-name">Datacenter Fabric — Hébergeur cloud</div>
-          <div class="card-desc">
-            Conception et déploiement d'une fabric EVPN/VXLAN sur Juniper QFX5200 pour
-            un datacenter de 500 serveurs. Architecture spine-leaf avec redondance totale.
-          </div>
-          <div class="card-links">
-            <a class="card-link" href="#">
-              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
-            </a>
-          </div>
+          <div class="card-tags"><span class="tag">Système</span><span class="tag">Windows</span></div>
+          <div class="card-name">Déploiement Active Directory</div>
+          <div class="card-desc">Mise en œuvre d'un domaine Windows Server 2022 : GPO, scripts d'ouverture de session et gestion des droits utilisateurs.</div>
+          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir la documentation technique</div>
         </div>
-      </div>
+      </a>
 
-      <div class="project-card">
-        <div class="card-thumb" style="background:#fff7ed;">
-          <i class="ti ti-activity" style="color:#c2410c;" aria-hidden="true"></i>
-        </div>
+      <a href="preuves/supervision_zabbix.pdf" target="_blank" class="project-card">
+        <div class="card-thumb" style="background:#f5f3ff;"><i class="ti ti-activity"></i></div>
         <div class="card-body">
-          <div class="card-tags">
-            <span class="tag amber">NOC</span>
-            <span class="tag">Zabbix</span>
-            <span class="tag">Grafana</span>
-            <span class="tag">SNMP</span>
-          </div>
-          <div class="card-name">Plateforme de supervision réseau — MSP</div>
-          <div class="card-desc">
-            Mise en place d'un NOC centralisé avec Zabbix + Grafana supervisant 800 équipements.
-            Alerting temps réel et dashboards opérationnels pour les équipes support N1/N2.
-          </div>
-          <div class="card-links">
-            <a class="card-link" href="#">
-              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
-            </a>
-          </div>
+          <div class="card-tags"><span class="tag">Supervision</span><span class="tag">Linux</span></div>
+          <div class="card-name">Supervision avec Zabbix</div>
+          <div class="card-desc">Mise en place d'une sonde de supervision pour serveurs Linux et équipements réseau avec alertes par mail.</div>
+          <div class="proof-hint"><i class="ti ti-external-link"></i> Voir le dashboard</div>
         </div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-thumb" style="background:#eff6ff;">
-          <i class="ti ti-wifi" style="color:#1d4ed8;" aria-hidden="true"></i>
-        </div>
-        <div class="card-body">
-          <div class="card-tags">
-            <span class="tag blue">Wi-Fi</span>
-            <span class="tag">Cisco WLC</span>
-            <span class="tag">802.1X</span>
-          </div>
-          <div class="card-name">Déploiement Wi-Fi entreprise — Campus universitaire</div>
-          <div class="card-desc">
-            Refonte complète de l'infrastructure Wi-Fi sur 12 bâtiments (350 AP Cisco Catalyst).
-            Authentification 802.1X via Cisco ISE, ségrégation réseau étudiants/personnel/IoT.
-          </div>
-          <div class="card-links">
-            <a class="card-link" href="#">
-              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-thumb" style="background:#f0fdf4;">
-          <i class="ti ti-cloud-network" style="color:#15803d;" aria-hidden="true"></i>
-        </div>
-        <div class="card-body">
-          <div class="card-tags">
-            <span class="tag green">Hybrid Cloud</span>
-            <span class="tag">AWS</span>
-            <span class="tag">Direct Connect</span>
-          </div>
-          <div class="card-name">Interconnexion Hybrid Cloud — Industrie</div>
-          <div class="card-desc">
-            Mise en place d'un interconnexion privée on-premise / AWS via Direct Connect et
-            Transit Gateway. Routage BGP avec politiques de failover vers VPN IPsec de secours.
-          </div>
-          <div class="card-links">
-            <a class="card-link" href="#">
-              <i class="ti ti-file-description" aria-hidden="true"></i> Étude de cas
-            </a>
-          </div>
-        </div>
-      </div>
-
+      </a>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     PAGE — EXPÉRIENCE
-══════════════════════════════════════════ -->
-<div class="page" id="page-proofs">
-  <div class="container">
-    <h2 class="section-title">Expérience professionnelle</h2>
-    <p class="section-sub">Parcours et missions marquantes</p>
-
-    <div class="timeline">
-
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2022 — Aujourd'hui</div>
-        <div class="tl-title">Ingénieur Réseaux Senior — ESN Réseau &amp; Cloud</div>
-        <div class="tl-detail">
-          Pilotage de projets d'infrastructure réseau pour des clients grands comptes (CAC 40).
-          Expertise SD-WAN, sécurité périmétrique et datacenter fabric. Référent technique pour
-          une équipe de 8 ingénieurs réseaux. Réalisation d'audits d'architectures et rédaction
-          de dossiers techniques de référence.
-        </div>
-        <span class="badge ok">
-          <i class="ti ti-check" aria-hidden="true"></i> En poste — référence disponible
-        </span>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2019 — 2022</div>
-        <div class="tl-title">Administrateur Réseaux &amp; Sécurité — Groupe Hospitalier</div>
-        <div class="tl-detail">
-          Administration de l'infrastructure réseau de 5 sites hospitaliers (4 000 utilisateurs).
-          Gestion des firewalls Palo Alto, segmentation réseau biomed/IT, maintien en condition
-          opérationnelle 24/7. Participation aux astreintes et gestion des incidents P1/P2.
-          Mise en conformité HDS (Hébergeur Données de Santé).
-        </div>
-        <span class="badge ok">
-          <i class="ti ti-check" aria-hidden="true"></i> Référence disponible
-        </span>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2017 — 2019</div>
-        <div class="tl-title">Technicien Réseaux N2 — Opérateur Télécom</div>
-        <div class="tl-detail">
-          Support niveau 2 sur infrastructures xDSL/Fibre et réseau cœur. Configuration et
-          dépannage d'équipements Cisco IOS/IOS-XE. Participation aux astreintes et gestion
-          des incidents majeurs. Rédaction de procédures d'exploitation et formations N1.
-        </div>
-        <span class="badge ok">
-          <i class="ti ti-check" aria-hidden="true"></i> Référence disponible
-        </span>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2016 — 2017</div>
-        <div class="tl-title">Alternant Technicien Réseaux — PME IT</div>
-        <div class="tl-detail">
-          Première expérience en alternance : déploiement de postes, câblage réseau, configuration
-          de switches managés Cisco Catalyst et assistance utilisateurs. Formation aux protocoles
-          TCP/IP et à l'administration Windows Server.
-        </div>
-        <span class="badge ok">
-          <i class="ti ti-award" aria-hidden="true"></i> BTS SIO SISR — Mention bien
-        </span>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     PAGE — CERTIFICATIONS
-══════════════════════════════════════════ -->
 <div class="page" id="page-certs">
   <div class="container">
-    <h2 class="section-title">Certifications</h2>
-    <p class="section-sub">Accréditations techniques obtenues et en cours de préparation</p>
-
-    <div class="certs-grid">
-
-      <div class="cert-card">
-        <div class="cert-logo" style="background:#e0f2fe;">
-          <i class="ti ti-topology-star-ring" style="color:#0c4a6e; font-size:22px;" aria-hidden="true"></i>
+    <h2 class="section-title">Certifications & Formations</h2>
+    <p class="section-sub">Validation des compétences académiques et professionnelles</p>
+    <div class="grid-2">
+        <div class="project-card" style="padding: 20px; text-align: center; cursor: default;">
+            <i class="ti ti-award" style="font-size: 40px; color: var(--amber);"></i>
+            <h3 class="card-name">Certification ANSSI</h3>
+            <p class="card-desc">SecNumAcadémie - Sensibilisation à la cybersécurité</p>
+            <span class="tag">Obtenue</span>
         </div>
-        <div class="cert-name">CCNP Enterprise</div>
-        <div class="cert-org">Cisco</div>
-        <div class="cert-date">Juin 2023</div>
-        <span class="cert-status valid">Valide</span>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-logo" style="background:#e0f2fe;">
-          <i class="ti ti-shield-check" style="color:#0c4a6e; font-size:22px;" aria-hidden="true"></i>
+        <div class="project-card" style="padding: 20px; text-align: center; cursor: default;">
+            <i class="ti ti-brand-python" style="font-size: 40px; color: var(--accent2);"></i>
+            <h3 class="card-name">Cisco Networking Academy</h3>
+            <p class="card-desc">Introduction to Cybersecurity / CCNA 1</p>
+            <span class="tag">En cours</span>
         </div>
-        <div class="cert-name">CCNP Security</div>
-        <div class="cert-org">Cisco</div>
-        <div class="cert-date">Fév. 2023</div>
-        <span class="cert-status valid">Valide</span>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-logo" style="background:#d1fae5;">
-          <i class="ti ti-wall" style="color:#064e3b; font-size:22px;" aria-hidden="true"></i>
-        </div>
-        <div class="cert-name">NSE 4 — FortiGate</div>
-        <div class="cert-org">Fortinet</div>
-        <div class="cert-date">Oct. 2022</div>
-        <span class="cert-status valid">Valide</span>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-logo" style="background:#fef3c7;">
-          <i class="ti ti-brand-aws" style="color:#78350f; font-size:22px;" aria-hidden="true"></i>
-        </div>
-        <div class="cert-name">AWS Advanced Networking</div>
-        <div class="cert-org">Amazon Web Services</div>
-        <div class="cert-date">Mars 2024</div>
-        <span class="cert-status valid">Valide</span>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-logo" style="background:#ede9fe;">
-          <i class="ti ti-route" style="color:#3b0764; font-size:22px;" aria-hidden="true"></i>
-        </div>
-        <div class="cert-name">JNCIP-EN</div>
-        <div class="cert-org">Juniper Networks</div>
-        <div class="cert-date">Sept. 2023</div>
-        <span class="cert-status valid">Valide</span>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-logo" style="background:#fef3c7;">
-          <i class="ti ti-certificate" style="color:#78350f; font-size:22px;" aria-hidden="true"></i>
-        </div>
-        <div class="cert-name">CCIE Enterprise — Written</div>
-        <div class="cert-org">Cisco</div>
-        <div class="cert-date">En cours — 2025</div>
-        <span class="cert-status inprogress">En préparation</span>
-      </div>
-
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     PAGE — CV
-══════════════════════════════════════════ -->
-<div class="page" id="page-cv">
-  <div class="container">
-    <h2 class="section-title">Curriculum vitae</h2>
-    <p class="section-sub">Aperçu — remplacer le bouton de téléchargement par le lien vers votre PDF</p>
-
-    <div class="cv-wrapper">
-
-      <div class="cv-header">
-        <div class="cv-name">Votre Prénom NOM</div>
-        <div class="cv-role-line">Ingénieur Réseaux &amp; Sécurité — CCNP Enterprise / Security · NSE 4</div>
-        <div class="cv-contact">
-          <span class="cv-contact-item">
-            <i class="ti ti-mail" aria-hidden="true"></i> prenom.nom@email.com
-          </span>
-          <span class="cv-contact-item">
-            <i class="ti ti-phone" aria-hidden="true"></i> +33 6 XX XX XX XX
-          </span>
-          <span class="cv-contact-item">
-            <i class="ti ti-map-pin" aria-hidden="true"></i> Paris, France
-          </span>
-          <span class="cv-contact-item">
-            <i class="ti ti-brand-linkedin" aria-hidden="true"></i> linkedin.com/in/prenom-nom
-          </span>
-        </div>
-      </div>
-
-      <div class="cv-body">
-
-        <div class="cv-col">
-          <div class="cv-section-head">Expérience</div>
-
-          <div class="cv-entry">
-            <div class="cv-entry-title">Ingénieur Réseaux Senior</div>
-            <div class="cv-entry-sub">ESN Réseau &amp; Cloud · 2022 – présent</div>
-            <div class="cv-entry-desc">Projets SD-WAN, sécurité périmétrique, datacenter fabric. Référent technique équipe de 8 ingénieurs.</div>
-          </div>
-
-          <div class="cv-entry">
-            <div class="cv-entry-title">Admin. Réseaux &amp; Sécurité</div>
-            <div class="cv-entry-sub">Groupe Hospitalier · 2019 – 2022</div>
-            <div class="cv-entry-desc">5 sites, 4 000 utilisateurs. Palo Alto NGFW, segmentation biomed/IT, MCO 24/7, conformité HDS.</div>
-          </div>
-
-          <div class="cv-entry">
-            <div class="cv-entry-title">Technicien Réseaux N2</div>
-            <div class="cv-entry-sub">Opérateur Télécom · 2017 – 2019</div>
-            <div class="cv-entry-desc">Support N2 xDSL/Fibre, Cisco IOS/IOS-XE, gestion incidents majeurs, astreintes.</div>
-          </div>
-
-          <div class="cv-section-head" style="margin-top:1.25rem;">Formation</div>
-
-          <div class="cv-entry">
-            <div class="cv-entry-title">Licence Pro Réseaux &amp; Télécom</div>
-            <div class="cv-entry-sub">Université · 2017</div>
-          </div>
-
-          <div class="cv-entry">
-            <div class="cv-entry-title">BTS SIO option SISR</div>
-            <div class="cv-entry-sub">Lycée technique · 2016 — Mention bien</div>
-          </div>
-        </div>
-
-        <div class="cv-col">
-          <div class="cv-section-head">Certifications clés</div>
-          <div class="cv-entry">
-            <div class="cv-entry-desc">
-              CCNP Enterprise · CCNP Security · NSE 4 FortiGate ·
-              AWS Advanced Networking · JNCIP-EN · CCIE Enterprise (en cours)
-            </div>
-          </div>
-
-          <div class="cv-section-head" style="margin-top:1.25rem;">Compétences techniques</div>
-          <div class="cv-skill-list">
-            <span class="cv-skill-tag">Cisco IOS/IOS-XE</span>
-            <span class="cv-skill-tag">BGP / OSPF / EIGRP</span>
-            <span class="cv-skill-tag">SD-WAN Viptela</span>
-            <span class="cv-skill-tag">MPLS / VRF</span>
-            <span class="cv-skill-tag">Fortinet FortiGate</span>
-            <span class="cv-skill-tag">Palo Alto NGFW</span>
-            <span class="cv-skill-tag">Juniper QFX / JunOS</span>
-            <span class="cv-skill-tag">EVPN / VXLAN</span>
-            <span class="cv-skill-tag">VPN IPsec / SSL / ZTNA</span>
-            <span class="cv-skill-tag">Cisco ISE / 802.1X</span>
-            <span class="cv-skill-tag">Zabbix / Grafana</span>
-            <span class="cv-skill-tag">SNMP / NetFlow</span>
-            <span class="cv-skill-tag">Ansible (network)</span>
-            <span class="cv-skill-tag">Python / Netmiko</span>
-            <span class="cv-skill-tag">AWS VPC / Direct Connect</span>
-            <span class="cv-skill-tag">Wireshark / tcpdump</span>
-          </div>
-
-          <div class="cv-section-head" style="margin-top:1.25rem;">Langues</div>
-          <div class="cv-entry">
-            <div class="cv-entry-desc">
-              Français — Natif &nbsp;·&nbsp; Anglais — Courant (technique, certifications)
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="cv-footer">
-        <a class="btn-primary" href="cv.pdf" download>
-          <i class="ti ti-download" aria-hidden="true"></i> Télécharger le CV (PDF)
-        </a>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     PAGE — COMPÉTENCES
-══════════════════════════════════════════ -->
 <div class="page" id="page-skills">
   <div class="container">
-    <h2 class="section-title">Tableau de compétences</h2>
-    <p class="section-sub">Filtrer par domaine technique</p>
-
-    <div class="skill-filters">
-      <button class="skill-filter-btn active" onclick="filterSkills('all', this)">Tout</button>
-      <button class="skill-filter-btn" onclick="filterSkills('routing', this)">Routage &amp; Switching</button>
-      <button class="skill-filter-btn" onclick="filterSkills('secu', this)">Sécurité</button>
-      <button class="skill-filter-btn" onclick="filterSkills('dc', this)">Datacenter</button>
-      <button class="skill-filter-btn" onclick="filterSkills('super', this)">Supervision</button>
-      <button class="skill-filter-btn" onclick="filterSkills('auto', this)">Automatisation</button>
-      <button class="skill-filter-btn" onclick="filterSkills('cloud', this)">Cloud</button>
-    </div>
+    <h2 class="section-title">Tableau des compétences SIO</h2>
+    <p class="section-sub">Maîtrise technique par domaine</p>
 
     <table class="skills-table">
       <thead>
         <tr>
-          <th>Technologie / Protocole</th>
           <th>Domaine</th>
-          <th>Niveau</th>
+          <th>Technologie</th>
           <th>Maîtrise</th>
-          <th>Expérience</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="visible" data-cat="routing">
-          <td><div class="skill-name">Cisco IOS / IOS-XE</div></td>
-          <td><span class="tag blue">Routage</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:95%"></div></div></td>
-          <td><div class="skill-exp">7 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="routing">
-          <td><div class="skill-name">BGP / OSPF / EIGRP</div></td>
-          <td><span class="tag blue">Routage</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:92%"></div></div></td>
-          <td><div class="skill-exp">7 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="routing">
-          <td><div class="skill-name">SD-WAN Cisco Viptela</div></td>
-          <td><span class="tag blue">WAN</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:85%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="routing">
-          <td><div class="skill-name">MPLS / VRF / VPLS</div></td>
-          <td><span class="tag blue">WAN</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></td>
-          <td><div class="skill-exp">5 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="routing">
-          <td><div class="skill-name">Spanning Tree / RSTP / MSTP</div></td>
-          <td><span class="tag blue">Switching</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
-          <td><div class="skill-exp">7 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="secu">
-          <td><div class="skill-name">Fortinet FortiGate NGFW</div></td>
-          <td><span class="tag green">Firewall</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
-          <td><div class="skill-exp">5 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="secu">
-          <td><div class="skill-name">Palo Alto NGFW / Panorama</div></td>
-          <td><span class="tag green">Firewall</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:82%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="secu">
-          <td><div class="skill-name">VPN IPsec / SSL / ZTNA</div></td>
-          <td><span class="tag green">Sécurité</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
-          <td><div class="skill-exp">6 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="secu">
-          <td><div class="skill-name">Cisco ISE / 802.1X / NAC</div></td>
-          <td><span class="tag green">Sécurité</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="dc">
-          <td><div class="skill-name">Juniper QFX / EX</div></td>
-          <td><span class="tag">Datacenter</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="dc">
-          <td><div class="skill-name">EVPN / VXLAN</div></td>
-          <td><span class="tag">Datacenter</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="dc">
-          <td><div class="skill-name">Architecture Spine-Leaf</div></td>
-          <td><span class="tag">Datacenter</span></td>
-          <td><div class="skill-level">Avancé</div></td>
+        <tr>
+          <td><span class="tag">Réseau</span></td>
+          <td><div class="skill-name">Cisco IOS (Switch/Router)</div></td>
           <td><div class="bar-wrap"><div class="bar-fill" style="width:75%"></div></div></td>
-          <td><div class="skill-exp">2 ans</div></td>
         </tr>
-        <tr class="visible" data-cat="super">
-          <td><div class="skill-name">Zabbix</div></td>
-          <td><span class="tag amber">Supervision</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:88%"></div></div></td>
-          <td><div class="skill-exp">5 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="super">
-          <td><div class="skill-name">Grafana / InfluxDB</div></td>
-          <td><span class="tag amber">Supervision</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:82%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="super">
-          <td><div class="skill-name">SNMP / NetFlow / sFlow</div></td>
-          <td><span class="tag amber">Supervision</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:90%"></div></div></td>
-          <td><div class="skill-exp">6 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="super">
-          <td><div class="skill-name">Wireshark / tcpdump</div></td>
-          <td><span class="tag amber">Analyse</span></td>
-          <td><div class="skill-level">Expert</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:88%"></div></div></td>
-          <td><div class="skill-exp">7 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="auto">
-          <td><div class="skill-name">Ansible (modules network)</div></td>
-          <td><span class="tag">Automatisation</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:78%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="auto">
-          <td><div class="skill-name">Python / Netmiko / NAPALM</div></td>
-          <td><span class="tag">Automatisation</span></td>
-          <td><div class="skill-level">Intermédiaire</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:62%"></div></div></td>
-          <td><div class="skill-exp">2 ans</div></td>
-        </tr>
-        <tr class="visible" data-cat="auto">
-          <td><div class="skill-name">Terraform (réseau)</div></td>
-          <td><span class="tag">IaC</span></td>
-          <td><div class="skill-level">Intermédiaire</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:55%"></div></div></td>
-          <td><div class="skill-exp">1 an</div></td>
-        </tr>
-        <tr class="visible" data-cat="cloud">
-          <td><div class="skill-name">AWS VPC / Transit Gateway</div></td>
-          <td><span class="tag blue">Cloud</span></td>
-          <td><div class="skill-level">Avancé</div></td>
+        <tr>
+          <td><span class="tag">Système</span></td>
+          <td><div class="skill-name">Windows Server / Active Directory</div></td>
           <td><div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div></td>
-          <td><div class="skill-exp">3 ans</div></td>
         </tr>
-        <tr class="visible" data-cat="cloud">
-          <td><div class="skill-name">AWS Direct Connect</div></td>
-          <td><span class="tag blue">Cloud</span></td>
-          <td><div class="skill-level">Avancé</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:75%"></div></div></td>
-          <td><div class="skill-exp">2 ans</div></td>
+        <tr>
+          <td><span class="tag">Système</span></td>
+          <td><div class="skill-name">Linux (Debian/Ubuntu Server)</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:70%"></div></div></td>
         </tr>
-        <tr class="visible" data-cat="cloud">
-          <td><div class="skill-name">Azure ExpressRoute</div></td>
-          <td><span class="tag blue">Cloud</span></td>
-          <td><div class="skill-level">Intermédiaire</div></td>
-          <td><div class="bar-wrap"><div class="bar-fill" style="width:60%"></div></div></td>
-          <td><div class="skill-exp">1 an</div></td>
+        <tr>
+          <td><span class="tag">Sécurité</span></td>
+          <td><div class="skill-name">Pare-feu (pfSense/Stormshield)</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:65%"></div></div></td>
+        </tr>
+        <tr>
+          <td><span class="tag">Virtu.</span></td>
+          <td><div class="skill-name">VMware ESXi / Proxmox</div></td>
+          <td><div class="bar-wrap"><div class="bar-fill" style="width:70%"></div></div></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<footer class="footer">
-  <p>© 2025 Votre Prénom NOM — Ingénieur Réseaux &amp; Infrastructures</p>
+<footer style="text-align: center; padding: 3rem; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border);">
+  © 2025 Pascal GRIFFON — Portfolio BTS SIO SISR
 </footer>
 
 <script>
@@ -1302,29 +418,14 @@
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
+    
+    // Update nav links active state
     const btns = document.querySelectorAll('.nav-link');
-    const labels = ['hero','projects','proofs','certs','cv','skills'];
+    const labels = ['hero','projects','certs','skills'];
     const idx = labels.indexOf(id);
-    if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+    if (idx >= 0) btns[idx].classList.add('active');
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    const nl = document.getElementById('navLinks');
-    if (nl.classList.contains('open')) nl.classList.remove('open');
-  }
-
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-
-  function filterSkills(cat, btn) {
-    document.querySelectorAll('.skill-filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.skills-table tbody tr').forEach(row => {
-      if (cat === 'all' || row.dataset.cat === cat) {
-        row.classList.add('visible');
-      } else {
-        row.classList.remove('visible');
-      }
-    });
   }
 </script>
 
