@@ -11,16 +11,10 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --navy: #0d1f35;
-    --accent: #0ea5e9;
-    --accent2: #0284c7;
-    --text: #0f172a;
-    --text2: #475569;
-    --text3: #94a3b8;
-    --border: rgba(15, 27, 45, 0.12);
-    --surface: #f8fafc;
-    --white: #ffffff;
-    --green: #059669;
+    --navy: #0d1f35; --accent: #0ea5e9; --accent2: #0284c7;
+    --text: #0f172a; --text2: #475569; --text3: #94a3b8;
+    --border: rgba(15, 27, 45, 0.12); --surface: #f8fafc;
+    --white: #ffffff; --green: #059669;
   }
 
   body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; }
@@ -40,16 +34,17 @@
 
   .page { display: none; padding-bottom: 5rem; }
   .page.active { display: block; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
   .hero { text-align: center; padding: 5rem 2rem; }
-  .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 8vw, 60px); color: var(--navy); margin-bottom: 1rem; }
+  .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 8vw, 60px); color: var(--navy); }
+  
   .btn-cv {
-    display: inline-flex; align-items: center; gap: 12px;
+    display: inline-flex; align-items: center; gap: 12px; margin-top: 2rem;
     background: var(--navy); color: white; padding: 16px 32px;
     border-radius: 14px; text-decoration: none; font-weight: 600; transition: 0.2s;
   }
-  .btn-cv:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); background: var(--accent2); }
+  .btn-cv:hover { transform: translateY(-3px); background: var(--accent2); }
 
   .category-header { 
     margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--surface);
@@ -64,16 +59,23 @@
   .card:hover { border-color: var(--accent2); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
   .card-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--navy); }
   .card-desc { font-size: 12px; color: var(--text2); flex-grow: 1; margin-bottom: 12px; }
-  .card-link { font-size: 11px; color: var(--accent2); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+  .card-link { font-size: 11px; color: var(--accent2); font-weight: 600; }
 
+  /* TABLEAU E4 CORRIGÉ */
   .table-scroll { overflow-x: auto; margin-top: 2rem; border-radius: 12px; border: 1px solid var(--border); }
   table { width: 100%; border-collapse: collapse; background: white; font-size: 11px; }
-  th { background: var(--navy); color: white; padding: 10px; text-align: center; border: 1px solid #1e293b; }
-  td { padding: 8px; border: 1px solid var(--border); text-align: center; }
-  td.task-name { text-align: left; font-weight: 500; background: var(--surface); width: 40%; font-size: 12px; padding-left: 15px; }
-  .x-mark { color: var(--green); font-weight: bold; font-size: 14px; }
+  th { background: var(--navy); color: white; padding: 12px 8px; text-align: center; border: 1px solid #1e293b; }
+  td { padding: 10px; border: 1px solid var(--border); text-align: center; }
+  td.task-name { text-align: left; font-weight: 500; background: var(--surface); width: 30%; padding-left: 15px; font-size: 12px;}
+  td.period { width: 15%; color: var(--text2); font-style: italic; }
+  .x-mark { color: var(--green); font-weight: bold; font-size: 15px; }
 
-  @media (max-width: 768px) { .nav-links { display: none; } }
+  .competence-legend {
+    margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;
+    background: var(--surface); padding: 1.5rem; border-radius: 12px;
+  }
+  .legend-item { font-size: 12px; line-height: 1.4; }
+  .legend-item b { color: var(--navy); display: block; margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -84,16 +86,15 @@
     <button class="nav-link active" onclick="showPage('hero')">Accueil</button>
     <button class="nav-link" onclick="showPage('projects')">Réalisations</button>
     <button class="nav-link" onclick="showPage('e4')">Tableau E4</button>
-    <button class="nav-link" onclick="showPage('certs')">Veille & Certifs</button>
   </div>
 </nav>
 
 <div class="page active" id="page-hero">
   <div class="hero">
     <h1 class="hero-name">Pascal GRIFFON</h1>
-    <p style="font-size: 20px; color: var(--text2); margin-bottom: 2rem;">Étudiant BTS SIO option SISR</p>
+    <p style="font-size: 20px; color: var(--text2);">Étudiant BTS SIO option SISR — Session 2026</p>
     <a href="CV_Pascal_GRIFFON.pdf" target="_blank" class="btn-cv">
-      <i class="ti ti-file-text"></i> Mon Curriculum Vitae
+      <i class="ti ti-file-text"></i> Accéder au CV complet
     </a>
   </div>
 </div>
@@ -103,130 +104,101 @@
     <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Portefeuille de Réalisations</h2>
 
     <h3 class="category-header">Réalisations en cours de formation</h3>
-    <div class="grid-projects" id="grid-formation">
-        </div>
+    <div class="grid-projects" id="grid-formation"></div>
 
     <h3 class="category-header">Stage 1ère Année</h3>
-    <div class="grid-projects" id="grid-stage1">
-    </div>
+    <div class="grid-projects" id="grid-stage1"></div>
 
     <h3 class="category-header">Stage 2ème Année</h3>
-    <div class="grid-projects" id="grid-stage2">
-    </div>
+    <div class="grid-projects" id="grid-stage2"></div>
   </div>
 </div>
 
 <div class="page" id="page-e4">
   <div class="container">
     <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Tableau de Synthèse Épreuve E4</h2>
+    <p class="section-sub" style="margin-bottom: 1rem; color: var(--text2);">Récapitulatif des compétences mises en œuvre durant le cursus.</p>
+    
     <div class="table-scroll">
       <table>
         <thead>
           <tr>
             <th>Réalisations Professionnelles</th>
+            <th>Période</th>
             <th>C1</th><th>C2</th><th>C3</th><th>C4</th><th>C5</th><th>C6</th>
           </tr>
         </thead>
-        <tbody id="table-body">
-            </tbody>
+        <tbody id="table-body"></tbody>
       </table>
     </div>
-  </div>
-</div>
 
-<div class="page" id="page-certs">
-  <div class="container">
-    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Veille Technologique & Certifications</h2>
-    <div class="category-header">Veille Technologique</div>
-    <div class="card" style="margin-bottom: 2rem;">
-        <div class="card-title">Sujet : La Cybersécurité dans les environnements Cloud</div>
-        <p class="card-desc">Outils utilisés : Feedly, Google Alerts, Twitter (X) - Suivi des vulnérabilités et des nouvelles normes de protection.</p>
-    </div>
-    
-    <div class="category-header">Certifications</div>
-    <div class="grid-projects">
-        <div class="card">
-            <div class="card-title">ANSSI SecNumAcadémie</div>
-            <p class="card-desc">MOOC sur la cybersécurité validé.</p>
-        </div>
-        <div class="card">
-            <div class="card-title">Cisco Networking Academy</div>
-            <p class="card-desc">Validation du module Introduction to Networks.</p>
-        </div>
+    <div class="competence-legend">
+      <div class="legend-item"><b>C1 : Gérer le patrimoine informatique</b> Recenser les ressources, exploiter les référentiels, gérer les habilitations et sauvegardes.</div>
+      <div class="legend-item"><b>C2 : Répondre aux incidents</b> Collecter, suivre et traiter les demandes d'assistance réseau, système et applicatif.</div>
+      <div class="legend-item"><b>C3 : Développer la présence en ligne</b> Valoriser l'image de l'organisation et référencer les services sur les médias numériques.</div>
+      <div class="legend-item"><b>C4 : Travailler en mode projet</b> Analyser les besoins, élaborer des solutions et participer à la gestion de projet IT.</div>
+      <div class="legend-item"><b>C5 : Mettre à disposition un service</b> Concevoir, déployer et accompagner la mise en production de services informatiques.</div>
+      <div class="legend-item"><b>C6 : Organiser son développement</b> Veille technologique, gestion de son identité et projet professionnel.</div>
     </div>
   </div>
 </div>
 
 <script>
-  // Données centralisées pour les cartes et le tableau
   const data = {
     formation: [
-      { n: "Infrastructure de contexte", d: "Mise en place de l'architecture réseau globale.", c: [0,0,0,0,1,1] },
-      { n: "Installation serveur GLPI", d: "Gestion de parc et helpdesk.", c: [0,1,1,0,0,1] },
-      { n: "Installation serveur rsyslog", d: "Centralisation des logs système.", c: [0,0,0,0,0,1] },
-      { n: "Installation serveur Zabbix", d: "Supervision et monitoring réseau.", c: [0,1,0,0,0,1] },
-      { n: "Installation serveur de fichiers", d: "Gestion des partages Windows/Linux.", c: [0,0,0,0,0,1] },
-      { n: "Installation serveur Proxy", d: "Filtrage et sécurisation des accès web.", c: [0,0,0,0,0,1] },
-      { n: "Installation serveur de messagerie", d: "Solution de courriels interne.", c: [0,0,0,0,0,1] },
-      { n: "Installation annuaire OpenLDAP", d: "Gestion centralisée des identités.", c: [0,0,0,0,0,1] },
-      { n: "Certifications", d: "Suivi et obtention de certifications (ANSSI, Cisco).", c: [0,0,0,0,0,1] }
+      { n: "Infrastructure de contexte", p: "2024-2025", d: "Architecture réseau d'entreprise complète.", c: [0,0,0,0,1,1] },
+      { n: "Serveur GLPI", p: "Oct 2024", d: "Inventaire et helpdesk.", c: [0,1,1,0,0,1] },
+      { n: "Serveur rsyslog", p: "Nov 2024", d: "Logs centralisés.", c: [0,0,0,0,0,1] },
+      { n: "Serveur Zabbix", p: "Déc 2024", d: "Supervision SNMP.", c: [0,1,0,0,0,1] },
+      { n: "Certifications", p: "2024-2026", d: "ANSSI, Cisco CCNA.", c: [0,0,0,0,0,1] },
+      { n: "Serveur de fichiers", p: "Fév 2025", d: "Gestion des partages Samba/NFS.", c: [0,0,0,0,0,1] },
+      { n: "Serveur Proxy", p: "Mars 2025", d: "Filtrage Squid.", c: [0,0,0,0,0,1] },
+      { n: "Serveur de messagerie", p: "Avril 2025", d: "Installation Postfix/Dovecot.", c: [0,0,0,0,0,1] },
+      { n: "Annuaire OpenLDAP", p: "Mai 2025", d: "Identification centralisée.", c: [0,0,0,0,0,1] }
     ],
     stage1: [
-      { n: "Sauvegarde Robocopy", d: "Automatisation des backups de fichiers.", c: [0,1,0,0,0,0] },
-      { n: "Sauvegarde Veeam", d: "Sauvegarde de machines virtuelles.", c: [0,1,0,0,0,0] },
-      { n: "Masterisation de PC", d: "Déploiement d'images via WDS/MDT.", c: [0,0,1,0,0,1] },
-      { n: "Installation serveur Grafana", d: "Tableaux de bord de métriques.", c: [0,1,0,0,0,1] },
-      { n: "Configuration de Nagios", d: "Supervision d'équipements critiques.", c: [0,1,0,0,0,1] },
-      { n: "Brassage réseaux", d: "Câblage et organisation des baies.", c: [0,1,1,0,0,0] },
-      { n: "Gestion des clichés instantanés", d: "Protection contre les suppressions accidentelles.", c: [0,1,0,0,0,0] },
-      { n: "Installation NAS", d: "Mise en place stockage réseau sécurisé.", c: [0,1,0,0,1,1] }
+      { n: "Sauvegarde Robocopy", p: "Mai 2025", d: "Backups Windows automatisés.", c: [0,1,0,0,0,0] },
+      { n: "Sauvegarde Veeam", p: "Juin 2025", d: "Backup de machines virtuelles.", c: [0,1,0,0,0,0] },
+      { n: "Masterisation de PC", p: "Mai 2025", d: "Images systèmes WDS/MDT.", c: [0,0,1,0,0,1] },
+      { n: "Serveur Grafana", p: "Mai 2025", d: "Dashboarding de test.", c: [0,1,0,0,0,1] },
+      { n: "Configuration Nagios", p: "Juin 2025", d: "Supervision open-source.", c: [0,1,0,0,0,1] },
+      { n: "Brassage réseaux", p: "Mai 2025", d: "Câblage de baie.", c: [0,1,1,0,0,0] },
+      { n: "Clichés instantanés", p: "Juin 2025", d: "Protection Shadow Copy.", c: [0,1,0,0,0,0] },
+      { n: "Installation NAS", p: "Mai 2025", d: "Stockage Synology/TrueNAS.", c: [0,1,0,0,1,1] }
     ],
     stage2: [
-      { n: "Gestion des tickets", d: "Support utilisateur et incidents niveau 1 & 2.", c: [0,0,1,0,0,0] },
-      { n: "Système de visio", d: "Installation et support solutions collaboratives.", c: [0,0,1,0,0,1] },
-      { n: "Installation Dépôt Secondaire WAPT", d: "Gestion de parc et déploiement logiciel.", c: [0,0,0,0,1,1] },
-      { n: "Migration de Serveurs Windows", d: "Passage vers Windows Server 2022.", c: [0,0,0,0,1,0] },
-      { n: "Intranet Web", d: "Maintenance et mise à jour du portail interne.", c: [0,0,0,1,0,0] },
-      { n: "Référencement site web", d: "Optimisation SEO pour la sécurité routière.", c: [0,0,0,1,0,0] },
-      { n: "Service iPXE sur Linux", d: "Boot réseau pour installations.", c: [0,0,0,0,0,1] },
-      { n: "Veille Technologique", d: "Méthodologie et outils de veille active.", c: [0,0,0,0,0,1] }
+      { n: "Gestion des tickets", p: "Janv 2026", d: "Support niveau 1 & 2.", c: [0,0,1,0,0,0] },
+      { n: "Système de visio", p: "Fév 2026", d: "Installation et configuration.", c: [0,0,1,0,0,1] },
+      { n: "Dépôt Secondaire WAPT", p: "Janv 2026", d: "Déploiement logiciel.", c: [0,0,0,0,1,1] },
+      { n: "Migration Serveurs Windows", p: "Fév 2026", d: "Vers Windows Server 2022.", c: [0,0,0,0,1,0] },
+      { n: "Intranet Web", p: "Janv 2026", d: "MAJ site interne.", c: [0,0,0,1,0,0] },
+      { n: "Référencement Web", p: "Fév 2026", d: "Optimisation SEO.", c: [0,0,0,1,0,0] },
+      { n: "Service iPXE Linux", p: "Janv 2026", d: "Boot réseau.", c: [0,0,0,0,0,1] },
+      { n: "Veille Technologique", p: "2024-2026", d: "Méthodologie de veille.", c: [0,0,0,0,0,1] }
     ]
   };
 
   function render() {
     const tableBody = document.getElementById('table-body');
-    
     Object.keys(data).forEach(cat => {
       const grid = document.getElementById('grid-' + cat);
-      if(tableBody) {
-        const rowHeader = document.createElement('tr');
-        rowHeader.innerHTML = `<td colspan="7" style="background:#f1f5f9; font-weight:bold; text-align:left; padding-left:10px;">${cat.toUpperCase()}</td>`;
-        tableBody.appendChild(rowHeader);
-      }
+      const rowHeader = document.createElement('tr');
+      rowHeader.innerHTML = `<td colspan="8" style="background:#f1f5f9; font-weight:bold; text-align:left; padding-left:15px;">${cat.toUpperCase()}</td>`;
+      tableBody.appendChild(rowHeader);
 
       data[cat].forEach(item => {
-        // Ajouter carte
         if(grid) {
           const card = document.createElement('a');
-          card.className = 'card';
-          card.target = '_blank';
+          card.className = 'card'; card.target = '_blank';
           card.href = `preuves/${item.n.toLowerCase().replace(/ /g,'_')}.pdf`;
-          card.innerHTML = `
-            <div class="card-title">${item.n}</div>
-            <p class="card-desc">${item.d}</p>
-            <div class="card-link"><i class="ti ti-external-link"></i> Voir la preuve</div>
-          `;
+          card.innerHTML = `<div class="card-title">${item.n}</div><p class="card-desc">${item.d}</p><div class="card-link"><i class="ti ti-link"></i> Preuve technique</div>`;
           grid.appendChild(card);
         }
-        
-        // Ajouter ligne tableau
-        if(tableBody) {
-          const tr = document.createElement('tr');
-          let checks = '';
-          item.c.forEach(val => checks += `<td>${val ? '<span class="x-mark">X</span>' : ''}</td>`);
-          tr.innerHTML = `<td class="task-name">${item.n}</td>${checks}`;
-          tableBody.appendChild(tr);
-        }
+        const tr = document.createElement('tr');
+        let checks = '';
+        item.c.forEach(val => checks += `<td>${val ? '<span class="x-mark">X</span>' : ''}</td>`);
+        tr.innerHTML = `<td class="task-name">${item.n}</td><td class="period">${item.p}</td>${checks}`;
+        tableBody.appendChild(tr);
       });
     });
   }
@@ -238,9 +210,7 @@
     event.currentTarget.classList.add('active');
     window.scrollTo(0,0);
   }
-
   window.onload = render;
 </script>
-
 </body>
 </html>
