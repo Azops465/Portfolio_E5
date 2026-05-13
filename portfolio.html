@@ -3,18 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio BTS SIO — Pascal GRIFFON</title>
+<title>Portfolio E5 — Pascal GRIFFON</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&family=DM+Serif+Display&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.19.0/iconfont/tabler-icons.min.css">
 <style>
+  /* --- STYLE GLOBAL --- */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --navy: #0d1f35; --accent: #0ea5e9; --accent2: #0284c7;
-    --text: #0f172a; --text2: #475569; --text3: #94a3b8;
-    --border: rgba(15, 27, 45, 0.12); --surface: #f8fafc;
-    --white: #ffffff; --green: #059669;
+    --text: #0f172a; --text2: #475569; --border: rgba(15, 27, 45, 0.12);
+    --surface: #f8fafc; --white: #ffffff; --green: #10b981;
+    /* Styles Certifs */
+    --cert-bg: #080c14; --cert-card: #141d2e; --cert-primary: #6366f1;
   }
 
   body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; }
@@ -22,7 +24,7 @@
   .nav {
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 2.5rem; border-bottom: 1px solid var(--border);
-    background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 1000;
   }
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
   .nav-links { display: flex; gap: 8px; }
@@ -32,50 +34,63 @@
   }
   .nav-link:hover, .nav-link.active { background: var(--navy); color: white; }
 
-  .page { display: none; padding-bottom: 5rem; }
+  .page { display: none; }
   .page.active { display: block; }
   .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
+  /* --- HERO --- */
   .hero { text-align: center; padding: 5rem 2rem; }
   .hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 8vw, 60px); color: var(--navy); }
-  
   .btn-cv {
     display: inline-flex; align-items: center; gap: 12px; margin-top: 2rem;
-    background: var(--navy); color: white; padding: 16px 32px;
-    border-radius: 14px; text-decoration: none; font-weight: 600; transition: 0.2s;
+    background: var(--navy); color: white; padding: 16px 32px; border-radius: 14px;
+    text-decoration: none; font-weight: 600; transition: 0.2s;
   }
   .btn-cv:hover { transform: translateY(-3px); background: var(--accent2); }
 
-  .category-header { 
-    margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--surface);
-    color: var(--navy); font-family: 'DM Serif Display', serif; font-size: 24px;
-  }
+  /* --- GRID --- */
+  .category-header { margin: 3rem 0 1.5rem; border-bottom: 2px solid var(--surface); font-family: 'DM Serif Display'; font-size: 24px; color: var(--navy); }
   .grid-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-  .card {
-    border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem;
-    text-decoration: none; color: inherit; transition: 0.2s; background: var(--white);
-    display: flex; flex-direction: column; height: 100%;
-  }
-  .card:hover { border-color: var(--accent2); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-  .card-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--navy); }
-  .card-desc { font-size: 12px; color: var(--text2); flex-grow: 1; margin-bottom: 12px; }
-  .card-link { font-size: 11px; color: var(--accent2); font-weight: 600; }
+  .card { border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; text-decoration: none; color: inherit; background: white; transition: 0.2s; }
+  .card:hover { border-color: var(--accent2); transform: translateY(-4px); }
 
-  /* TABLEAU E4 CORRIGÉ */
-  .table-scroll { overflow-x: auto; margin-top: 2rem; border-radius: 12px; border: 1px solid var(--border); }
+  /* --- TABLEAU E4 (CORRIGÉ) --- */
+  .table-scroll { overflow-x: auto; margin-top: 2rem; border: 1px solid var(--border); border-radius: 12px; }
   table { width: 100%; border-collapse: collapse; background: white; font-size: 11px; }
-  th { background: var(--navy); color: white; padding: 12px 8px; text-align: center; border: 1px solid #1e293b; }
+  th { background: var(--navy); color: white; padding: 10px 5px; border: 1px solid #1e293b; font-weight: 500; font-size: 10px; line-height: 1.2; }
   td { padding: 10px; border: 1px solid var(--border); text-align: center; }
-  td.task-name { text-align: left; font-weight: 500; background: var(--surface); width: 30%; padding-left: 15px; font-size: 12px;}
-  td.period { width: 15%; color: var(--text2); font-style: italic; }
-  .x-mark { color: var(--green); font-weight: bold; font-size: 15px; }
+  td.task-name { text-align: left; font-weight: 500; background: var(--surface); width: 25%; padding-left: 15px; }
+  td.period { width: 12%; color: var(--text2); font-style: italic; }
+  .x-mark { color: var(--green); font-weight: bold; font-size: 16px; }
 
-  .competence-legend {
-    margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;
-    background: var(--surface); padding: 1.5rem; border-radius: 12px;
-  }
-  .legend-item { font-size: 12px; line-height: 1.4; }
-  .legend-item b { color: var(--navy); display: block; margin-bottom: 4px; }
+  /* --- STYLE VITRINE CERTIFS (SOURCE 3) --- */
+  #page-certs { background-color: var(--cert-bg); color: #e8edf5; min-height: 100vh; padding-top: 0; }
+  .cert-header { text-align: center; padding: 4rem 1rem; position: relative; }
+  .cert-eyebrow { font-family: 'Space Mono', monospace; color: var(--accent); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; }
+  .cert-title-h1 { font-size: 2.5rem; background: linear-gradient(135deg, #e8edf5 30%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  
+  .filters { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+  .filter-btn { background: var(--cert-card); color: #94a3b8; border: 1px solid #1e2d45; padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+  .filter-btn.active { background: var(--cert-primary); color: white; }
+
+  .showcase { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+  .cert-card-v { background: var(--cert-card); border-radius: 18px; border: 1px solid #1e2d45; width: 300px; padding: 1.5rem; transition: 0.3s; }
+  .cert-card-v:hover { border-color: var(--cert-primary); transform: translateY(-5px); }
+  .cert-img-v { height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+  .cert-img-v img { max-height: 100%; max-width: 100%; object-fit: contain; }
+  .cert-tag-v { background: rgba(99, 102, 241, 0.1); color: #a5b4fc; font-size: 0.7rem; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; }
+  
+  .cert-link-v { display: block; text-align: center; background: var(--cert-primary); color: white; padding: 0.7rem; border-radius: 10px; text-decoration: none; margin-top: 1rem; font-weight: 600; }
+  .modules-btn-v { width: 100%; background: rgba(34, 211, 238, 0.1); color: #22d3ee; border: 1px solid rgba(34,211,238,0.2); padding: 0.7rem; border-radius: 10px; margin-top: 0.5rem; cursor: pointer; }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal-v { background: #0f1623; border: 1px solid #2a3f60; border-radius: 20px; width: 90%; max-width: 800px; padding: 2rem; max-height: 80vh; overflow-y: auto; }
+  .module-item-v { background: #141d2e; padding: 1rem; border-radius: 12px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+  .close-modal { float: right; color: white; font-size: 1.5rem; cursor: pointer; }
+
+  @media (max-width: 768px) { .nav-links { display: none; } }
 </style>
 </head>
 <body>
@@ -86,119 +101,173 @@
     <button class="nav-link active" onclick="showPage('hero')">Accueil</button>
     <button class="nav-link" onclick="showPage('projects')">Réalisations</button>
     <button class="nav-link" onclick="showPage('e4')">Tableau E4</button>
+    <button class="nav-link" onclick="showPage('certs')">Certifications</button>
   </div>
 </nav>
 
 <div class="page active" id="page-hero">
   <div class="hero">
     <h1 class="hero-name">Pascal GRIFFON</h1>
-    <p style="font-size: 20px; color: var(--text2);">Étudiant BTS SIO option SISR — Session 2026</p>
+    <p style="font-size: 20px; color: var(--text2);">Étudiant BTS SIO — SISR · Session 2026</p>
     <a href="CV_Pascal_GRIFFON.pdf" target="_blank" class="btn-cv">
-      <i class="ti ti-file-text"></i> Accéder au CV complet
+      <i class="ti ti-file-download"></i> Télécharger mon CV
     </a>
   </div>
 </div>
 
 <div class="page" id="page-projects">
   <div class="container">
-    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Portefeuille de Réalisations</h2>
-
-    <h3 class="category-header">Réalisations en cours de formation</h3>
-    <div class="grid-projects" id="grid-formation"></div>
-
-    <h3 class="category-header">Stage 1ère Année</h3>
-    <div class="grid-projects" id="grid-stage1"></div>
-
-    <h3 class="category-header">Stage 2ème Année</h3>
-    <div class="grid-projects" id="grid-stage2"></div>
+    <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Portefeuille de Travaux</h2>
+    <div id="projects-content"></div>
   </div>
 </div>
 
 <div class="page" id="page-e4">
   <div class="container">
     <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Tableau de Synthèse Épreuve E4</h2>
-    <p class="section-sub" style="margin-bottom: 1rem; color: var(--text2);">Récapitulatif des compétences mises en œuvre durant le cursus.</p>
-    
     <div class="table-scroll">
       <table>
         <thead>
           <tr>
-            <th>Réalisations Professionnelles</th>
-            <th>Période</th>
+            <th rowspan="2">Réalisations Professionnelles</th>
+            <th rowspan="2">Période</th>
             <th>C1</th><th>C2</th><th>C3</th><th>C4</th><th>C5</th><th>C6</th>
+          </tr>
+          <tr>
+            <th>Gérer le patrimoine informatique</th>
+            <th>Répondre aux incidents</th>
+            <th>Présence en ligne</th>
+            <th>Travail en mode projet</th>
+            <th>Mise à disposition service</th>
+            <th>Développement pro</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
       </table>
     </div>
-
-    <div class="competence-legend">
-      <div class="legend-item"><b>C1 : Gérer le patrimoine informatique</b> Recenser les ressources, exploiter les référentiels, gérer les habilitations et sauvegardes.</div>
-      <div class="legend-item"><b>C2 : Répondre aux incidents</b> Collecter, suivre et traiter les demandes d'assistance réseau, système et applicatif.</div>
-      <div class="legend-item"><b>C3 : Développer la présence en ligne</b> Valoriser l'image de l'organisation et référencer les services sur les médias numériques.</div>
-      <div class="legend-item"><b>C4 : Travailler en mode projet</b> Analyser les besoins, élaborer des solutions et participer à la gestion de projet IT.</div>
-      <div class="legend-item"><b>C5 : Mettre à disposition un service</b> Concevoir, déployer et accompagner la mise en production de services informatiques.</div>
-      <div class="legend-item"><b>C6 : Organiser son développement</b> Veille technologique, gestion de son identité et projet professionnel.</div>
-    </div>
   </div>
+</div>
+
+<div class="page" id="page-certs">
+    <header class="cert-header">
+        <p class="cert-eyebrow">// Parcours certifié</p>
+        <h1 class="cert-title-h1">Mes Certifications</h1>
+        <p style="color: #94a3b8;">Validation des compétences ANSSI et Microsoft Learn</p>
+    </header>
+
+    <div class="container">
+        <nav class="filters">
+            <button class="filter-btn active" onclick="filterCerts('all', this)">Tout</button>
+            <button class="filter-btn" onclick="filterCerts('SecNum', this)">SecNumAcadémie</button>
+            <button class="filter-btn" onclick="filterCerts('Microsoft', this)">Microsoft Learn</button>
+        </nav>
+
+        <section class="showcase" id="cert-showcase">
+            <article class="cert-card-v SecNum">
+                <div class="cert-img-v"><img src="Badges/secnum.png" alt="ANSSI"></div>
+                <span class="cert-tag-v">Cyber</span>
+                <h3 style="margin-top:0.5rem">Bases de la SSI</h3>
+                <p style="font-size:0.8rem; color:#64748b; margin-bottom:1rem">Délivré par l'ANSSI le 07/11/2024</p>
+                <a href="Certifs/Attestation SecNum.pdf" target="_blank" class="cert-link-v">Voir le certificat</a>
+            </article>
+
+            <article class="cert-card-v Microsoft">
+                <div class="cert-img-v"><img src="Badges/powershell-base.png" alt="PS"></div>
+                <span class="cert-tag-v">Microsoft</span>
+                <h3 style="margin-top:0.5rem">Windows PowerShell</h3>
+                <p style="font-size:0.8rem; color:#64748b; margin-bottom:1rem">Démarrage et fondamentaux</p>
+                <button class="modules-btn-v" onclick="openModal('ps-base')">Voir les modules</button>
+            </article>
+
+            <article class="cert-card-v Microsoft">
+                <div class="cert-img-v"><img src="Badges/powershell-auto.png" alt="PS"></div>
+                <span class="cert-tag-v">Microsoft</span>
+                <h3 style="margin-top:0.5rem">Automatisation PS</h3>
+                <p style="font-size:0.8rem; color:#64748b; margin-bottom:1rem">Administration avancée</p>
+                <button class="modules-btn-v" onclick="openModal('ps-auto')">Voir les modules</button>
+            </article>
+        </section>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
+    <div class="modal-v">
+        <span class="close-modal" onclick="closeModal()">✕</span>
+        <h2 id="modalTitle" style="color:white; margin-bottom:1.5rem">Modules</h2>
+        <div id="modalList"></div>
+    </div>
 </div>
 
 <script>
   const data = {
     formation: [
-      { n: "Infrastructure de contexte", p: "2024-2025", d: "Architecture réseau d'entreprise complète.", c: [0,0,0,0,1,1] },
-      { n: "Serveur GLPI", p: "Oct 2024", d: "Inventaire et helpdesk.", c: [0,1,1,0,0,1] },
-      { n: "Serveur rsyslog", p: "Nov 2024", d: "Logs centralisés.", c: [0,0,0,0,0,1] },
-      { n: "Serveur Zabbix", p: "Déc 2024", d: "Supervision SNMP.", c: [0,1,0,0,0,1] },
-      { n: "Certifications", p: "2024-2026", d: "ANSSI, Cisco CCNA.", c: [0,0,0,0,0,1] },
-      { n: "Serveur de fichiers", p: "Fév 2025", d: "Gestion des partages Samba/NFS.", c: [0,0,0,0,0,1] },
-      { n: "Serveur Proxy", p: "Mars 2025", d: "Filtrage Squid.", c: [0,0,0,0,0,1] },
-      { n: "Serveur de messagerie", p: "Avril 2025", d: "Installation Postfix/Dovecot.", c: [0,0,0,0,0,1] },
-      { n: "Annuaire OpenLDAP", p: "Mai 2025", d: "Identification centralisée.", c: [0,0,0,0,0,1] }
+      { n: "Infrastructure de contexte", p: "2024-2025", c: [0,0,0,0,1,1] },
+      { n: "Installation serveur GLPI", p: "Oct 2024", c: [0,1,1,0,0,1] },
+      { n: "Installation serveur rsyslog", p: "Nov 2024", c: [0,0,0,0,0,1] },
+      { n: "Installation serveur Zabbix", p: "Déc 2024", c: [0,1,0,0,0,1] },
+      { n: "Certifications", p: "2024-2026", c: [0,0,0,0,0,1] },
+      { n: "Installation serveur de fichiers", p: "Fév 2025", c: [0,0,0,0,0,1] },
+      { n: "Installation serveur Proxy", p: "Mars 2025", c: [0,0,0,0,0,1] },
+      { n: "Installation serveur de messagerie", p: "Avril 2025", c: [0,0,0,0,0,1] },
+      { n: "Installation annuaire OpenLDAP", p: "Mai 2025", c: [0,0,0,0,0,1] }
     ],
     stage1: [
-      { n: "Sauvegarde Robocopy", p: "Mai 2025", d: "Backups Windows automatisés.", c: [0,1,0,0,0,0] },
-      { n: "Sauvegarde Veeam", p: "Juin 2025", d: "Backup de machines virtuelles.", c: [0,1,0,0,0,0] },
-      { n: "Masterisation de PC", p: "Mai 2025", d: "Images systèmes WDS/MDT.", c: [0,0,1,0,0,1] },
-      { n: "Serveur Grafana", p: "Mai 2025", d: "Dashboarding de test.", c: [0,1,0,0,0,1] },
-      { n: "Configuration Nagios", p: "Juin 2025", d: "Supervision open-source.", c: [0,1,0,0,0,1] },
-      { n: "Brassage réseaux", p: "Mai 2025", d: "Câblage de baie.", c: [0,1,1,0,0,0] },
-      { n: "Clichés instantanés", p: "Juin 2025", d: "Protection Shadow Copy.", c: [0,1,0,0,0,0] },
-      { n: "Installation NAS", p: "Mai 2025", d: "Stockage Synology/TrueNAS.", c: [0,1,0,0,1,1] }
+      { n: "Sauvegarde Robocopy", p: "Mai 2025", c: [0,1,0,0,0,0] },
+      { n: "Sauvegarde Veeam", p: "Juin 2025", c: [0,1,0,0,0,0] },
+      { n: "Masterisation de PC", p: "Mai 2025", c: [0,0,1,0,0,1] },
+      { n: "Installation serveur Grafana", p: "Mai 2025", c: [0,1,0,0,0,1] },
+      { n: "Configuration de Nagios", p: "Juin 2025", c: [0,1,0,0,0,1] },
+      { n: "Brassage réseaux", p: "Mai 2025", c: [0,1,1,0,0,0] },
+      { n: "Gestion des clichés instantanés", p: "Juin 2025", c: [0,1,0,0,0,0] },
+      { n: "Installation NAS", p: "Mai 2025", c: [0,1,0,0,1,1] }
     ],
     stage2: [
-      { n: "Gestion des tickets", p: "Janv 2026", d: "Support niveau 1 & 2.", c: [0,0,1,0,0,0] },
-      { n: "Système de visio", p: "Fév 2026", d: "Installation et configuration.", c: [0,0,1,0,0,1] },
-      { n: "Dépôt Secondaire WAPT", p: "Janv 2026", d: "Déploiement logiciel.", c: [0,0,0,0,1,1] },
-      { n: "Migration Serveurs Windows", p: "Fév 2026", d: "Vers Windows Server 2022.", c: [0,0,0,0,1,0] },
-      { n: "Intranet Web", p: "Janv 2026", d: "MAJ site interne.", c: [0,0,0,1,0,0] },
-      { n: "Référencement Web", p: "Fév 2026", d: "Optimisation SEO.", c: [0,0,0,1,0,0] },
-      { n: "Service iPXE Linux", p: "Janv 2026", d: "Boot réseau.", c: [0,0,0,0,0,1] },
-      { n: "Veille Technologique", p: "2024-2026", d: "Méthodologie de veille.", c: [0,0,0,0,0,1] }
+      { n: "Gestion des tickets et appels", p: "Janv 2026", c: [0,0,1,0,0,0] },
+      { n: "Mise en place système de visio", p: "Fév 2026", c: [0,0,1,0,0,1] },
+      { n: "Installation Dépôt Secondaire WAPT", p: "Janv 2026", c: [0,0,0,0,1,1] },
+      { n: "Migration de Serveurs Windows", p: "Fév 2026", c: [0,0,0,0,1,0] },
+      { n: "MAJ site web Intranet", p: "Janv 2026", c: [0,0,0,1,0,0] },
+      { n: "Référencement site web", p: "Fév 2026", c: [0,0,0,1,0,0] },
+      { n: "Service iPXE sur Linux", p: "Janv 2026", c: [0,0,0,0,0,1] },
+      { n: "Veille Technologique", p: "2024-2026", c: [0,0,0,0,0,1] }
     ]
   };
 
-  function render() {
+  function renderAll() {
     const tableBody = document.getElementById('table-body');
+    const projectsDiv = document.getElementById('projects-content');
+
     Object.keys(data).forEach(cat => {
-      const grid = document.getElementById('grid-' + cat);
-      const rowHeader = document.createElement('tr');
-      rowHeader.innerHTML = `<td colspan="8" style="background:#f1f5f9; font-weight:bold; text-align:left; padding-left:15px;">${cat.toUpperCase()}</td>`;
-      tableBody.appendChild(rowHeader);
+      // Header Tableau
+      const trH = document.createElement('tr');
+      trH.innerHTML = `<td colspan="8" style="background:#f1f5f9; font-weight:bold; text-align:left; padding:10px;">${cat.toUpperCase()}</td>`;
+      tableBody.appendChild(trH);
+
+      // Section Projets
+      const sectionHeader = document.createElement('h3');
+      sectionHeader.className = 'category-header';
+      sectionHeader.innerText = cat.replace('stage','Stage ').toUpperCase();
+      projectsDiv.appendChild(sectionHeader);
+      
+      const grid = document.createElement('div');
+      grid.className = 'grid-projects';
+      projectsDiv.appendChild(grid);
 
       data[cat].forEach(item => {
-        if(grid) {
-          const card = document.createElement('a');
-          card.className = 'card'; card.target = '_blank';
-          card.href = `preuves/${item.n.toLowerCase().replace(/ /g,'_')}.pdf`;
-          card.innerHTML = `<div class="card-title">${item.n}</div><p class="card-desc">${item.d}</p><div class="card-link"><i class="ti ti-link"></i> Preuve technique</div>`;
-          grid.appendChild(card);
-        }
+        // Ligne Tableau
         const tr = document.createElement('tr');
         let checks = '';
-        item.c.forEach(val => checks += `<td>${val ? '<span class="x-mark">X</span>' : ''}</td>`);
+        item.c.forEach(v => checks += `<td>${v ? '<span class="x-mark">X</span>' : ''}</td>`);
         tr.innerHTML = `<td class="task-name">${item.n}</td><td class="period">${item.p}</td>${checks}`;
         tableBody.appendChild(tr);
+
+        // Carte Projet
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = `preuves/${item.n.replace(/ /g,'_')}.pdf`;
+        card.target = '_blank';
+        card.innerHTML = `<div class="card-title">${item.n}</div><div style="font-size:11px; color:#64748b">Période : ${item.p}</div>`;
+        grid.appendChild(card);
       });
     });
   }
@@ -210,7 +279,42 @@
     event.currentTarget.classList.add('active');
     window.scrollTo(0,0);
   }
-  window.onload = render;
+
+  /* Logique Certifs Source 3 */
+  function filterCerts(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.cert-card-v').forEach(card => {
+        if(cat==='all' || card.classList.contains(cat)) card.style.display='block';
+        else card.style.display='none';
+    });
+  }
+
+  const MODULES = {
+      'ps-base': [
+          { n: 'Passer en revue PowerShell', d: '55 min' },
+          { n: 'Syntaxe des commandes', d: '28 min' }
+      ],
+      'ps-auto': [
+          { n: 'Introduction à l’écriture de scripts', d: '42 min' },
+          { n: 'Pipeline et commandes', d: '38 min' }
+      ]
+  };
+
+  function openModal(id) {
+    const m = MODULES[id];
+    document.getElementById('modalTitle').innerText = id === 'ps-base' ? 'PowerShell Fondamentaux' : 'Automatisation';
+    const list = document.getElementById('modalList');
+    list.innerHTML = '';
+    m.forEach(mod => {
+        list.innerHTML += `<div class="module-item-v"><span>${mod.n}</span><span style="color:#64748b">${mod.d}</span></div>`;
+    });
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+  window.onload = renderAll;
 </script>
 </body>
 </html>
