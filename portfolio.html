@@ -69,7 +69,7 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
 .card { border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; text-decoration: none; color: inherit; background: white; transition: 0.2s; }
 .card:hover { border-color: var(--accent2); transform: translateY(-4px); }
 
-/* --- CERTIFICATIONS (thème clair, cohérent avec le portfolio) --- */
+/* --- CERTIFICATIONS --- */
 #page-certs { background: var(--white); color: var(--text); min-height: 100vh; }
 
 .cert-header { text-align: center; padding: 4rem 1rem 2rem; }
@@ -166,7 +166,6 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
   </div>
 </nav>
 
-<!-- PAGE ACCUEIL -->
 <div class="page active" id="page-hero">
   <div class="hero">
     <h1 class="hero-name">Pascal GRIFFON</h1>
@@ -188,7 +187,6 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
   </div>
 </div>
 
-<!-- PAGE RÉALISATIONS -->
 <div class="page" id="page-projects">
   <div class="container">
     <h2 style="font-family: 'DM Serif Display'; font-size: 32px;">Portefeuille de Travaux</h2>
@@ -196,7 +194,6 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
   </div>
 </div>
 
-<!-- PAGE CERTIFICATIONS -->
 <div class="page" id="page-certs">
   <header class="cert-header">
     <p class="cert-eyebrow">// Parcours certifié</p>
@@ -235,7 +232,6 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
   </div>
 </div>
 
-<!-- MODAL MODULES -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
   <div class="modal-v">
     <span class="close-modal" onclick="closeModal()">✕</span>
@@ -245,12 +241,14 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
 </div>
 
 <script>
+// --- AJOUTEZ VOS LIENS DE PREUVES DIRECTEMENT ICI ---
+// Exemple : git: "https://github.com/..." ou doc: "preuves/screenshot.png"
 const data = {
   formation: [
     { n: "Infrastructure de contexte",      p: "2024-2025", c: [0,0,0,0,1,1] },
-    { n: "Installation serveur GLPI",        p: "Oct 2024",  c: [0,1,1,0,0,1] },
+    { n: "Installation serveur GLPI",        p: "Oct 2024",  c: [0,1,1,0,0,1], git: "https://github.com/Azops465/Portfolio_E5" }, // Exemple de lien GitHub
     { n: "Installation serveur rsyslog",     p: "Nov 2024",  c: [0,0,0,0,0,1] },
-    { n: "Installation serveur Zabbix",      p: "Déc 2024",  c: [0,1,0,0,0,1] },
+    { n: "Installation serveur Zabbix",      p: "Déc 2024",  c: [0,1,0,0,0,1], doc: "preuves/Zabbix_Dashboard.png" }, // Exemple de capture de preuve
     { n: "Certifications",                   p: "2024-2026", c: [0,0,0,0,0,1] },
     { n: "Installation serveur de fichiers", p: "Fév 2025",  c: [0,0,0,0,0,1] },
     { n: "Installation serveur Proxy",       p: "Mars 2025", c: [0,0,0,0,0,1] },
@@ -283,6 +281,8 @@ const catLabels = { formation: 'Formation', stage: 'Stage', Alternance: 'Alterna
 
 function renderAll() {
   const projectsDiv = document.getElementById('projects-content');
+  projectsDiv.innerHTML = ''; 
+  
   Object.keys(data).forEach(cat => {
     const sectionHeader = document.createElement('h3');
     sectionHeader.className = 'category-header';
@@ -294,11 +294,29 @@ function renderAll() {
     projectsDiv.appendChild(grid);
 
     data[cat].forEach(item => {
-      const card = document.createElement('a');
+      // Transformation de la carte en 'div' pour intégrer proprement plusieurs boutons
+      const card = document.createElement('div');
       card.className = 'card';
-      card.href = `preuves/${item.n.replace(/ /g,'_')}.pdf`;
-      card.target = '_blank';
-      card.innerHTML = `<div style="font-weight:600; margin-bottom:4px">${item.n}</div><div style="font-size:11px; color:#64748b">Période : ${item.p}</div>`;
+      
+      // Lien générique par défaut basé sur le nom du fichier
+      const defaultPdf = `preuves/${item.n.replace(/ /g,'_')}.pdf`;
+      
+      // Construction dynamique des boutons à l'intérieur de la carte
+      let buttonsHTML = `<a href="${defaultPdf}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-decoration: none; background: var(--navy); color: white; padding: 5px 10px; border-radius: 6px; transition: 0.2s;"><i class="ti ti-file-text"></i> Fiche E5</a>`;
+      
+      if (item.git) {
+        buttonsHTML += `<a href="${item.git}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-decoration: none; background: #24292e; color: white; padding: 5px 10px; border-radius: 6px; transition: 0.2s;"><i class="ti ti-brand-github"></i> Code</a>`;
+      }
+      
+      if (item.doc) {
+        buttonsHTML += `<a href="${item.doc}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-decoration: none; background: var(--accent2); color: white; padding: 5px 10px; border-radius: 6px; transition: 0.2s;"><i class="ti ti-photo"></i> Preuve</a>`;
+      }
+
+      card.innerHTML = `
+        <div style="font-weight:600; margin-bottom:4px; color: var(--navy);">${item.n}</div>
+        <div style="font-size:11px; color:#64748b; margin-bottom: 12px;">Période : ${item.p}</div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">${buttonsHTML}</div>
+      `;
       grid.appendChild(card);
     });
   });
