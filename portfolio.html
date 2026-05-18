@@ -181,7 +181,7 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
         <i class="ti ti-file-download"></i> Télécharger mon CV
       </a>
       <a href="tableau-de-synthese-E5-GRIFFON-Pascal.pdf" target="_blank" class="btn-tableau">
-        <i class="ti ti-table-down"></i> Tableau de synthèse E5
+        <i class="ti ti-table-down"></i> Tableau de synthèse E4
       </a>
     </div>
   </div>
@@ -241,14 +241,12 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
 </div>
 
 <script>
-// --- AJOUTEZ VOS LIENS DE PREUVES DIRECTEMENT ICI ---
-// Exemple : git: "https://github.com/..." ou doc: "preuves/screenshot.png"
 const data = {
   formation: [
     { n: "Infrastructure de contexte",      p: "2024-2025", c: [0,0,0,0,1,1] },
-    { n: "Installation serveur GLPI",        p: "Oct 2024",  c: [0,1,1,0,0,1], git: "https://github.com/Azops465/Portfolio_E5" }, // Exemple de lien GitHub
+    { n: "Installation serveur GLPI",        p: "Oct 2024",  c: [0,1,1,0,0,1], git: "https://github.com/Azops465/Portfolio_E5" }, 
     { n: "Installation serveur rsyslog",     p: "Nov 2024",  c: [0,0,0,0,0,1] },
-    { n: "Installation serveur Zabbix",      p: "Déc 2024",  c: [0,1,0,0,0,1], doc: "preuves/Zabbix_Dashboard.png" }, // Exemple de capture de preuve
+    { n: "Installation serveur Zabbix",      p: "Déc 2024",  c: [0,1,0,0,0,1], doc: "preuves/Zabbix_Dashboard.pdf" }, // Remplacer par un .pdf pour l'affichage direct
     { n: "Certifications",                   p: "2024-2026", c: [0,0,0,0,0,1] },
     { n: "Installation serveur de fichiers", p: "Fév 2025",  c: [0,0,0,0,0,1] },
     { n: "Installation serveur Proxy",       p: "Mars 2025", c: [0,0,0,0,0,1] },
@@ -272,7 +270,7 @@ const data = {
     { n: "Migration de Serveurs Windows",    p: "Fév 2026",  c: [0,0,0,0,1,0] },
     { n: "MAJ site web Intranet",            p: "Janv 2026", c: [0,0,0,1,0,0] },
     { n: "Référencement site web",           p: "Fév 2026",  c: [0,0,0,1,0,0] },
-    { n: "Service iPXE sur Linux",           p: "Janv 2026", c: [0,0,0,0,0,1], doc: "Procedures/FP-SI-P2-03 - iPXE WAPT v1.4.odt" },
+    { n: "Service iPXE sur Linux",           p: "Janv 2026", c: [0,0,0,0,0,1] },
     { n: "Veille Technologique",             p: "2024-2026", c: [0,0,0,0,0,1] }
   ]
 };
@@ -294,15 +292,10 @@ function renderAll() {
     projectsDiv.appendChild(grid);
 
     data[cat].forEach(item => {
-      // Transformation de la carte en 'div' pour intégrer proprement plusieurs boutons
       const card = document.createElement('div');
       card.className = 'card';
       
-      // Lien générique par défaut basé sur le nom du fichier
-      const defaultPdf = `preuves/${item.n.replace(/ /g,'_')}.pdf`;
-      
-      // Construction dynamique des boutons à l'intérieur de la carte
-      let buttonsHTML = `<a href="${defaultPdf}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-decoration: none; background: var(--navy); color: white; padding: 5px 10px; border-radius: 6px; transition: 0.2s;"><i class="ti ti-file-text"></i> Fiche E5</a>`;
+      let buttonsHTML = ''; 
       
       if (item.git) {
         buttonsHTML += `<a href="${item.git}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-decoration: none; background: #24292e; color: white; padding: 5px 10px; border-radius: 6px; transition: 0.2s;"><i class="ti ti-brand-github"></i> Code</a>`;
@@ -312,10 +305,13 @@ function renderAll() {
         buttonsHTML += `<a href="${item.doc}" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-decoration: none; background: var(--accent2); color: white; padding: 5px 10px; border-radius: 6px; transition: 0.2s;"><i class="ti ti-photo"></i> Preuve</a>`;
       }
 
+      const hasButtons = buttonsHTML !== '';
+      const marginStyle = hasButtons ? 'margin-bottom: 12px;' : 'margin-bottom: 0;';
+
       card.innerHTML = `
         <div style="font-weight:600; margin-bottom:4px; color: var(--navy);">${item.n}</div>
-        <div style="font-size:11px; color:#64748b; margin-bottom: 12px;">Période : ${item.p}</div>
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">${buttonsHTML}</div>
+        <div style="font-size:11px; color:#64748b; ${marginStyle}">Période : ${item.p}</div>
+        ${hasButtons ? `<div style="display: flex; gap: 6px; flex-wrap: wrap;">${buttonsHTML}</div>` : ''}
       `;
       grid.appendChild(card);
     });
