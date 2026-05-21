@@ -162,7 +162,8 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
   <div class="nav-links">
     <button class="nav-link active" onclick="showPage('hero', event)">Accueil</button>
     <button class="nav-link" onclick="showPage('projects', event)">Réalisations</button>
-    <button class="nav-link" onclick="showPage('certs', event)">Certifications</button>
+    <!-- MODIFICATION : lien Certifications ouvre le site externe -->
+    <button class="nav-link" onclick="window.open('https://azops465.github.io/Support-EF3/index.html', '_blank')">Certifications</button>
   </div>
 </nav>
 
@@ -194,42 +195,8 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
   </div>
 </div>
 
-<div class="page" id="page-certs">
-  <header class="cert-header">
-    <p class="cert-eyebrow">// Parcours certifié</p>
-    <h1 class="cert-title-h1">Mes Certifications</h1>
-    <p class="cert-subtitle">Validation des compétences ANSSI et Microsoft Learn</p>
-  </header>
-  <div class="container">
-    <nav class="filters">
-      <button class="filter-btn active" onclick="filterCerts('all', this)">Tout</button>
-      <button class="filter-btn" onclick="filterCerts('SecNum', this)">SecNumAcadémie</button>
-      <button class="filter-btn" onclick="filterCerts('Microsoft', this)">Microsoft Learn</button>
-    </nav>
-    <section class="showcase" id="cert-showcase">
-      <article class="cert-card-v SecNum">
-        <div class="cert-img-v"><img src="Badges/secnum.png" alt="ANSSI"></div>
-        <span class="cert-tag-v">Cyber</span>
-        <h3>Bases de la SSI</h3>
-        <p>Délivré par l'ANSSI le 07/11/2024</p>
-        <a href="Certifs/Attestation SecNum.pdf" target="_blank" class="cert-link-v">Voir le certificat</a>
-      </article>
-      <article class="cert-card-v Microsoft">
-        <div class="cert-img-v"><img src="Badges/powershell-base.png" alt="PS"></div>
-        <span class="cert-tag-v">Microsoft</span>
-        <h3>Windows PowerShell</h3>
-        <p>Démarrage et fondamentaux</p>
-        <button class="modules-btn-v" onclick="openModal('ps-base')"><i class="ti ti-layout-list"></i> Voir les modules</button>
-      </article>
-      <article class="cert-card-v Microsoft">
-        <div class="cert-img-v"><img src="Badges/powershell-auto.png" alt="PS"></div>
-        <span class="cert-tag-v">Microsoft</span>
-        <h3>Automatisation PS</h3>
-        <p>Administration avancée</p>
-        <button class="modules-btn-v" onclick="openModal('ps-auto')"><i class="ti ti-layout-list"></i> Voir les modules</button>
-      </article>
-    </section>
-  </div>
+<!-- La page certifications interne n'est plus utilisée mais conservée au cas où -->
+<div class="page" id="page-certs" style="display:none!important">
 </div>
 
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target==this) closeModal()">
@@ -243,35 +210,36 @@ body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(-
 <script>
 const data = {
   formation: [
-    { n: "Infrastructure de contexte",      p: "2024-2025", c: [0,0,0,0,1,1], doc: "Procedures/contexte.png" },
-    { n: "Installation serveur GLPI",        p: "Oct 2024",  c: [0,1,1,0,0,1], doc: "Procedures/Procédure GLPI.pdf" },
-    { n: "Installation serveur rsyslog",     p: "Nov 2024",  c: [0,0,0,0,0,1], doc: "Procedures/Procédure Rsyslog.pdf" },
-    { n: "Installation serveur Zabbix",      p: "Déc 2024",  c: [0,1,0,0,0,1], doc: "Procedures/Serveur Zabbix 7.pdf" },
-    { n: "Certifications",                   p: "2024-2026", c: [0,0,0,0,0,1] },
-    { n: "Création d'un portfolio",          p: "Fév 2025",  c: [0,0,0,0,0,1] },
-    { n: "Installation serveur Opentofu",    p: "Mars 2025", c: [0,0,0,0,0,1], doc: "Procedures/Procedure_OpenTofu.docx.pdf" },
-    { n: "Installation serveur de messagerie", p: "Avril 2025", c: [0,0,0,0,0,1], doc: "Procedures/Serveur de Messagerie (Postfix _ Dovecot _ Rainloop).pdf" },
-    { n: "Installation d'un serveur Proxmox Backup Server", p: "Mai 2025",  c: [0,0,0,0,0,1], doc: "Procedures/Procédure PBS.pdf" }
+    { n: "Infrastructure de contexte",      c: [0,0,0,0,1,1], doc: "Procedures/contexte.png" },
+    { n: "Installation serveur GLPI",        c: [0,1,1,0,0,1], doc: "Procedures/Procédure GLPI.pdf" },
+    { n: "Installation serveur rsyslog",     c: [0,0,0,0,0,1], doc: "Procedures/Procédure Rsyslog.pdf" },
+    { n: "Installation serveur Zabbix",      c: [0,1,0,0,0,1], doc: "Procedures/Serveur Zabbix 7.pdf" },
+    // MODIFICATION : bouton Preuve redirige vers le site certifications externe
+    { n: "Certifications",                   c: [0,0,0,0,0,1], doc: "https://azops465.github.io/Support-EF3/index.html" },
+    { n: "Création d'un portfolio",          c: [0,0,0,0,0,1] },
+    { n: "Installation serveur Opentofu",    c: [0,0,0,0,0,1], doc: "Procedures/Procedure_OpenTofu.docx.pdf" },
+    { n: "Installation serveur de messagerie", c: [0,0,0,0,0,1], doc: "Procedures/Serveur de Messagerie (Postfix _ Dovecot _ Rainloop).pdf" },
+    { n: "Installation d'un serveur Proxmox Backup Server", c: [0,0,0,0,0,1], doc: "Procedures/Procédure PBS.pdf" }
   ],
   stage: [
-    { n: "Sauvegarde Robocopy",              p: "Mai 2025",  c: [0,1,0,0,0,0], doc: "Procedures/FP-SI-P2-06 - RobocopyV1.pdf" },
-    { n: "Sauvegarde Veeam",                 p: "Juin 2025", c: [0,1,0,0,0,0], doc: "Procedures/FP-SI-P2-05 - VeeamV1.pdf" },
-    { n: "Masterisation de PC",              p: "Mai 2025",  c: [0,0,1,0,0,1], doc: "Procedures/FP-SI-P4-03 - WAPT - Déploiement de poste - IPXE.pdf" },
-    { n: "Installation serveur Grafana",     p: "Mai 2025",  c: [0,1,0,0,0,1], doc: "Procedures/Serveur Grafana.pdf" },
-    { n: "Configuration de Nagios",          p: "Juin 2025", c: [0,1,0,0,0,1], doc: "Procedures/FP-SI-P2-04 - Nagios4V1.pdf" },
-    { n: "Brassage réseaux",                 p: "Mai 2025",  c: [0,1,1,0,0,0], doc: "Procedures/screen brassage réseau.pdf" },
-    { n: "Gestion des clichés instantanés",  p: "Juin 2025", c: [0,1,0,0,0,0], doc: "Procedures/screen cliché instantané.pdf" },
-    { n: "Installation NAS",                 p: "Mai 2025",  c: [0,1,0,0,1,1] }
+    { n: "Sauvegarde Robocopy",              c: [0,1,0,0,0,0], doc: "Procedures/FP-SI-P2-06 - RobocopyV1.pdf" },
+    { n: "Sauvegarde Veeam",                 c: [0,1,0,0,0,0], doc: "Procedures/FP-SI-P2-05 - VeeamV1.pdf" },
+    { n: "Masterisation de PC",              c: [0,0,1,0,0,1], doc: "Procedures/FP-SI-P4-03 - WAPT - Déploiement de poste - IPXE.pdf" },
+    { n: "Installation serveur Grafana",     c: [0,1,0,0,0,1], doc: "Procedures/Serveur Grafana.pdf" },
+    { n: "Configuration de Nagios",          c: [0,1,0,0,0,1], doc: "Procedures/FP-SI-P2-04 - Nagios4V1.pdf" },
+    { n: "Brassage réseaux",                 c: [0,1,1,0,0,0], doc: "Procedures/screen brassage réseau.pdf" },
+    { n: "Gestion des clichés instantanés",  c: [0,1,0,0,0,0], doc: "Procedures/screen cliché instantané.pdf" },
+    { n: "Installation NAS",                 c: [0,1,0,0,1,1] }
   ],
   Alternance: [
-    { n: "Gestion des tickets et appels",    p: "Janv 2026", c: [0,0,1,0,0,0], doc: "Procedures/screens tickets.pdf" },
-    { n: "Mise en place système de visio",   p: "Fév 2026",  c: [0,0,1,0,0,1], doc: "Procedures/screen visio.pdf" },
-    { n: "Installation Dépôt Secondaire WAPT", p: "Janv 2026", c: [0,0,0,0,1,1], doc: "Procedures/FP-SI-Px-xx - Dépot Secondaire WAPT.pdf" },
-    { n: "Migration de Serveurs Windows",    p: "Fév 2026",  c: [0,0,0,0,1,0], doc: "Procedures/screens migrations serveurs.pdf" },
-    { n: "MAJ site web Intranet",            p: "Janv 2026", c: [0,0,0,1,0,0], doc: "Procedures/intranet.png" },
-    { n: "Référencement site web",           p: "Fév 2026",  c: [0,0,0,1,0,0], doc: "Procedures/Bilan réunion.pdf" },
-    { n: "Service iPXE sur Linux",           p: "Janv 2026", c: [0,0,0,0,0,1], doc: "Procedures/FP-SI-P2-03 - iPXE WAPT v1.4.pdf" },
-    { n: "Veille Technologique",             p: "2024-2026", c: [0,0,0,0,0,1], doc: "Procedures/Veille info.pdf" }
+    { n: "Gestion des tickets et appels",    c: [0,0,1,0,0,0], doc: "Procedures/screens tickets.pdf" },
+    { n: "Mise en place système de visio",   c: [0,0,1,0,0,1], doc: "Procedures/screen visio.pdf" },
+    { n: "Installation Dépôt Secondaire WAPT", c: [0,0,0,0,1,1], doc: "Procedures/FP-SI-Px-xx - Dépot Secondaire WAPT.pdf" },
+    { n: "Migration de Serveurs Windows",    c: [0,0,0,0,1,0], doc: "Procedures/screens migrations serveurs.pdf" },
+    { n: "MAJ site web Intranet",            c: [0,0,0,1,0,0], doc: "Procedures/intranet.png" },
+    { n: "Référencement site web",           c: [0,0,0,1,0,0], doc: "Procedures/Bilan réunion.pdf" },
+    { n: "Service iPXE sur Linux",           c: [0,0,0,0,0,1], doc: "Procedures/FP-SI-P2-03 - iPXE WAPT v1.4.pdf" },
+    { n: "Veille Technologique",             c: [0,0,0,0,0,1], doc: "Procedures/Veille info.pdf" }
   ]
 };
 
@@ -306,11 +274,10 @@ function renderAll() {
       }
 
       const hasButtons = buttonsHTML !== '';
-      const marginStyle = hasButtons ? 'margin-bottom: 12px;' : 'margin-bottom: 0;';
 
+      // MODIFICATION : suppression de l'affichage de la période/date
       card.innerHTML = `
-        <div style="font-weight:600; margin-bottom:4px; color: var(--navy);">${item.n}</div>
-        <div style="font-size:11px; color:#64748b; ${marginStyle}">Période : ${item.p}</div>
+        <div style="font-weight:600; color: var(--navy); ${hasButtons ? 'margin-bottom: 12px;' : ''}">${item.n}</div>
         ${hasButtons ? `<div style="display: flex; gap: 6px; flex-wrap: wrap;">${buttonsHTML}</div>` : ''}
       `;
       grid.appendChild(card);
@@ -324,14 +291,6 @@ function showPage(id, event) {
   document.getElementById('page-' + id).classList.add('active');
   if (event && event.currentTarget) event.currentTarget.classList.add('active');
   window.scrollTo(0, 0);
-}
-
-function filterCerts(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.cert-card-v').forEach(card => {
-    card.style.display = (cat === 'all' || card.classList.contains(cat)) ? 'block' : 'none';
-  });
 }
 
 const MODULES = {
