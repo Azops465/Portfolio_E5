@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenTofu — Installation & Configuration · Debian 13</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-2: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #2dd4bf;
+      --green: #3fb950;
+      --orange: #f0883e;
+      --red: #f85149;
+      --blue: #79c0ff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    #progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 2px; width: 0;
+      background: var(--accent);
+      z-index: 1000;
+      transition: width 0.08s linear;
+    }
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 252px; flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: sticky; top: 0; height: 100vh;
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+    }
+    .sidebar-header {
+      padding: 26px 20px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 4px;
+    }
+    .sidebar-sub { font-size: 11px; color: var(--muted); }
+    .toc { padding: 10px 0; flex: 1; }
+    .toc a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 20px; text-decoration: none;
+      font-size: 12.5px; color: var(--muted);
+      border-left: 2px solid transparent;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+    .toc a:hover { color: var(--text); background: var(--surface-2); }
+    .toc a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(45, 212, 191, 0.06);
+    }
+    .toc .n {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; opacity: 0.4; min-width: 18px;
+    }
+    .content { flex: 1; min-width: 0; }
+    .hero {
+      padding: 56px 64px 44px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: 34px; font-weight: 500;
+      color: var(--text); line-height: 1.2; margin-bottom: 10px;
+    }
+    .hero-desc {
+      font-size: 14px; color: var(--muted);
+      max-width: 500px; line-height: 1.65; margin-bottom: 22px;
+    }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 4px;
+      font-size: 11px; font-family: 'JetBrains Mono', monospace;
+      border: 1px solid;
+    }
+    .bg { border-color: rgba(63,185,80,0.35); color: var(--green); }
+    .bb { border-color: rgba(121,192,255,0.35); color: var(--blue); }
+    .bt { border-color: rgba(45,212,191,0.35); color: var(--accent); }
+    section {
+      padding: 52px 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-of-type { border-bottom: none; }
+    .sh { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 32px; }
+    .sn {
+      font-size: 50px; font-weight: 300; line-height: 1;
+      color: var(--border); min-width: 50px;
+      font-variant-numeric: tabular-nums; user-select: none; padding-top: 3px;
+    }
+    .si h2 { font-size: 21px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+    .si .ss { font-size: 12px; color: var(--muted); }
+    h3 {
+      font-size: 13.5px; font-weight: 500; color: var(--text);
+      margin: 26px 0 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    h3::before {
+      content: ''; display: block;
+      width: 3px; height: 13px;
+      background: var(--accent); border-radius: 2px; flex-shrink: 0;
+    }
+    h3:first-child { margin-top: 0; }
+    p { font-size: 13.5px; color: var(--muted); line-height: 1.75; margin-bottom: 12px; }
+    strong { color: var(--text); font-weight: 500; }
+    ul, ol { padding-left: 20px; margin-bottom: 12px; }
+    li { font-size: 13.5px; color: var(--muted); margin-bottom: 5px; line-height: 1.65; }
+    ul li::marker { color: var(--accent); }
+    :not(pre) > code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px; background: var(--surface-2);
+      color: var(--accent); padding: 2px 6px;
+      border-radius: 3px; border: 1px solid var(--border);
+    }
+    .tbl-wrap {
+      overflow-x: auto; margin: 14px 0;
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead { background: var(--surface-2); }
+    th {
+      padding: 9px 14px; text-align: left;
+      font-size: 10px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.8px;
+      text-transform: uppercase; border-bottom: 1px solid var(--border);
+    }
+    td { padding: 9px 14px; color: var(--muted); border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    .cb {
+      background: var(--surface);
+      border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden; margin: 14px 0;
+    }
+    .ch {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: var(--surface-2); border-bottom: 1px solid var(--border);
+    }
+    .cl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .cd {
+      width: 7px; height: 7px;
+      border-radius: 50%; background: var(--accent); opacity: 0.7;
+    }
+    .cp-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; color: var(--muted);
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 4px; padding: 2px 9px; cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .cp-btn:hover { color: var(--text); border-color: var(--muted); }
+    .cp-btn.ok { color: var(--green); border-color: rgba(63,185,80,0.4); }
+    pre { padding: 18px; overflow-x: auto; font-size: 12.5px; line-height: 1.6; }
+    pre code { font-family: 'JetBrains Mono', monospace; color: var(--text); }
+    .cm { color: var(--muted); opacity: 0.5; }
+    .kw { color: #ff7b72; }
+    .st { color: #a5d6ff; }
+    .ky { color: #d2a8ff; }
+    .nu { color: #f2cc60; }
+    .callout {
+      display: flex; gap: 12px;
+      padding: 13px 16px; border-radius: 8px; margin: 14px 0;
+    }
+    .callout.info    { background: rgba(121,192,255,0.07); border: 1px solid rgba(121,192,255,0.2); }
+    .callout.warn    { background: rgba(240,136,62,0.07);  border: 1px solid rgba(240,136,62,0.2); }
+    .callout.danger  { background: rgba(248,81,73,0.07);   border: 1px solid rgba(248,81,73,0.2); }
+    .callout.success { background: rgba(63,185,80,0.07);   border: 1px solid rgba(63,185,80,0.2); }
+    .ci { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+    .cc strong {
+      display: block; font-size: 12px; font-weight: 500; margin-bottom: 3px;
+    }
+    .callout.info    .cc strong { color: var(--blue); }
+    .callout.warn    .cc strong { color: var(--orange); }
+    .callout.danger  .cc strong { color: var(--red); }
+    .callout.success .cc strong { color: var(--green); }
+    .cc p { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.6; }
+    .ftree {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px; line-height: 1.9; margin: 14px 0;
+    }
+    .fd { color: var(--accent); }
+    .ff { color: var(--text); }
+    .fc { color: var(--muted); opacity: 0.4; font-style: italic; }
+    .steps { display: flex; flex-direction: column; gap: 12px; margin: 14px 0; }
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step-n {
+      width: 26px; height: 26px; min-width: 26px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 500; color: var(--accent);
+    }
+    .step-b { flex: 1; font-size: 13px; color: var(--muted); padding-top: 3px; line-height: 1.6; }
+    footer {
+      padding: 28px 64px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--muted);
+    }
+    @media (max-width: 860px) {
+      .sidebar { display: none; }
+      .hero, section, footer { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">OpenTofu</div>
+      <div class="sidebar-sub">Debian 13 · bpg/proxmox ≥ 0.78</div>
+    </div>
+    <nav class="toc">
+      <a href="#s1" class="active"><span class="n">01</span> Prérequis</a>
+      <a href="#s2"><span class="n">02</span> Accès Proxmox</a>
+      <a href="#s3"><span class="n">03</span> Installation</a>
+      <a href="#s4"><span class="n">04</span> Structure du projet</a>
+      <a href="#s5"><span class="n">05</span> Fichiers de configuration</a>
+      <a href="#s6"><span class="n">06</span> Initialisation</a>
+      <a href="#s7"><span class="n">07</span> Utilisation courante</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+
+    <header class="hero">
+      <div class="hero-eyebrow">Procédure d'installation</div>
+      <h1>OpenTofu sur Debian 13</h1>
+      <p class="hero-desc">Installation, configuration et déploiement de VMs Proxmox avec OpenTofu et le provider <code>bpg/proxmox</code>.</p>
+      <div class="badges">
+        <span class="badge bg">● OpenTofu ≥ 1.6</span>
+        <span class="badge bb">● Debian 13 Trixie</span>
+        <span class="badge bt">● bpg/proxmox ≥ 0.78</span>
+      </div>
+    </header>
+
+<!-- 01 -->
+    <section id="s1">
+      <div class="sh">
+        <div class="sn">01</div>
+        <div class="si"><h2>Prérequis</h2><div class="ss">Environnement système et Proxmox requis</div></div>
+      </div>
+      <h3>Système</h3>
+      <ul>
+        <li>Debian 13 (Trixie) avec accès <code>sudo</code></li>
+        <li>Connexion Internet pour l'installation des paquets</li>
+        <li><code>curl</code>, <code>wget</code>, <code>gnupg</code> disponibles</li>
+      </ul>
+      <h3>Proxmox</h3>
+      <ul>
+        <li>Proxmox VE fonctionnel et accessible (<code>https://172.17.5.102:8006/</code>)</li>
+        <li>Un <strong>token API</strong> créé pour OpenTofu (voir section 02)</li>
+        <li>Une <strong>clé SSH</strong> configurée pour l'accès root à Proxmox</li>
+        <li>Des <strong>templates de VMs</strong> déjà créés sur Proxmox (IDs définis dans <code>variables.tf</code>)</li>
+      </ul>
+      <h3>Vérification des prérequis</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># Vérifier la version de Debian</span>
+cat /etc/os-release | grep -E "NAME|VERSION"
+
+<span class="cm"># Vérifier la connectivité vers Proxmox</span>
+curl -k https://172.17.5.102:8006/ -o /dev/null -w "%{http_code}" --max-time 5</code></pre>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section id="s2">
+      <div class="sh">
+        <div class="sn">02</div>
+        <div class="si"><h2>Configuration de l'accès Proxmox</h2><div class="ss">Token API et SSH Agent</div></div>
+      </div>
+      <h3>Créer le token API</h3>
+      <p>Sur l'interface web Proxmox (<code>https://172.17.5.102:8006/</code>) :</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-b">Aller dans <strong>Datacenter → Permissions → API Tokens</strong></div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-b">Cliquer sur <strong>Add</strong></div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-b">Renseigner : <strong>User</strong> = <code>opentofu@pve</code>, <strong>Token ID</strong> = <code>tofu</code>, décocher <strong>Privilege Separation</strong></div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-b">Copier le token généré <strong>(affiché une seule fois)</strong></div></div>
+        <div class="step"><div class="step-n">5</div><div class="step-b">Assigner les droits via <strong>Datacenter → Permissions → Add → User Permission</strong> : <code>Path: /</code> · <code>User: opentofu@pve</code> · <code>Role: PVEVMAdmin</code></div></div>
+      </div>
+      <h3>Configurer le SSH Agent</h3>
+      <p>Le provider utilise SSH pour les opérations de clonage. L'agent SSH doit être actif avec la clé root chargée.</p>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># Démarrer l'agent SSH</span>
+eval $(ssh-agent -s)
+
+<span class="cm"># Charger la clé privée</span>
+ssh-add ~/.ssh/id_ed25519   <span class="cm"># ou id_rsa selon votre configuration</span>
+ssh-add -l                   <span class="cm"># Vérifier que la clé est chargée</span>
+
+<span class="cm"># Tester la connexion vers Proxmox</span>
+ssh root@172.17.5.102 "pveversion"</code></pre>
+      </div>
+      <div class="callout info">
+        <span class="ci">💡</span>
+        <div class="cc">
+          <strong>Persistance de l'agent SSH entre sessions</strong>
+          <p>Ajoutez dans <code>~/.bashrc</code> : <code>if [ -z "$SSH_AUTH_SOCK" ]; then eval $(ssh-agent -s); ssh-add ~/.ssh/id_ed25519 2>/dev/null; fi</code></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section id="s3">
+      <div class="sh">
+        <div class="sn">03</div>
+        <div class="si"><h2>Installation d'OpenTofu</h2><div class="ss">Via script officiel ou APT manuel</div></div>
+      </div>
+      <h3>Méthode recommandée — Script officiel</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code>curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh \
+  | sudo sh -s -- --install-method deb</code></pre>
+      </div>
+      <h3>Méthode manuelle — Via APT</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># 1. Installer les dépendances</span>
+sudo apt update
+sudo apt install -y wget curl gnupg software-properties-common apt-transport-https
+
+<span class="cm"># 2. Créer le dossier keyrings</span>
+sudo install -m 0755 -d /etc/apt/keyrings
+
+<span class="cm"># 3. Importer la clé GPG OpenTofu</span>
+curl -fsSL https://packages.opentofu.org/opentofu/tofu/gpgkey \
+  | gpg --dearmor \
+  | sudo tee /etc/apt/keyrings/opentofu.gpg > /dev/null
+sudo chmod a+r /etc/apt/keyrings/opentofu.gpg
+
+<span class="cm"># 4. Ajouter le dépôt APT</span>
+echo "deb [signed-by=/etc/apt/keyrings/opentofu.gpg] \
+  https://packages.opentofu.org/opentofu/tofu/any/ any main" \
+  | sudo tee /etc/apt/sources.list.d/opentofu.list
+
+<span class="cm"># 5. Installer OpenTofu</span>
+sudo apt update && sudo apt install -y opentofu</code></pre>
+      </div>
+      <h3>Vérification</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code>tofu --version
+<span class="cm"># Attendu : OpenTofu v1.x.x (ou supérieur)</span></code></pre>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section id="s4">
+      <div class="sh">
+        <div class="sn">04</div>
+        <div class="si"><h2>Structure du projet</h2><div class="ss">Arborescence et création du répertoire</div></div>
+      </div>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code>mkdir -p ~/opentofu-proxmox
+cd ~/opentofu-proxmox</code></pre>
+      </div>
+      <p>Arborescence finale attendue :</p>
+      <div class="ftree">
+<span class="fd">opentofu-proxmox/</span>
+├── <span class="ff">provider.tf</span>        <span class="fc"># Configuration du provider Proxmox</span>
+├── <span class="ff">variables.tf</span>       <span class="fc"># OS, templates, paramètres communs</span>
+├── <span class="ff">main.tf</span>            <span class="fc"># Ressource VM et outputs</span>
+└── <span class="ff">clean_state.sh</span>     <span class="fc"># Script de nettoyage du state</span></div>
+    </section>
+
+    <!-- 05 -->
+    <section id="s5">
+      <div class="sh">
+        <div class="sn">05</div>
+        <div class="si"><h2>Fichiers de configuration</h2><div class="ss">Contenu et explication de chaque fichier</div></div>
+      </div>
+
+      <h3>provider.tf — Connexion à Proxmox</h3>
+      <p>Déclare le provider <code>bpg/proxmox</code> et configure l'authentification à l'instance Proxmox.</p>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>provider.tf</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="ky">terraform</span> {
+  <span class="ky">required_providers</span> {
+    <span class="ky">proxmox</span> = {
+      <span class="ky">source</span>  = <span class="st">"bpg/proxmox"</span>
+      <span class="ky">version</span> = <span class="st">">= 0.78.0"</span>
+    }
+  }
+}
+
+<span class="ky">provider</span> <span class="st">"proxmox"</span> {
+  <span class="ky">endpoint</span>  = <span class="st">"https://172.17.5.102:8006/"</span>
+  <span class="ky">api_token</span> = <span class="st">"opentofu@pve!tofu=ff73be51-0d82-448a-9934-a0259993bc2e"</span>
+  <span class="ky">insecure</span>  = <span class="nu">true</span>  <span class="cm"># Accepte les certificats auto-signés Proxmox</span>
+
+  <span class="ky">ssh</span> {
+    <span class="ky">agent</span>    = <span class="nu">true</span>  <span class="cm"># Utilise le SSH agent</span>
+    <span class="ky">username</span> = <span class="st">"root"</span>
+  }
+}</code></pre>
+      </div>
+      <div class="callout warn">
+        <span class="ci">⚠</span>
+        <div class="cc">
+          <strong>Sécurité — token API en clair</strong>
+          <p>En production, utilisez une variable d'environnement : <code>export PROXMOX_VE_API_TOKEN="opentofu@pve!tofu=&lt;token&gt;"</code> et supprimez la ligne <code>api_token</code> du provider.</p>
+        </div>
+      </div>
+
+      <h3>variables.tf — Catalogue OS et paramètres</h3>
+      <p>Centralise les types d'OS supportés, IDs des templates Proxmox, plages de VMIDs et paramètres communs.</p>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>variables.tf</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># Seule variable à modifier en ligne de commande</span>
+<span class="cm"># Exemple : -var='vm_deployments={"debian"=3,"ubuntu"=2}'</span>
+<span class="ky">variable</span> <span class="st">"vm_deployments"</span> {
+  <span class="ky">description</span> = <span class="st">"Map OS => nombre de VMs à créer"</span>
+  <span class="ky">type</span>        = map(number)
+  <span class="ky">default</span>     = { <span class="st">"debian"</span> = <span class="nu">3</span> }
+  <span class="ky">validation</span> {
+    condition     = alltrue([for os, count in var.vm_deployments : contains(keys(var.os_config), os)])
+    error_message = <span class="st">"OS supportés : debian, ubuntu, windows."</span>
+  }
+}
+
+<span class="cm"># Catalogue OS — template + plage de VMIDs</span>
+<span class="ky">variable</span> <span class="st">"os_config"</span> {
+  <span class="ky">type</span> = map(object({ template_id = number, vm_id_base = number, is_windows = bool, boot_disk = string }))
+  <span class="ky">default</span> = {
+    debian  = { template_id = <span class="nu">100</span>, vm_id_base = <span class="nu">200</span>, is_windows = <span class="nu">false</span>, boot_disk = <span class="st">"virtio0"</span> }
+    ubuntu  = { template_id = <span class="nu">106</span>, vm_id_base = <span class="nu">300</span>, is_windows = <span class="nu">false</span>, boot_disk = <span class="st">"scsi0"</span>   }
+    windows = { template_id = <span class="nu">107</span>, vm_id_base = <span class="nu">400</span>, is_windows = <span class="nu">true</span>,  boot_disk = <span class="st">"ide0"</span>    }
+  }
+}
+
+<span class="ky">variable</span> <span class="st">"target_node"</span> { <span class="ky">type</span> = string; <span class="ky">default</span> = <span class="st">"Proxmox-SP2"</span> }
+<span class="ky">variable</span> <span class="st">"storage"</span>     { <span class="ky">type</span> = string; <span class="ky">default</span> = <span class="st">"local-lvm"</span>   }</code></pre>
+      </div>
+      <p>Variables à adapter à votre environnement :</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Valeur actuelle</th><th>À modifier si…</th></tr></thead>
+          <tbody>
+            <tr><td><code>os_config.debian.template_id</code></td><td><code>100</code></td><td>Votre template Debian a un autre VMID</td></tr>
+            <tr><td><code>os_config.ubuntu.template_id</code></td><td><code>106</code></td><td>Votre template Ubuntu a un autre VMID</td></tr>
+            <tr><td><code>os_config.windows.template_id</code></td><td><code>107</code></td><td>Votre template Windows a un autre VMID</td></tr>
+            <tr><td><code>target_node</code></td><td><code>Proxmox-SP2</code></td><td>Votre nœud Proxmox a un autre nom</td></tr>
+            <tr><td><code>storage</code></td><td><code>local-lvm</code></td><td>Vous utilisez un stockage différent</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>main.tf — Ressource VM et outputs</h3>
+      <p>Logique de création des VMs par clonage de templates Proxmox, avec outputs récapitulatifs.</p>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>main.tf</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="ky">locals</span> {
+  <span class="cm"># Aplatit {"debian"=2,"ubuntu"=1} en liste d'objets VM</span>
+  vm_list = flatten([
+    for os, count in var.vm_deployments : [
+      for i in range(count) : {
+        key         = <span class="st">"${os}-${format("%02d", i + 1)}"</span>
+        name        = <span class="st">"${os}-${format("%02d", i + 1)}"</span>
+        vm_id       = var.os_config[os].vm_id_base + i
+        template_id = var.os_config[os].template_id
+        is_windows  = var.os_config[os].is_windows
+        boot_disk   = var.os_config[os].boot_disk
+      }
+    ]
+  ])
+  <span class="cm"># Transforme en map indexée par key (requis par for_each)</span>
+  vm_map = { for vm in local.vm_list : vm.key => vm }
+}
+
+<span class="ky">resource</span> <span class="st">"proxmox_virtual_environment_vm"</span> <span class="st">"vm"</span> {
+  for_each  = local.vm_map
+  name      = each.value.name
+  vm_id     = each.value.vm_id
+  node_name = var.target_node
+
+  <span class="ky">clone</span> {
+    vm_id        = each.value.template_id
+    full         = <span class="nu">true</span>
+    datastore_id = var.storage
+  }
+
+  boot_order = [each.value.boot_disk]
+}
+
+<span class="ky">output</span> <span class="st">"deployed_vms"</span> {
+  description = <span class="st">"Récapitulatif des VMs créées"</span>
+  value = {
+    for key, vm in proxmox_virtual_environment_vm.vm :
+    key => { vm_id = vm.vm_id, name = vm.name, node = vm.node_name }
+  }
+}
+
+<span class="ky">output</span> <span class="st">"vm_count_by_os"</span> {
+  description = <span class="st">"Nombre de VMs par OS"</span>
+  value       = var.vm_deployments
+}</code></pre>
+      </div>
+
+      <h3>clean_state.sh — Nettoyage du state</h3>
+      <p>Retire les VMs du state OpenTofu sans les supprimer sur Proxmox.</p>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>clean_state.sh</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm">#!/bin/bash</span>
+VMS=$(tofu state list | grep <span class="st">'proxmox_virtual_environment_vm.vm'</span>)
+
+[ -z <span class="st">"$VMS"</span> ] && echo <span class="st">"Aucune VM trouvée dans le state."</span> && exit 0
+
+echo <span class="st">"VMs qui vont être retirées du state :"</span>
+echo <span class="st">"$VMS"</span>
+read -p <span class="st">"Confirmer la suppression du state uniquement ? (y/n) "</span> CONFIRM
+[ <span class="st">"$CONFIRM"</span> != <span class="st">"y"</span> ] && echo <span class="st">"Annulé."</span> && exit 0
+
+while read -r vm; do
+  echo <span class="st">"Suppression du state : $vm"</span>
+  tofu state rm <span class="st">"$vm"</span>
+done &lt;&lt;&lt; <span class="st">"$VMS"</span>
+
+echo <span class="st">"Toutes les VMs ont été retirées du state."</span>
+echo <span class="st">"Les VMs existent toujours sur Proxmox."</span></code></pre>
+      </div>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code>chmod +x ~/opentofu-proxmox/clean_state.sh</code></pre>
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section id="s6">
+      <div class="sh">
+        <div class="sn">06</div>
+        <div class="si"><h2>Initialisation et déploiement</h2><div class="ss">Premières commandes OpenTofu</div></div>
+      </div>
+      <h3>tofu init</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code>cd ~/opentofu-proxmox
+tofu init</code></pre>
+      </div>
+      <div class="callout success">
+        <span class="ci">✓</span>
+        <div class="cc">
+          <strong>Sortie attendue</strong>
+          <p>Installing bpg/proxmox v0.x.x… · OpenTofu has been successfully initialized!</p>
+        </div>
+      </div>
+      <h3>tofu plan — Prévisualiser</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># Plan avec valeurs par défaut (3 VMs Debian)</span>
+tofu plan</code></pre>
+      </div>
+      <h3>tofu apply — Déployer</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># Avec confirmation manuelle</span>
+tofu apply
+
+<span class="cm"># Sans confirmation (CI/CD, scripts)</span>
+tofu apply -auto-approve</code></pre>
+      </div>
+    </section>
+
+    <!-- 07 -->
+    <section id="s7">
+      <div class="sh">
+        <div class="sn">07</div>
+        <div class="si"><h2>Utilisation courante</h2><div class="ss">Commandes du quotidien</div></div>
+      </div>
+      <h3>Déployer des VMs par OS</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># 5 VMs Debian</span>
+tofu apply -var='vm_deployments={"debian"=5}'
+
+<span class="cm"># 2 VMs Ubuntu</span>
+tofu apply -var='vm_deployments={"ubuntu"=2}'
+
+<span class="cm"># Mix : 3 Debian + 2 Ubuntu + 1 Windows</span>
+tofu apply -var='vm_deployments={"debian"=3,"ubuntu"=2,"windows"=1}'</code></pre>
+      </div>
+      <h3>Gestion du state</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># Lister les ressources</span>
+tofu state list
+
+<span class="cm"># Inspecter une ressource spécifique</span>
+tofu state show 'proxmox_virtual_environment_vm.vm["debian-01"]'
+
+<span class="cm"># Rafraîchir depuis Proxmox</span>
+tofu refresh</code></pre>
+      </div>
+      <h3>Afficher les outputs</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code>tofu output                  <span class="cm"># Tous les outputs</span>
+tofu output deployed_vms     <span class="cm"># VMs créées avec VMID et nœud</span>
+tofu output vm_count_by_os   <span class="cm"># Comptage par OS</span></code></pre>
+      </div>
+      <h3>Destruction</h3>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>bash</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code><span class="cm"># Détruire toutes les VMs (supprime sur Proxmox)</span>
+tofu destroy
+
+<span class="cm"># Détruire une VM spécifique uniquement</span>
+tofu destroy -target='proxmox_virtual_environment_vm.vm["debian-01"]'</code></pre>
+      </div>
+      <h3>Fichier terraform.tfvars</h3>
+      <p>Pour éviter de répéter les options <code>-var</code>, créez un fichier <code>terraform.tfvars</code> chargé automatiquement par OpenTofu :</p>
+      <div class="cb">
+        <div class="ch"><span class="cl"><span class="cd"></span>terraform.tfvars</span><button class="cp-btn" onclick="cp(this)">copier</button></div>
+        <pre><code>vm_deployments = { <span class="st">"debian"</span> = <span class="nu">3</span>, <span class="st">"ubuntu"</span> = <span class="nu">2</span> }
+target_node    = <span class="st">"Proxmox-SP2"</span>
+storage        = <span class="st">"local-lvm"</span></code></pre>
+      </div>
+    </section>
+
+    
+    <footer>
+      Document généré pour OpenTofu ≥ 1.6 et provider bpg/proxmox ≥ 0.78.0
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const pct = (d.scrollTop || document.body.scrollTop) / (d.scrollHeight - d.clientHeight) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      document.querySelectorAll('.toc a').forEach(l => l.classList.remove('active'));
+      const a = document.querySelector('.toc a[href="#' + e.target.id + '"]');
+      if (a) a.classList.add('active');
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+
+  document.querySelectorAll('section[id]').forEach(s => obs.observe(s));
+
+  function cp(btn) {
+    const text = btn.closest('.cb').querySelector('pre').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'copié ✓';
+      btn.classList.add('ok');
+      setTimeout(() => { btn.textContent = 'copier'; btn.classList.remove('ok'); }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
